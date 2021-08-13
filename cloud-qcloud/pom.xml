@@ -16,8 +16,8 @@
 
 	<properties>
 		<cos.sts.version>3.0.8</cos.sts.version>
-		<cos-api.version>5.6.35</cos-api.version>
-		<tencentcloud.version>3.1.209</tencentcloud.version>
+		<cos-api.version>5.6.51</cos-api.version>
+		<tencentcloud.version>3.1.213</tencentcloud.version>
 	</properties>
 
 	<dependencies>
@@ -27,12 +27,13 @@
 			<version>${cloudsdk.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
+			<groupId>com.mizhousoft.sdk</groupId>
+			<artifactId>cloud-tencent-nlp</artifactId>
+			<version>${tencentcloud.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mizhousoft.tencentcloud</groupId>
-			<artifactId>tencentcloud-sdk-java</artifactId>
+			<groupId>com.tencentcloudapi</groupId>
+			<artifactId>tencentcloud-sdk-java-vod</artifactId>
 			<version>${tencentcloud.version}</version>
 		</dependency>
 		<dependency>
@@ -51,20 +52,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>bintray-qcloud-maven-repo</id>
-			<name>qcloud-maven-repo</name>
-			<url>https://dl.bintray.com/qcloud/maven-repo/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 </project>
