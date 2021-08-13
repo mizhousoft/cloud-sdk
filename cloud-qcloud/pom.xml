@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>com.mizhousoft.sdk</groupId>
 			<artifactId>cloud-tencent-nlp</artifactId>
-			<version>${tencentcloud.version}</version>
+			<version>${cloudsdk.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>

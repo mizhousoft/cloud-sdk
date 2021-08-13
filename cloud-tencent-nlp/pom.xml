@@ -10,7 +10,6 @@
 	</parent>
 
 	<artifactId>cloud-tencent-nlp</artifactId>
-	<version>3.1.213</version>
 	<packaging>jar</packaging>
 	<name>tencentcloud-sdk-java</name>
 
