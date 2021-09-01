@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>com.mizhousoft.sdk</groupId>
 		<artifactId>cloud-sdk</artifactId>
-		<version>1.2.0-SNAPSHOT</version>
+		<version>1.2.0</version>
 	</parent>
 
 	<artifactId>cloud-tencent-nlp</artifactId>
 	<packaging>jar</packaging>
-	<name>tencentcloud-sdk-java</name>
+	<name>cloud-tencent-nlp</name>
 
 	<description>Tencent Cloud Open API SDK for Java</description>
 
