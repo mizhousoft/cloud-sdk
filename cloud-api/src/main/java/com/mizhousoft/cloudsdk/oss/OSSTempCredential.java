@@ -7,7 +7,7 @@ import java.util.Set;
  *
  * @version
  */
-public class TempCredential
+public class OSSTempCredential
 {
 	// 桶
 	private String bucketName;

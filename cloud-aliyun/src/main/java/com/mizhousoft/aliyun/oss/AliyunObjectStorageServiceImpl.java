@@ -31,7 +31,7 @@ import com.aliyuncs.profile.IClientProfile;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.TempCredential;
+import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 
 /**
  * 对象存储服务
@@ -244,7 +244,7 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TempCredential getUploadTempCredential(String bucketName, Set<String> objectNames, int oneDurationSeconds)
+	public OSSTempCredential getUploadTempCredential(String bucketName, Set<String> objectNames, int oneDurationSeconds)
 	        throws CloudSDKException
 	{
 		String policy = "{\"Version\":\"1\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"oss:PutObject\"],\"Resource\":[\"acs:oss:*:*:*\"]}]}";
@@ -268,7 +268,7 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 
 			Credentials credentials = response.getCredentials();
 
-			TempCredential tc = new TempCredential();
+			OSSTempCredential tc = new OSSTempCredential();
 			tc.setSecretId(credentials.getAccessKeyId());
 			tc.setSecretKey(credentials.getAccessKeySecret());
 			tc.setToken(credentials.getSecurityToken());

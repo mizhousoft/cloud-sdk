@@ -96,7 +96,7 @@ public interface ObjectStorageService
 	 * @return
 	 * @throws CloudSDKException
 	 */
-	TempCredential getUploadTempCredential(String bucketName, Set<String> objectNames, int oneDurationSeconds) throws CloudSDKException;
+	OSSTempCredential getUploadTempCredential(String bucketName, Set<String> objectNames, int oneDurationSeconds) throws CloudSDKException;
 
 	/**
 	 * 生成一个预签名下载url

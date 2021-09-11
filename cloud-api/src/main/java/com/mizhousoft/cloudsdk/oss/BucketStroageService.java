@@ -21,7 +21,7 @@ public interface BucketStroageService
 	 * @return
 	 * @throws CloudSDKException
 	 */
-	TempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException;
+	OSSTempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException;
 
 	/**
 	 * 获取桶信息

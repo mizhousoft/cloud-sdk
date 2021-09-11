@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.TempCredential;
+import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.tencent.RegionEnum;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
@@ -225,7 +225,7 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TempCredential getUploadTempCredential(String bucketName, Set<String> objectNames, int oneDurationSeconds)
+	public OSSTempCredential getUploadTempCredential(String bucketName, Set<String> objectNames, int oneDurationSeconds)
 	        throws CloudSDKException
 	{
 		TreeMap<String, Object> config = new TreeMap<String, Object>();
@@ -260,7 +260,7 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 			long startTime = credential.getLong("startTime");
 			long expiredTime = credential.getLong("expiredTime");
 
-			TempCredential tc = new TempCredential();
+			OSSTempCredential tc = new OSSTempCredential();
 			tc.setExpiredTime(expiredTime);
 			tc.setSecretId(tmpSecretId);
 			tc.setSecretKey(tmpSecretKey);

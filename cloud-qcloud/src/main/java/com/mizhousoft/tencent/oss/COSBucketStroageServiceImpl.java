@@ -16,7 +16,7 @@ import com.mizhousoft.cloudsdk.oss.Bucket;
 import com.mizhousoft.cloudsdk.oss.BucketStroageService;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.TempCredential;
+import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.tencent.cdn.TencentCDNSignServiceImpl;
 
 /**
@@ -41,7 +41,7 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException
+	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException
 	{
 		return objectStorageService.getUploadTempCredential(bucketName, objectNames, oneDurationSeconds);
 	}
