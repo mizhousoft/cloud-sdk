@@ -13,8 +13,9 @@ public interface OCRService
 	/**
 	 * 获取临时密钥
 	 * 
+	 * @param durationSecond
 	 * @return
 	 * @throws CloudSDKException
 	 */
-	TempCredential getTempCredential() throws CloudSDKException;
+	TempCredential getTempCredential(long durationSecond) throws CloudSDKException;
 }
