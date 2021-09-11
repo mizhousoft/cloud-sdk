@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.vod.impl;
+package com.mizhousoft.tencent.vod.impl;
 
 import java.io.File;
 
@@ -9,7 +9,6 @@ import org.junit.Test;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.vod.MediaMeta;
 import com.mizhousoft.cloudsdk.vod.VODService;
-import com.mizhousoft.tencent.vod.impl.QCloudVODServiceImpl;
 import com.mizhousoft.tencent.vod.profile.VodProfile;
 
 /**

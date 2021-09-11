@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.nlp.impl;
+package com.mizhousoft.tencent.nlp.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -8,7 +8,6 @@ import org.junit.Test;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.nlp.RecognitionResult;
 import com.mizhousoft.cloudsdk.nlp.SensitiveWordsRecognitionService;
-import com.mizhousoft.tencent.nlp.impl.SensitiveWordsRecognitionServiceImpl;
 import com.mizhousoft.tencent.nlp.profile.NLPProfile;
 
 /**
