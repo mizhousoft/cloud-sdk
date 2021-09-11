@@ -16,7 +16,7 @@
 
 	<properties>
 		<cos.sts.version>3.0.8</cos.sts.version>
-		<cos-api.version>5.6.51</cos-api.version>
+		<cos-api.version>5.6.54</cos-api.version>
 		<tencentcloud.version>3.1.213</tencentcloud.version>
 	</properties>
 
