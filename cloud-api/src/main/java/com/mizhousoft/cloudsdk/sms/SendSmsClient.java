@@ -2,8 +2,6 @@ package com.mizhousoft.cloudsdk.sms;
 
 import java.util.Map;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
-
 /**
  * 发送短信客户端
  *
@@ -17,9 +15,9 @@ public interface SendSmsClient
 	 * @param phoneNumber
 	 * @param paramMap
 	 * @param smsTemplate
-	 * @throws CloudSDKException
+	 * @throws SmsSendException
 	 */
-	void send(String phoneNumber, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws CloudSDKException;
+	void send(String phoneNumber, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException;
 
 	/**
 	 * 发送多个
@@ -27,7 +25,7 @@ public interface SendSmsClient
 	 * @param phoneNumbers
 	 * @param paramMap
 	 * @param smsTemplate
-	 * @throws CloudSDKException
+	 * @throws SmsSendException
 	 */
-	void multiSend(String[] phoneNumbers, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws CloudSDKException;
+	void multiSend(String[] phoneNumbers, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException;
 }

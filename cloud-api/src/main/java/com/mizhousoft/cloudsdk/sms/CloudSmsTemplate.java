@@ -7,6 +7,9 @@ package com.mizhousoft.cloudsdk.sms;
  */
 public class CloudSmsTemplate
 {
+	// 应用ID
+	private final String appId;
+
 	// 模板编码
 	private final String templateCode;
 
@@ -19,16 +22,28 @@ public class CloudSmsTemplate
 	/**
 	 * 构造函数
 	 *
+	 * @param appId
 	 * @param templateCode
 	 * @param signName
 	 * @param templateId
 	 */
-	public CloudSmsTemplate(String templateCode, String signName, Object templateId)
+	public CloudSmsTemplate(String appId, String templateCode, String signName, Object templateId)
 	{
 		super();
+		this.appId = appId;
 		this.templateCode = templateCode;
 		this.signName = signName;
 		this.templateId = templateId;
+	}
+
+	/**
+	 * 获取appId
+	 * 
+	 * @return
+	 */
+	public String getAppId()
+	{
+		return appId;
 	}
 
 	/**

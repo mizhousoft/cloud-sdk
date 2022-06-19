@@ -12,6 +12,8 @@ import com.aliyun.teaopenapi.models.Config;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.sms.CloudSmsTemplate;
 import com.mizhousoft.cloudsdk.sms.SendSmsClient;
+import com.mizhousoft.cloudsdk.sms.SmsProfile;
+import com.mizhousoft.cloudsdk.sms.SmsSendException;
 import com.mizhousoft.cloudsdk.util.AssertUtils;
 import com.mizhousoft.commons.json.JSONUtils;
 
@@ -28,11 +30,11 @@ public class AliyunSendSmsClient implements SendSmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void send(String phoneNumber, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws CloudSDKException
+	public void send(String phoneNumber, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException
 	{
 		if (null == smsTemplate)
 		{
-			throw new CloudSDKException("Sms template is null.");
+			throw new SmsSendException("Sms template is null.");
 		}
 
 		String signName = smsTemplate.getSignName();
@@ -63,7 +65,7 @@ public class AliyunSendSmsClient implements SendSmsClient
 		}
 		catch (Exception e)
 		{
-			throw new CloudSDKException("Send sms failed.", e);
+			throw new SmsSendException("Send sms failed.", e);
 		}
 	}
 
@@ -71,7 +73,7 @@ public class AliyunSendSmsClient implements SendSmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws CloudSDKException
+	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException
 	{
 		if (null == phoneNumbers || 0 == phoneNumbers.length)
 		{
@@ -82,7 +84,7 @@ public class AliyunSendSmsClient implements SendSmsClient
 		send(phoneNumber, paramMap, smsTemplate);
 	}
 
-	public void init(AliyunSmsProfile profile) throws CloudSDKException
+	public void init(SmsProfile profile) throws CloudSDKException
 	{
 		AssertUtils.notNull(profile.getAccessKeyId(), "Access key id is null.");
 		AssertUtils.notNull(profile.getAccessKeySecret(), "Access key secret is null.");

@@ -2,8 +2,6 @@ package com.mizhousoft.cloudsdk.sms;
 
 import java.util.Map;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
-
 /**
  * 短信应用服务
  *
@@ -17,9 +15,9 @@ public interface SmsApplicationService
 	 * @param phoneNumbers
 	 * @param paramMap
 	 * @param templateCode
-	 * @throws CloudSDKException
+	 * @throws SmsSendException
 	 */
-	void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String templateCode) throws CloudSDKException;
+	void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String templateCode) throws SmsSendException;
 
 	/**
 	 * 发送
@@ -27,9 +25,9 @@ public interface SmsApplicationService
 	 * @param phoneNumber
 	 * @param paramMap
 	 * @param templateCode
-	 * @throws CloudSDKException
+	 * @throws SmsSendException
 	 */
-	boolean sendNotification(String phoneNumber, Map<String, String> paramMap, String templateCode) throws CloudSDKException;
+	boolean sendNotification(String phoneNumber, Map<String, String> paramMap, String templateCode) throws SmsSendException;
 
 	/**
 	 * 发送
@@ -38,9 +36,9 @@ public interface SmsApplicationService
 	 * @param host
 	 * @param templateCode
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws SmsSendException
 	 */
-	String sendVerificationCode(String phoneNumber, String host, String templateCode) throws CloudSDKException;
+	String sendVerificationCode(String phoneNumber, String host, String templateCode) throws SmsSendException;
 
 	/**
 	 * 校验
@@ -48,7 +46,7 @@ public interface SmsApplicationService
 	 * @param phoneNumber
 	 * @param code
 	 * @param templateCode
-	 * @throws CloudSDKException
+	 * @throws SmsSendException
 	 */
-	void verify(String phoneNumber, String code, String templateCode) throws CloudSDKException;
+	void verify(String phoneNumber, String code, String templateCode) throws SmsSendException;
 }

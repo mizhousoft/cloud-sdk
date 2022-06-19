@@ -1,11 +1,11 @@
-package com.mizhousoft.aliyun.sms;
+package com.mizhousoft.cloudsdk.sms;
 
 /**
  * 阿里云配置
  *
  * @version
  */
-public class AliyunSmsProfile
+public class SmsProfile
 {
 	// AccessKey ID
 	private String accessKeyId;
@@ -15,6 +15,9 @@ public class AliyunSmsProfile
 
 	// endpoint
 	private String endpoint;
+
+	// 地域
+	private String region;
 
 	/**
 	 * 获取accessKeyId
@@ -74,5 +77,25 @@ public class AliyunSmsProfile
 	public void setEndpoint(String endpoint)
 	{
 		this.endpoint = endpoint;
+	}
+
+	/**
+	 * 获取region
+	 * 
+	 * @return
+	 */
+	public String getRegion()
+	{
+		return region;
+	}
+
+	/**
+	 * 设置region
+	 * 
+	 * @param region
+	 */
+	public void setRegion(String region)
+	{
+		this.region = region;
 	}
 }

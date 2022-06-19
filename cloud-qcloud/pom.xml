@@ -32,6 +32,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
+			<artifactId>tencentcloud-sdk-java-sms</artifactId>
+			<version>${tencentcloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-vod</artifactId>
 			<version>${tencentcloud.version}</version>
 		</dependency>
