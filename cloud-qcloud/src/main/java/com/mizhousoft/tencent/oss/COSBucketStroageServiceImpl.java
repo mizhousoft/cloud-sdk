@@ -14,9 +14,10 @@ import com.mizhousoft.cloudsdk.cdn.CDNProfile;
 import com.mizhousoft.cloudsdk.cdn.CDNSignService;
 import com.mizhousoft.cloudsdk.oss.Bucket;
 import com.mizhousoft.cloudsdk.oss.BucketStroageService;
+import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
+import com.mizhousoft.commons.data.NestedRuntimeException;
 import com.mizhousoft.tencent.cdn.TencentCDNSignServiceImpl;
 
 /**
@@ -81,6 +82,11 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 	@Override
 	public String getObjectDownloadUrl(long signExpiredMs, String objectName)
 	{
+		if (null == cdnSignService)
+		{
+			throw new NestedRuntimeException("Method not support.");
+		}
+
 		return cdnSignService.signUrl(objectName, signExpiredMs);
 	}
 
@@ -172,8 +178,16 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 		objectStorageService.init(cosProfile);
 		this.objectStorageService = objectStorageService;
 
-		TencentCDNSignServiceImpl cdnSignService = new TencentCDNSignServiceImpl();
-		cdnSignService.init(cdnProfile);
-		this.cdnSignService = cdnSignService;
+		if (null != cdnProfile)
+		{
+			TencentCDNSignServiceImpl cdnSignService = new TencentCDNSignServiceImpl();
+			cdnSignService.init(cdnProfile);
+			this.cdnSignService = cdnSignService;
+		}
+	}
+
+	public void init(String bucketName, COSProfile cosProfile) throws CloudSDKException
+	{
+		this.init(bucketName, cosProfile, null);
 	}
 }
