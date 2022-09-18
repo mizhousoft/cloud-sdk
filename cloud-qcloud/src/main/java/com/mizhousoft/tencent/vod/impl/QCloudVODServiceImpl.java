@@ -258,7 +258,7 @@ public class QCloudVODServiceImpl implements VODService
 
 			DeleteMediaResponse resp = vodClient.DeleteMedia(req);
 
-			LOG.info("Delete video successfully. requestid is {}.", resp.getRequestId());
+			LOG.info("Delete video successfully. requestid is {}, fileId is {}.", resp.getRequestId(), fileId);
 		}
 		catch (TencentCloudSDKException e)
 		{

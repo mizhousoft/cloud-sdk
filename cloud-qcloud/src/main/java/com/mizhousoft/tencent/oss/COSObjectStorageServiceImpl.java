@@ -143,6 +143,8 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 		try
 		{
 			cosClient.deleteObject(bucketName, objectName);
+
+			LOG.info("Delete object successfully. bucketName is {}, objectName is {}.", bucketName, objectName);
 		}
 		catch (Throwable e)
 		{
@@ -203,6 +205,8 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 		{
 			cosClient.deleteObjects(deleteObjectsRequest);
 			// List<DeletedObject> deletedObjects = deleteResult.getDeletedObjects();
+
+			LOG.info("Delete object successfully. bucketName is {}, objectNames are {}.", bucketName, StringUtils.join(objectNames, ","));
 		}
 		catch (MultiObjectDeleteException e)
 		{
