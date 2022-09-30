@@ -10,7 +10,9 @@ public enum RegionEnum
     // 广州
 	GUANGZHOU("ap-guangzhou"),
     // 广州2
-	GUANGZHOU2("ap-guangzhou-2");
+	GUANGZHOU2("ap-guangzhou-2"),
+    // 上海
+	SHANGHAI("ap-shanghai");
 
 	/**
 	 * 构造函数
