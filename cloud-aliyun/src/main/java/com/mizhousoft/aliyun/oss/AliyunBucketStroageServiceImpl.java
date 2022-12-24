@@ -15,9 +15,9 @@ import com.mizhousoft.cloudsdk.cdn.CDNProfile;
 import com.mizhousoft.cloudsdk.cdn.CDNSignService;
 import com.mizhousoft.cloudsdk.oss.Bucket;
 import com.mizhousoft.cloudsdk.oss.BucketStroageService;
+import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 
 /**
  * 存储和CDN存储混合服务
@@ -44,6 +44,15 @@ public class AliyunBucketStroageServiceImpl implements BucketStroageService
 	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException
 	{
 		return objectStorageService.getUploadTempCredential(bucketName, objectNames, oneDurationSeconds);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, String[] allowPrefixes) throws CloudSDKException
+	{
+		return objectStorageService.getUploadTempCredential(bucketName, allowPrefixes, oneDurationSeconds);
 	}
 
 	/**

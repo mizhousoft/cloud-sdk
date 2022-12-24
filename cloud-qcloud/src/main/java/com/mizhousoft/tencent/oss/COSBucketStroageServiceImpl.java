@@ -51,6 +51,15 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 	 * {@inheritDoc}
 	 */
 	@Override
+	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, String[] allowPrefixes) throws CloudSDKException
+	{
+		return objectStorageService.getUploadTempCredential(bucketName, allowPrefixes, oneDurationSeconds);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Bucket getBucket()
 	{
 		Bucket bucket = new Bucket();
