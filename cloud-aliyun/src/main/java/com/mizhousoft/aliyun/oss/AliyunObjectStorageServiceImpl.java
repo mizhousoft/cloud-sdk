@@ -29,9 +29,9 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 
 /**
  * 对象存储服务
@@ -288,6 +288,49 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	 * {@inheritDoc}
 	 */
 	@Override
+	public OSSTempCredential getUploadTempCredential(String bucketName, String[] allowPrefixes, int oneDurationSeconds)
+	        throws CloudSDKException
+	{
+		String policy = "{\"Version\":\"1\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"oss:PutObject\"],\"Resource\":[\"acs:oss:*:*:*\"]}]}";
+
+		try
+		{
+			// 添加endpoint（直接使用STS endpoint，前两个参数留空，无需添加region ID）
+			DefaultProfile.addEndpoint("", "Sts", profile.getStsEndpoint());
+			// 构造default profile（参数留空，无需添加region ID）
+			IClientProfile clientProfile = DefaultProfile.getProfile("", profile.getAccessKey(), profile.getSecretKey());
+			// 用profile构造client
+			DefaultAcsClient client = new DefaultAcsClient(clientProfile);
+			final AssumeRoleRequest request = new AssumeRoleRequest();
+			request.setSysMethod(MethodType.POST);
+			request.setRoleArn(profile.getRoleArn());
+			request.setRoleSessionName(profile.getRoleSessionName());
+			request.setPolicy(policy); // 若policy为空，则用户将获得该角色下所有权限
+			request.setDurationSeconds((long) oneDurationSeconds); // 设置凭证有效时间
+
+			final AssumeRoleResponse response = client.getAcsResponse(request);
+
+			Credentials credentials = response.getCredentials();
+
+			OSSTempCredential tc = new OSSTempCredential();
+			tc.setSecretId(credentials.getAccessKeyId());
+			tc.setSecretKey(credentials.getAccessKeySecret());
+			tc.setToken(credentials.getSecurityToken());
+			tc.setBucketName(bucketName);
+			tc.setRegion(profile.getRegion());
+
+			return tc;
+		}
+		catch (Throwable e)
+		{
+			throw new CloudSDKException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public URL genPresignedDownloadUrl(String bucketName, String objectName, long signExpired) throws CloudSDKException
 	{
 		try
@@ -405,4 +448,5 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 			throw new CloudSDKException("Region is null.");
 		}
 	}
+
 }
