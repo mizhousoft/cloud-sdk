@@ -52,6 +52,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.tencentcloudapi</groupId>
+			<artifactId>tencentcloud-sdk-java-captcha</artifactId>
+			<version>${tencentcloud.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.tencent.cloud</groupId>
 			<artifactId>cos-sts-java</artifactId>
 			<version>${cos.sts.version}</version>
