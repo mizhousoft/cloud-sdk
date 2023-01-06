@@ -80,7 +80,8 @@ public class CaptchaServiceImpl implements CaptchaService
 		StringBuilder buffer = new StringBuilder();
 
 		buffer.append("v1").append(DELIMITER).append(request.getCaptchaType()).append(DELIMITER).append(request.getCaptchaAppId())
-		        .append(DELIMITER).append(request.getUserIp());
+		        .append(DELIMITER).append(request.getUserIp()).append(DELIMITER).append(request.getBusinessId()).append(DELIMITER)
+		        .append(request.getSceneId());
 
 		if (null != resp)
 		{
