@@ -60,6 +60,16 @@ public interface BucketStroageService
 	String getObjectDownloadUrl(long signExpiredMs, String objectName);
 
 	/**
+	 * 获取对象下载地址
+	 * 
+	 * @param signExpiredMs
+	 * @param objectName
+	 * @param params
+	 * @return
+	 */
+	String getObjectDownloadUrl(long signExpiredMs, String objectName, WaterMarkParams params);
+
+	/**
 	 * 删除对象
 	 * 
 	 * @param bucketName

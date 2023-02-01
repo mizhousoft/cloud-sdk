@@ -8,10 +8,10 @@ package com.mizhousoft.tencent.vod.profile;
 public class VodProfile
 {
 	// Access key
-	private String accessKey;
+	private volatile String accessKey;
 
 	// Secret key
-	private String secretKey;
+	private volatile String secretKey;
 
 	// 区域
 	private String region;

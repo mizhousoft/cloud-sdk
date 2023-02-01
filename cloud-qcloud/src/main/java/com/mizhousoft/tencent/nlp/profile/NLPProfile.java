@@ -8,10 +8,10 @@ package com.mizhousoft.tencent.nlp.profile;
 public class NLPProfile
 {
 	// Access key
-	private String accessKey;
+	private volatile String accessKey;
 
 	// Secret key
-	private String secretKey;
+	private volatile String secretKey;
 
 	// 区域
 	private String region;

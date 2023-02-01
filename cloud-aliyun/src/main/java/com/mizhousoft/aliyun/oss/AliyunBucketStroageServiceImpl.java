@@ -18,6 +18,8 @@ import com.mizhousoft.cloudsdk.oss.BucketStroageService;
 import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
+import com.mizhousoft.cloudsdk.oss.WaterMarkParams;
+import com.mizhousoft.commons.data.NestedRuntimeException;
 
 /**
  * 存储和CDN存储混合服务
@@ -91,6 +93,15 @@ public class AliyunBucketStroageServiceImpl implements BucketStroageService
 	public String getObjectDownloadUrl(long signExpiredMs, String objectName)
 	{
 		return cdnSignService.signUrl(objectName, signExpiredMs);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getObjectDownloadUrl(long signExpiredMs, String objectName, WaterMarkParams params)
+	{
+		throw new NestedRuntimeException("Method not support.");
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 {
 	private static final Logger LOG = LoggerFactory.getLogger(TencentCDNSignServiceImpl.class);
 
-	private CDNProfile profile;
+	private volatile CDNProfile profile;
 
 	/**
 	 * {@inheritDoc}

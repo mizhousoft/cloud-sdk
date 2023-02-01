@@ -50,7 +50,7 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 
 	private COSClient cosClient;
 
-	private COSProfile profile;
+	private volatile COSProfile profile;
 
 	/**
 	 * {@inheritDoc}

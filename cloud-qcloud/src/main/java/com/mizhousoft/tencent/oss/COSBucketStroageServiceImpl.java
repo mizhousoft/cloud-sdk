@@ -17,6 +17,7 @@ import com.mizhousoft.cloudsdk.oss.BucketStroageService;
 import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
+import com.mizhousoft.cloudsdk.oss.WaterMarkParams;
 import com.mizhousoft.commons.data.NestedRuntimeException;
 import com.mizhousoft.tencent.cdn.TencentCDNSignServiceImpl;
 
@@ -97,6 +98,25 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 		}
 
 		return cdnSignService.signUrl(objectName, signExpiredMs);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getObjectDownloadUrl(long signExpiredMs, String objectName, WaterMarkParams params)
+	{
+		if (null == cdnSignService)
+		{
+			throw new NestedRuntimeException("Method not support.");
+		}
+
+		String downloadUrl = cdnSignService.signUrl(objectName, signExpiredMs);
+
+		String waterMarkPath = WaterMarkUriBuilder.build(params);
+		downloadUrl = downloadUrl + "&" + waterMarkPath;
+
+		return downloadUrl;
 	}
 
 	/**
