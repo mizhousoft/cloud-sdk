@@ -11,7 +11,7 @@ public class SmsProfile
 	private String accessKeyId;
 
 	// AccessKey Secret
-	private String accessKeySecret;
+	private volatile String accessKeySecret;
 
 	// endpoint
 	private String endpoint;

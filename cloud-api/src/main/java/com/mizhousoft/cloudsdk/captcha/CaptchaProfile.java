@@ -11,7 +11,7 @@ public class CaptchaProfile
 	private String secretId;
 
 	// Secret key
-	private String secretKey;
+	private volatile String secretKey;
 
 	// Endpoint
 	private String endpoint;

@@ -11,7 +11,7 @@ public class OSSProfile
 	private String accessKey;
 
 	// Secret key
-	private String secretKey;
+	private volatile String secretKey;
 
 	// 区域
 	private String region;

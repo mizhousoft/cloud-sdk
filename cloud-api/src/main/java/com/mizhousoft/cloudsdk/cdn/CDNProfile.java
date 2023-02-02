@@ -14,7 +14,7 @@ public class CDNProfile
 	private boolean urlAuthzEnable;
 
 	// Secret key
-	private String secretKey;
+	private volatile String secretKey;
 
 	/**
 	 * 获取endpoint
