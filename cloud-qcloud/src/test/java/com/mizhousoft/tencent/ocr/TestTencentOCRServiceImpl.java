@@ -1,8 +1,8 @@
 package com.mizhousoft.tencent.ocr;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.TempCredential;
@@ -18,7 +18,7 @@ public class TestTencentOCRServiceImpl
 {
 	private OCRService ocrService;
 
-	@Before
+	@BeforeEach
 	public void before() throws CloudSDKException
 	{
 		OCRProfile profile = new OCRProfile();
@@ -39,11 +39,11 @@ public class TestTencentOCRServiceImpl
 		{
 			TempCredential tempCredential = ocrService.getTempCredential(30);
 
-			Assert.assertNotNull(tempCredential);
+			Assertions.assertNotNull(tempCredential);
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 }

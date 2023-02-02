@@ -2,9 +2,9 @@ package com.mizhousoft.tencent.vod.impl;
 
 import java.io.File;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.vod.MediaMeta;
@@ -28,7 +28,7 @@ public class TestQCloudVODServiceImpl
 
 	private VODService vodService;
 
-	@Before
+	@BeforeEach
 	public void before() throws CloudSDKException
 	{
 		VodProfile profile = new VodProfile();
@@ -57,7 +57,7 @@ public class TestQCloudVODServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -70,7 +70,7 @@ public class TestQCloudVODServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -81,11 +81,11 @@ public class TestQCloudVODServiceImpl
 		{
 			MediaMeta mediaMeta = vodService.getVideoMeta("5285890786997530566");
 
-			Assert.assertNotNull(mediaMeta);
+			Assertions.assertNotNull(mediaMeta);
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 }

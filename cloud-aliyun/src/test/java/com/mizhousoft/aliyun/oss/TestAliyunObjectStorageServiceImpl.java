@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
@@ -41,7 +41,7 @@ public class TestAliyunObjectStorageServiceImpl
 
 	private ObjectStorageService objectStoreageService;
 
-	@Before
+	@BeforeEach
 	public void before() throws CloudSDKException
 	{
 		AliyunOSSProfile profile = new AliyunOSSProfile();
@@ -71,7 +71,7 @@ public class TestAliyunObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -84,7 +84,7 @@ public class TestAliyunObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -98,7 +98,7 @@ public class TestAliyunObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -112,7 +112,7 @@ public class TestAliyunObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -127,7 +127,7 @@ public class TestAliyunObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -170,15 +170,15 @@ public class TestAliyunObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 		catch (ProtocolException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 		catch (IOException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 }

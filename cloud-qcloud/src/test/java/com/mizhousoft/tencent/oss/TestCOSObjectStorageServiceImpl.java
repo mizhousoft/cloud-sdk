@@ -8,9 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
@@ -36,7 +36,7 @@ public class TestCOSObjectStorageServiceImpl
 
 	private ObjectStorageService objectStoreageService;
 
-	@Before
+	@BeforeEach
 	public void before() throws CloudSDKException
 	{
 		COSProfile profile = new COSProfile();
@@ -62,7 +62,7 @@ public class TestCOSObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -75,7 +75,7 @@ public class TestCOSObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -89,7 +89,7 @@ public class TestCOSObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -104,7 +104,7 @@ public class TestCOSObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -147,15 +147,15 @@ public class TestCOSObjectStorageServiceImpl
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 		catch (ProtocolException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 		catch (IOException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 }

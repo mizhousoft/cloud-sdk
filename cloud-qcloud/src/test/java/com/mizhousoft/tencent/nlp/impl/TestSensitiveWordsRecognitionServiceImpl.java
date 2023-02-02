@@ -1,9 +1,9 @@
 package com.mizhousoft.tencent.nlp.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.nlp.RecognitionResult;
@@ -27,7 +27,7 @@ public class TestSensitiveWordsRecognitionServiceImpl
 
 	private SensitiveWordsRecognitionService sensitiveWordsRecognitionService;
 
-	@Before
+	@BeforeEach
 	public void before() throws CloudSDKException
 	{
 		NLPProfile profile = new NLPProfile();
@@ -50,11 +50,11 @@ public class TestSensitiveWordsRecognitionServiceImpl
 		{
 			RecognitionResult result = this.sensitiveWordsRecognitionService.recognize(text);
 
-			Assert.assertTrue(result.isContainSensitiveWord());
+			Assertions.assertTrue(result.isContainSensitiveWord());
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 
@@ -69,11 +69,11 @@ public class TestSensitiveWordsRecognitionServiceImpl
 		{
 			RecognitionResult result = this.sensitiveWordsRecognitionService.recognize(text1, text2);
 
-			Assert.assertTrue(result.isContainSensitiveWord());
+			Assertions.assertTrue(result.isContainSensitiveWord());
 		}
 		catch (CloudSDKException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e.getMessage());
 		}
 	}
 }

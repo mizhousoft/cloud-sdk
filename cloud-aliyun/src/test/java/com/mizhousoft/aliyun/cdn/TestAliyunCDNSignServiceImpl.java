@@ -1,7 +1,7 @@
 package com.mizhousoft.aliyun.cdn;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.cdn.CDNProfile;
@@ -20,7 +20,7 @@ public class TestAliyunCDNSignServiceImpl
 
 	private CDNSignService cdnSignService;
 
-	@Before
+	@BeforeEach
 	public void before() throws CloudSDKException
 	{
 		CDNProfile profile = new CDNProfile();
