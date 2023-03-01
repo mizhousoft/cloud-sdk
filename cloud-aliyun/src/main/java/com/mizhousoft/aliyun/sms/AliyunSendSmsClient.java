@@ -30,7 +30,7 @@ public class AliyunSendSmsClient implements SendSmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void send(String phoneNumber, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException
+	public void send(String phoneNumber, Map<String, String> paramMap, String appId, CloudSmsTemplate smsTemplate) throws SmsSendException
 	{
 		if (null == smsTemplate)
 		{
@@ -73,7 +73,8 @@ public class AliyunSendSmsClient implements SendSmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException
+	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, CloudSmsTemplate smsTemplate)
+	        throws SmsSendException
 	{
 		if (null == phoneNumbers || 0 == phoneNumbers.length)
 		{
@@ -81,7 +82,7 @@ public class AliyunSendSmsClient implements SendSmsClient
 		}
 
 		String phoneNumber = StringUtils.join(phoneNumbers, ",");
-		send(phoneNumber, paramMap, smsTemplate);
+		send(phoneNumber, paramMap, appId, smsTemplate);
 	}
 
 	public void init(SmsProfile profile) throws CloudSDKException

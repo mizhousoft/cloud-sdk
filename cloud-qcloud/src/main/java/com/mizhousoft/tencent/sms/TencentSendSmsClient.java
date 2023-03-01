@@ -33,22 +33,23 @@ public class TencentSendSmsClient implements SendSmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void send(String phoneNumber, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException
+	public void send(String phoneNumber, Map<String, String> paramMap, String appId, CloudSmsTemplate smsTemplate) throws SmsSendException
 	{
 		String[] phoneNumbers = { phoneNumber };
 
-		multiSend(phoneNumbers, paramMap, smsTemplate);
+		multiSend(phoneNumbers, paramMap, appId, smsTemplate);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, CloudSmsTemplate smsTemplate) throws SmsSendException
+	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, CloudSmsTemplate smsTemplate)
+	        throws SmsSendException
 	{
 		SendSmsRequest req = new SendSmsRequest();
 
-		req.setSmsSdkAppid(smsTemplate.getAppId());
+		req.setSmsSdkAppid(appId);
 		req.setSign(smsTemplate.getSignName());
 		req.setTemplateID(smsTemplate.getTemplateId().toString());
 
