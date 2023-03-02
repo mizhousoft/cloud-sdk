@@ -31,6 +31,12 @@ public class MediaMeta
 	// 视频流的编码格式，例如 h264
 	private String codec;
 
+	// 宽度
+	private long width;
+
+	// 高度
+	private long height;
+
 	/**
 	 * 获取fileId
 	 * 
@@ -189,5 +195,41 @@ public class MediaMeta
 	public void setCodec(String codec)
 	{
 		this.codec = codec;
+	}
+
+	/**
+	 * 获取width
+	 * @return
+	 */
+	public long getWidth()
+	{
+		return width;
+	}
+
+	/**
+	 * 设置width
+	 * @param width
+	 */
+	public void setWidth(long width)
+	{
+		this.width = width;
+	}
+
+	/**
+	 * 获取height
+	 * @return
+	 */
+	public long getHeight()
+	{
+		return height;
+	}
+
+	/**
+	 * 设置height
+	 * @param height
+	 */
+	public void setHeight(long height)
+	{
+		this.height = height;
 	}
 }

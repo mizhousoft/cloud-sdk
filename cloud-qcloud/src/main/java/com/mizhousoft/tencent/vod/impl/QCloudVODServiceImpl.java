@@ -399,6 +399,8 @@ public class QCloudVODServiceImpl implements VODService
 		{
 			midiaMeta.setDuration(metaData.getDuration().intValue());
 			midiaMeta.setMediaFileSize(metaData.getSize());
+			midiaMeta.setWidth(metaData.getWidth());
+			midiaMeta.setHeight(metaData.getHeight());
 
 			MediaVideoStreamItem[] videoStreams = metaData.getVideoStreamSet();
 			if (!ArrayUtils.isEmpty(videoStreams))
@@ -430,6 +432,8 @@ public class QCloudVODServiceImpl implements VODService
 					midiaMeta.setDuration(item.getDuration().intValue());
 					midiaMeta.setMediaFileSize(item.getSize());
 					midiaMeta.setMediaUrl(item.getUrl());
+					midiaMeta.setWidth(item.getWidth());
+					midiaMeta.setHeight(item.getHeight());
 
 					break;
 				}
