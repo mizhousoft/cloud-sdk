@@ -16,15 +16,6 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 public interface ObjectStorageService
 {
 	/**
-	 * 检索存储桶是否存在且是否有权限访问
-	 * 
-	 * @param bucketName
-	 * @return
-	 * @throws CloudSDKException
-	 */
-	boolean doesBucketExist(String bucketName) throws CloudSDKException;
-
-	/**
 	 * 上传对象
 	 * 
 	 * @param bucketName
@@ -131,23 +122,4 @@ public interface ObjectStorageService
 	 * @throws CloudSDKException
 	 */
 	URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5) throws CloudSDKException;
-
-	/**
-	 * 获取区域
-	 * 
-	 * @return
-	 */
-	String getRegion();
-
-	/**
-	 * 获取AccessKey
-	 * 
-	 * @return
-	 */
-	String getAccessKey();
-
-	/**
-	 * 销毁
-	 */
-	void destory();
 }

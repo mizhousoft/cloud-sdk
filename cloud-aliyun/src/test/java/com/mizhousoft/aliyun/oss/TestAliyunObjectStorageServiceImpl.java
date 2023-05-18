@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.aliyun.oss.OSS;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
@@ -53,8 +54,9 @@ public class TestAliyunObjectStorageServiceImpl
 		profile.setRoleSessionName("web-service3");
 		profile.setRegion("oss-cn-shenzhen");
 
-		AliyunObjectStorageServiceImpl service = new AliyunObjectStorageServiceImpl();
-		service.init(profile);
+		OSS ossClient = AliyunOSSClientBuilder.build(profile);
+
+		AliyunObjectStorageServiceImpl service = new AliyunObjectStorageServiceImpl(ossClient, profile);
 
 		this.objectStoreageService = service;
 	}

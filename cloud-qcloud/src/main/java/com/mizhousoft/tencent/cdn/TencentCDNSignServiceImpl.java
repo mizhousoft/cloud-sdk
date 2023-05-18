@@ -20,6 +20,30 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 	private volatile CDNProfile profile;
 
 	/**
+	 * 构造函数
+	 *
+	 * @param profile
+	 */
+	public TencentCDNSignServiceImpl(CDNProfile profile)
+	{
+		String endpoint = profile.getEndpoint();
+		if (StringUtils.endsWith(endpoint, "/"))
+		{
+			endpoint = endpoint.substring(0, endpoint.length() - 1);
+			profile.setEndpoint(endpoint);
+
+			LOG.info("Remove cdn endpoint {} last char /.", endpoint);
+		}
+
+		if (StringUtils.isBlank(profile.getSecretKey()))
+		{
+			profile.setUrlAuthzEnable(false);
+		}
+
+		this.profile = profile;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -46,22 +70,12 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 		return url;
 	}
 
-	public void init(CDNProfile profile)
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getEndpoint()
 	{
-		String endpoint = profile.getEndpoint();
-		if (StringUtils.endsWith(endpoint, "/"))
-		{
-			endpoint = endpoint.substring(0, endpoint.length() - 1);
-			profile.setEndpoint(endpoint);
-
-			LOG.info("Remove cdn endpoint {} last char /.", endpoint);
-		}
-
-		if (StringUtils.isBlank(profile.getSecretKey()))
-		{
-			profile.setUrlAuthzEnable(false);
-		}
-
-		this.profile = profile;
+		return profile.getEndpoint();
 	}
 }

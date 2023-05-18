@@ -1,25 +1,16 @@
 package com.mizhousoft.aliyun.oss;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.Set;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aliyun.oss.OSS;
 import com.mizhousoft.aliyun.cdn.AliyunCDNSignServiceImpl;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.cdn.CDNProfile;
 import com.mizhousoft.cloudsdk.cdn.CDNSignService;
 import com.mizhousoft.cloudsdk.oss.Bucket;
 import com.mizhousoft.cloudsdk.oss.BucketStroageService;
-import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
-import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.WaterMarkParams;
-import com.mizhousoft.commons.data.NestedRuntimeException;
 
 /**
  * 存储和CDN存储混合服务
@@ -36,26 +27,9 @@ public class AliyunBucketStroageServiceImpl implements BucketStroageService
 	// CDN服务
 	protected CDNSignService cdnSignService;
 
-	// 桶名
-	protected String bucketName;
+	private OSS ossClient;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException
-	{
-		return objectStorageService.getUploadTempCredential(bucketName, objectNames, oneDurationSeconds);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, String[] allowPrefixes) throws CloudSDKException
-	{
-		return objectStorageService.getUploadTempCredential(bucketName, allowPrefixes, oneDurationSeconds);
-	}
+	private AliyunOSSProfile ossProfile;
 
 	/**
 	 * {@inheritDoc}
@@ -63,9 +37,7 @@ public class AliyunBucketStroageServiceImpl implements BucketStroageService
 	@Override
 	public Bucket getBucket()
 	{
-		Bucket bucket = new Bucket();
-		bucket.setBucketName(bucketName);
-		bucket.setRegion(objectStorageService.getRegion());
+		Bucket bucket = new Bucket(ossProfile.getBucketName(), ossProfile.getRegion());
 
 		return bucket;
 	}
@@ -74,93 +46,33 @@ public class AliyunBucketStroageServiceImpl implements BucketStroageService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ObjectMetadata getObjectMetadata(String bucketName, String objectName) throws CloudSDKException
+	public String getRegion()
+	{
+		return ossProfile.getRegion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getAccessKey()
+	{
+		return ossProfile.getAccessKey();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean doesBucketExist(String bucketName) throws CloudSDKException
 	{
 		try
 		{
-			return objectStorageService.getObjectMetadata(bucketName, objectName);
+			return ossClient.doesBucketExist(bucketName);
 		}
-		catch (CloudSDKException e)
+		catch (Throwable e)
 		{
-			throw new CloudSDKException(e.getErrorCode(), e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getObjectDownloadUrl(long signExpiredMs, String objectName)
-	{
-		return cdnSignService.signUrl(objectName, signExpiredMs);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getObjectDownloadUrl(long signExpiredMs, String objectName, WaterMarkParams params)
-	{
-		throw new NestedRuntimeException("Method not support.");
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(String bucketName, String objectName) throws CloudSDKException
-	{
-		if (StringUtils.isBlank(bucketName) || StringUtils.isBlank(objectName))
-		{
-			LOG.warn("Object can not delete, bucket name is {}, object name is {}.", bucketName, objectName);
-			return;
-		}
-
-		try
-		{
-			objectStorageService.deleteObject(bucketName, objectName);
-		}
-		catch (CloudSDKException e)
-		{
-			throw new CloudSDKException(e.getErrorCode(), e.getCodeParams(), e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(String bucketName, Collection<String> objectNames) throws CloudSDKException
-	{
-		if (StringUtils.isBlank(bucketName) || CollectionUtils.isEmpty(objectNames))
-		{
-			LOG.warn("Object can not delete, bucket name is {}, object names is {}.", bucketName, objectNames);
-			return;
-		}
-
-		try
-		{
-			objectStorageService.deleteObjects(bucketName, objectNames);
-		}
-		catch (CloudSDKException e)
-		{
-			throw new CloudSDKException(e.getErrorCode(), e.getCodeParams(), e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void putObject(String objectName, File localFile) throws CloudSDKException
-	{
-		try
-		{
-			objectStorageService.putObject(bucketName, objectName, localFile);
-		}
-		catch (CloudSDKException e)
-		{
-			throw new CloudSDKException(e.getErrorCode(), e.getCodeParams(), e.getMessage(), e);
+			throw new CloudSDKException(e.getMessage(), e);
 		}
 	}
 
@@ -177,24 +89,39 @@ public class AliyunBucketStroageServiceImpl implements BucketStroageService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void destory()
+	public CDNSignService getCDNSignService()
 	{
-		if (null != objectStorageService)
+		return cdnSignService;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void destroy()
+	{
+		if (null != ossClient)
 		{
-			objectStorageService.destory();
+			ossClient.shutdown();
 		}
+
+		LOG.info("Shutdown oss client successfully.");
 	}
 
 	public void init(String bucketName, AliyunOSSProfile ossProfile, CDNProfile cdnProfile) throws CloudSDKException
 	{
-		this.bucketName = bucketName;
+		if (null == ossProfile || null == ossProfile.getBucketName())
+		{
+			throw new CloudSDKException("Bucket name is null.");
+		}
 
-		AliyunObjectStorageServiceImpl objectStorageService = new AliyunObjectStorageServiceImpl();
-		objectStorageService.init(ossProfile);
+		this.ossClient = AliyunOSSClientBuilder.build(ossProfile);
+		this.ossProfile = ossProfile;
+
+		AliyunObjectStorageServiceImpl objectStorageService = new AliyunObjectStorageServiceImpl(this.ossClient, this.ossProfile);
 		this.objectStorageService = objectStorageService;
 
-		AliyunCDNSignServiceImpl cdnSignService = new AliyunCDNSignServiceImpl();
-		cdnSignService.init(cdnProfile);
+		AliyunCDNSignServiceImpl cdnSignService = new AliyunCDNSignServiceImpl(cdnProfile);
 		this.cdnSignService = cdnSignService;
 	}
 }

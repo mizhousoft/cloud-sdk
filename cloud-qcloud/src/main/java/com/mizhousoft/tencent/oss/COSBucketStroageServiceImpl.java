@@ -1,11 +1,5 @@
 package com.mizhousoft.tencent.oss;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.Set;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,12 +8,9 @@ import com.mizhousoft.cloudsdk.cdn.CDNProfile;
 import com.mizhousoft.cloudsdk.cdn.CDNSignService;
 import com.mizhousoft.cloudsdk.oss.Bucket;
 import com.mizhousoft.cloudsdk.oss.BucketStroageService;
-import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
-import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.cloudsdk.oss.WaterMarkParams;
-import com.mizhousoft.commons.data.NestedRuntimeException;
 import com.mizhousoft.tencent.cdn.TencentCDNSignServiceImpl;
+import com.qcloud.cos.COSClient;
 
 /**
  * 桶存储服务
@@ -31,31 +22,16 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 	private static final Logger LOG = LoggerFactory.getLogger(COSBucketStroageServiceImpl.class);
 
 	// 对象存储服务
-	protected COSObjectStorageServiceImpl objectStorageService;
+	protected ObjectStorageService objectStorageService;
 
 	// CDN服务
 	protected CDNSignService cdnSignService;
 
-	// 桶名
-	protected String bucketName;
+	// COSProfile
+	protected volatile COSProfile cosProfile;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException
-	{
-		return objectStorageService.getUploadTempCredential(bucketName, objectNames, oneDurationSeconds);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public OSSTempCredential getUploadTempCredential(int oneDurationSeconds, String[] allowPrefixes) throws CloudSDKException
-	{
-		return objectStorageService.getUploadTempCredential(bucketName, allowPrefixes, oneDurationSeconds);
-	}
+	// COSClient
+	protected COSClient cosClient;
 
 	/**
 	 * {@inheritDoc}
@@ -63,9 +39,7 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 	@Override
 	public Bucket getBucket()
 	{
-		Bucket bucket = new Bucket();
-		bucket.setBucketName(bucketName);
-		bucket.setRegion(objectStorageService.getRegion());
+		Bucket bucket = new Bucket(cosProfile.getBucketName(), cosProfile.getRegion());
 
 		return bucket;
 	}
@@ -74,108 +48,33 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ObjectMetadata getObjectMetadata(String bucketName, String objectName) throws CloudSDKException
+	public String getRegion()
+	{
+		return cosProfile.getRegion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getAccessKey()
+	{
+		return cosProfile.getAccessKey();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean doesBucketExist(String bucketName) throws CloudSDKException
 	{
 		try
 		{
-			return objectStorageService.getObjectMetadata(bucketName, objectName);
+			return cosClient.doesBucketExist(bucketName);
 		}
-		catch (CloudSDKException e)
+		catch (Throwable e)
 		{
-			throw new CloudSDKException(e.getErrorCode(), e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getObjectDownloadUrl(long signExpiredMs, String objectName)
-	{
-		if (null == cdnSignService)
-		{
-			throw new NestedRuntimeException("Method not support.");
-		}
-
-		return cdnSignService.signUrl(objectName, signExpiredMs);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getObjectDownloadUrl(long signExpiredMs, String objectName, WaterMarkParams params)
-	{
-		if (null == cdnSignService)
-		{
-			throw new NestedRuntimeException("Method not support.");
-		}
-
-		String downloadUrl = cdnSignService.signUrl(objectName, signExpiredMs);
-
-		String waterMarkPath = WaterMarkUriBuilder.build(params);
-		downloadUrl = downloadUrl + "&" + waterMarkPath;
-
-		return downloadUrl;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(String bucketName, String objectName) throws CloudSDKException
-	{
-		if (StringUtils.isBlank(bucketName) || StringUtils.isBlank(objectName))
-		{
-			LOG.warn("Object can not delete, bucket name is {}, object name is {}.", bucketName, objectName);
-			return;
-		}
-
-		try
-		{
-			objectStorageService.deleteObject(bucketName, objectName);
-		}
-		catch (CloudSDKException e)
-		{
-			throw new CloudSDKException(e.getErrorCode(), e.getCodeParams(), e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void delete(String bucketName, Collection<String> objectNames) throws CloudSDKException
-	{
-		if (StringUtils.isBlank(bucketName) || CollectionUtils.isEmpty(objectNames))
-		{
-			LOG.warn("Object can not delete, bucket name is {}, object names is {}.", bucketName, objectNames);
-			return;
-		}
-
-		try
-		{
-			objectStorageService.deleteObjects(bucketName, objectNames);
-		}
-		catch (CloudSDKException e)
-		{
-			throw new CloudSDKException(e.getErrorCode(), e.getCodeParams(), e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void putObject(String objectName, File localFile) throws CloudSDKException
-	{
-		try
-		{
-			objectStorageService.putObject(bucketName, objectName, localFile);
-		}
-		catch (CloudSDKException e)
-		{
-			throw new CloudSDKException(e.getErrorCode(), e.getCodeParams(), e.getMessage(), e);
+			throw new CloudSDKException(e.getMessage(), e);
 		}
 	}
 
@@ -191,32 +90,51 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 	/**
 	 * {@inheritDoc}
 	 */
-	public void destory()
+	@Override
+	public CDNSignService getCDNSignService()
 	{
-		if (null != objectStorageService)
-		{
-			objectStorageService.destory();
-		}
+		return cdnSignService;
 	}
 
-	public void init(String bucketName, COSProfile cosProfile, CDNProfile cdnProfile) throws CloudSDKException
+	/**
+	 * {@inheritDoc}
+	 */
+	public void destroy()
 	{
-		this.bucketName = bucketName;
+		if (null != cosClient)
+		{
+			cosClient.shutdown();
+		}
 
-		COSObjectStorageServiceImpl objectStorageService = new COSObjectStorageServiceImpl();
-		objectStorageService.init(cosProfile);
+		LOG.info("Shutdown {} cos client successfully.", cosProfile.getBucketName());
+	}
+
+	/**
+	 * 初始化
+	 * 
+	 * @param cosProfile
+	 * @param cdnProfile
+	 * @throws CloudSDKException
+	 */
+	public void init(COSProfile cosProfile, CDNProfile cdnProfile) throws CloudSDKException
+	{
+		if (null == cosProfile || null == cosProfile.getBucketName())
+		{
+			throw new CloudSDKException("Bucket name is null.");
+		}
+
+		this.cosClient = COSClientBuilder.build(cosProfile);
+		this.cosProfile = cosProfile;
+
+		COSObjectStorageServiceImpl objectStorageService = new COSObjectStorageServiceImpl(this.cosClient, cosProfile);
 		this.objectStorageService = objectStorageService;
 
 		if (null != cdnProfile)
 		{
-			TencentCDNSignServiceImpl cdnSignService = new TencentCDNSignServiceImpl();
-			cdnSignService.init(cdnProfile);
+			TencentCDNSignServiceImpl cdnSignService = new TencentCDNSignServiceImpl(cdnProfile);
 			this.cdnSignService = cdnSignService;
 		}
-	}
 
-	public void init(String bucketName, COSProfile cosProfile) throws CloudSDKException
-	{
-		this.init(bucketName, cosProfile, null);
+		LOG.info("Init {} cos client successfully.", cosProfile.getBucketName());
 	}
 }

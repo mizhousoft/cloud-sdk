@@ -19,6 +19,7 @@ import com.mizhousoft.cloudsdk.vod.event.VodEvent;
 import com.mizhousoft.cloudsdk.vod.event.VodFileDeletedEvent;
 import com.mizhousoft.cloudsdk.vod.event.VodNewFileUploadEvent;
 import com.mizhousoft.cloudsdk.vod.event.VodStateChangedEvent;
+import com.mizhousoft.tencent.oss.COSClientBuilder;
 import com.mizhousoft.tencent.oss.COSObjectStorageServiceImpl;
 import com.mizhousoft.tencent.oss.COSProfile;
 import com.mizhousoft.tencent.vod.constants.CoverTypeEnum;
@@ -26,6 +27,7 @@ import com.mizhousoft.tencent.vod.constants.MediaCodecEnum;
 import com.mizhousoft.tencent.vod.constants.MediaTypeEnum;
 import com.mizhousoft.tencent.vod.profile.VodProfile;
 import com.mizhousoft.tencent.vod.validator.VodProfileValidator;
+import com.qcloud.cos.COSClient;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -80,7 +82,8 @@ public class QCloudVODServiceImpl implements VODService
 		MediaTypeEnum mediaType = getMediaType(mediaFile);
 		CoverTypeEnum coverType = getCoverType(coverFile);
 
-		COSObjectStorageServiceImpl objectStorageService = null;
+		COSClient cosClient = null;
+		ObjectStorageService objectStorageService = null;
 
 		String bucket = null;
 		String coverObjectName = null;
@@ -94,14 +97,14 @@ public class QCloudVODServiceImpl implements VODService
 
 			ApplyUploadResponse applyResponse = vodClient.ApplyUpload(req);
 
-			COSProfile config = new COSProfile();
-			config.setAccessKey(applyResponse.getTempCertificate().getSecretId());
-			config.setSecretKey(applyResponse.getTempCertificate().getSecretKey());
-			config.setSessionToken(applyResponse.getTempCertificate().getToken());
-			config.setRegion(applyResponse.getStorageRegion());
+			COSProfile cosProfile = new COSProfile();
+			cosProfile.setAccessKey(applyResponse.getTempCertificate().getSecretId());
+			cosProfile.setSecretKey(applyResponse.getTempCertificate().getSecretKey());
+			cosProfile.setSessionToken(applyResponse.getTempCertificate().getToken());
+			cosProfile.setRegion(applyResponse.getStorageRegion());
 
-			objectStorageService = new COSObjectStorageServiceImpl();
-			objectStorageService.init(config);
+			cosClient = COSClientBuilder.build(cosProfile);
+			objectStorageService = new COSObjectStorageServiceImpl(cosClient, cosProfile);
 
 			bucket = applyResponse.getStorageBucket();
 
@@ -131,9 +134,9 @@ public class QCloudVODServiceImpl implements VODService
 			cleanUploadFailedFile(bucket, coverObjectName, objectStorageService);
 			cleanUploadFailedFile(bucket, mediaObjectName, objectStorageService);
 
-			if (null != objectStorageService)
+			if (null != cosClient)
 			{
-				objectStorageService.destory();
+				cosClient.shutdown();
 			}
 		}
 	}
@@ -445,7 +448,7 @@ public class QCloudVODServiceImpl implements VODService
 
 	private void cleanUploadFailedFile(String bucket, String objectName, ObjectStorageService objectStoreageService)
 	{
-		if (null != bucket && null != objectName)
+		if (null != bucket && null != objectName && null != objectStoreageService)
 		{
 			try
 			{

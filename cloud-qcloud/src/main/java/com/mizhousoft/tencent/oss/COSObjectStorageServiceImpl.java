@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -21,21 +22,14 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
-import com.mizhousoft.tencent.RegionEnum;
 import com.qcloud.cos.COSClient;
-import com.qcloud.cos.ClientConfig;
-import com.qcloud.cos.auth.BasicCOSCredentials;
-import com.qcloud.cos.auth.BasicSessionCredentials;
-import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.exception.CosServiceException;
 import com.qcloud.cos.exception.MultiObjectDeleteException;
 import com.qcloud.cos.http.HttpMethodName;
-import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.model.CopyObjectRequest;
 import com.qcloud.cos.model.DeleteObjectsRequest;
 import com.qcloud.cos.model.DeleteObjectsRequest.KeyVersion;
 import com.qcloud.cos.model.GeneratePresignedUrlRequest;
-import com.qcloud.cos.region.Region;
 import com.tencent.cloud.CosStsClient;
 import com.tencent.cloud.Scope;
 
@@ -53,19 +47,16 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 	private volatile COSProfile profile;
 
 	/**
-	 * {@inheritDoc}
+	 * 构造函数
+	 *
+	 * @param cosClient
+	 * @param profile
 	 */
-	@Override
-	public boolean doesBucketExist(String bucketName) throws CloudSDKException
+	public COSObjectStorageServiceImpl(COSClient cosClient, COSProfile profile)
 	{
-		try
-		{
-			return cosClient.doesBucketExist(bucketName);
-		}
-		catch (Throwable e)
-		{
-			throw new CloudSDKException(e.getMessage(), e);
-		}
+		super();
+		this.cosClient = cosClient;
+		this.profile = profile;
 	}
 
 	/**
@@ -140,6 +131,12 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 	@Override
 	public void deleteObject(String bucketName, String objectName) throws CloudSDKException
 	{
+		if (StringUtils.isBlank(bucketName) || StringUtils.isBlank(objectName))
+		{
+			LOG.warn("Object can not delete, bucket name is {}, object name is {}.", bucketName, objectName);
+			return;
+		}
+
 		try
 		{
 			cosClient.deleteObject(bucketName, objectName);
@@ -158,6 +155,12 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 	@Override
 	public void deleteObjects(String bucketName, Collection<String> objectNames) throws CloudSDKException
 	{
+		if (StringUtils.isBlank(bucketName) || CollectionUtils.isEmpty(objectNames))
+		{
+			LOG.warn("Object can not delete, bucket name is {}, object names is {}.", bucketName, objectNames);
+			return;
+		}
+
 		List<String> list = new ArrayList<>(objectNames);
 
 		// 设置要删除的key列表, 最多一次删除1000个
@@ -304,7 +307,7 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 			// 换成您的 bucket
 			config.put("bucket", bucketName);
 			// 换成 bucket 所在地区
-			config.put("region", getRegion());
+			config.put("region", profile.getRegion());
 
 			// 这里改成允许的路径前缀，可以根据自己网站的用户登录态判断允许上传的具体路径
 			// 列举几种典型的前缀授权场景：
@@ -427,91 +430,4 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 			throw new CloudSDKException(e.getMessage(), e);
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getRegion()
-	{
-		return profile.getRegion();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getAccessKey()
-	{
-		return profile.getAccessKey();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void destory()
-	{
-		if (null != cosClient)
-		{
-			cosClient.shutdown();
-		}
-
-		LOG.info("Shutdown cos client successfully.");
-	}
-
-	public void init(COSProfile config) throws CloudSDKException
-	{
-		validate(config);
-
-		COSCredentials cred = null;
-		if (StringUtils.isBlank(config.getSessionToken()))
-		{
-			cred = new BasicCOSCredentials(config.getAccessKey(), config.getSecretKey());
-		}
-		else
-		{
-			cred = new BasicSessionCredentials(config.getAccessKey(), config.getSecretKey(), config.getSessionToken());
-		}
-
-		RegionEnum region = RegionEnum.get(config.getRegion());
-		ClientConfig clientConfig = new ClientConfig(new Region(region.getValue()));
-		clientConfig.setHttpProtocol(HttpProtocol.https);
-
-		COSClient cosClient = new COSClient(cred, clientConfig);
-
-		this.profile = config;
-		this.cosClient = cosClient;
-
-		LOG.info("Init cos client successfully.");
-	}
-
-	private void validate(COSProfile profile) throws CloudSDKException
-	{
-		if (null == profile)
-		{
-			throw new CloudSDKException("COSProfile is null.");
-		}
-
-		if (StringUtils.isBlank(profile.getAccessKey()))
-		{
-			throw new CloudSDKException("Cos access key is null.");
-		}
-
-		if (StringUtils.isBlank(profile.getSecretKey()))
-		{
-			throw new CloudSDKException("Cos secret key is null.");
-		}
-
-		if (StringUtils.isBlank(profile.getRegion()))
-		{
-			throw new CloudSDKException("Cos region is null.");
-		}
-
-		RegionEnum region = RegionEnum.get(profile.getRegion());
-		if (null == region)
-		{
-			throw new CloudSDKException("Cos region does not supported, region is " + profile.getRegion() + '.');
-		}
-	}
-
 }

@@ -7,6 +7,9 @@ package com.mizhousoft.cloudsdk.oss;
  */
 public class OSSProfile
 {
+	// bucketName
+	private String bucketName;
+
 	// Access key
 	private String accessKey;
 
@@ -15,6 +18,26 @@ public class OSSProfile
 
 	// 区域
 	private String region;
+
+	/**
+	 * 获取bucketName
+	 * 
+	 * @return
+	 */
+	public String getBucketName()
+	{
+		return bucketName;
+	}
+
+	/**
+	 * 设置bucketName
+	 * 
+	 * @param bucketName
+	 */
+	public void setBucketName(String bucketName)
+	{
+		this.bucketName = bucketName;
+	}
 
 	/**
 	 * 获取accessKey

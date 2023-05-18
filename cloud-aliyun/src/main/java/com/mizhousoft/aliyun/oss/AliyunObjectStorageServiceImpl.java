@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.HttpMethod;
 import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.CopyObjectRequest;
 import com.aliyun.oss.model.DeleteObjectsRequest;
@@ -47,19 +47,16 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	private AliyunOSSProfile profile;
 
 	/**
-	 * {@inheritDoc}
+	 * 构造函数
+	 *
+	 * @param ossClient
+	 * @param profile
 	 */
-	@Override
-	public boolean doesBucketExist(String bucketName) throws CloudSDKException
+	public AliyunObjectStorageServiceImpl(OSS ossClient, AliyunOSSProfile profile)
 	{
-		try
-		{
-			return ossClient.doesBucketExist(bucketName);
-		}
-		catch (Throwable e)
-		{
-			throw new CloudSDKException(e.getMessage(), e);
-		}
+		super();
+		this.ossClient = ossClient;
+		this.profile = profile;
 	}
 
 	/**
@@ -134,6 +131,12 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	@Override
 	public void deleteObject(String bucketName, String objectName) throws CloudSDKException
 	{
+		if (StringUtils.isBlank(bucketName) || StringUtils.isBlank(objectName))
+		{
+			LOG.warn("Object can not delete, bucket name is {}, object name is {}.", bucketName, objectName);
+			return;
+		}
+
 		try
 		{
 			ossClient.deleteObject(bucketName, objectName);
@@ -150,6 +153,12 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	@Override
 	public void deleteObjects(String bucketName, Collection<String> objectNames) throws CloudSDKException
 	{
+		if (StringUtils.isBlank(bucketName) || CollectionUtils.isEmpty(objectNames))
+		{
+			LOG.warn("Object can not delete, bucket name is {}, object names is {}.", bucketName, objectNames);
+			return;
+		}
+
 		List<String> list = new ArrayList<>(objectNames);
 
 		// 设置要删除的key列表, 最多一次删除1000个
@@ -368,84 +377,6 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 		catch (Throwable e)
 		{
 			throw new CloudSDKException(e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getRegion()
-	{
-		return profile.getRegion();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getAccessKey()
-	{
-		return profile.getAccessKey();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void destory()
-	{
-		if (null != ossClient)
-		{
-			ossClient.shutdown();
-		}
-
-		LOG.info("Shutdown oss client successfully.");
-	}
-
-	public void init(AliyunOSSProfile profile) throws CloudSDKException
-	{
-		validate(profile);
-
-		String endpoint = profile.getEndpoint();
-
-		String accessKeyId = profile.getAccessKey();
-		String accessKeySecret = profile.getSecretKey();
-
-		// 创建OSSClient实例。
-		OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
-		this.profile = profile;
-		this.ossClient = ossClient;
-
-		LOG.info("Init oss client successfully.");
-	}
-
-	private void validate(AliyunOSSProfile profile) throws CloudSDKException
-	{
-		if (null == profile)
-		{
-			throw new CloudSDKException("Profile is null.");
-		}
-
-		if (StringUtils.isBlank(profile.getAccessKey()))
-		{
-			throw new CloudSDKException("Access key is null.");
-		}
-
-		if (StringUtils.isBlank(profile.getSecretKey()))
-		{
-			throw new CloudSDKException("Secret key is null.");
-		}
-
-		if (StringUtils.isBlank(profile.getEndpoint()))
-		{
-			throw new CloudSDKException("Endpoint is null.");
-		}
-
-		if (StringUtils.isBlank(profile.getRegion()))
-		{
-			throw new CloudSDKException("Region is null.");
 		}
 	}
 

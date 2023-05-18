@@ -1,10 +1,7 @@
 package com.mizhousoft.cloudsdk.oss;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.Set;
-
 import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.cdn.CDNSignService;
 
 /**
  * 桶存储服务
@@ -14,26 +11,6 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 public interface BucketStroageService
 {
 	/**
-	 * 获取上传临时凭证
-	 * 
-	 * @param oneDurationSeconds
-	 * @param objectNames
-	 * @return
-	 * @throws CloudSDKException
-	 */
-	OSSTempCredential getUploadTempCredential(int oneDurationSeconds, Set<String> objectNames) throws CloudSDKException;
-
-	/**
-	 * 获取临时密钥
-	 * 
-	 * @param oneDurationSeconds
-	 * @param allowPrefixes
-	 * @return
-	 * @throws CloudSDKException
-	 */
-	OSSTempCredential getUploadTempCredential(int oneDurationSeconds, String[] allowPrefixes) throws CloudSDKException;
-
-	/**
 	 * 获取桶信息
 	 * 
 	 * @return
@@ -41,60 +18,27 @@ public interface BucketStroageService
 	Bucket getBucket();
 
 	/**
-	 * 获取文件对象元数据
+	 * 获取区域
+	 * 
+	 * @return
+	 */
+	String getRegion();
+
+	/**
+	 * 获取AccessKey
+	 * 
+	 * @return
+	 */
+	String getAccessKey();
+
+	/**
+	 * 检索存储桶是否存在且是否有权限访问
 	 * 
 	 * @param bucketName
-	 * @param objectName
 	 * @return
 	 * @throws CloudSDKException
 	 */
-	ObjectMetadata getObjectMetadata(String bucketName, String objectName) throws CloudSDKException;
-
-	/**
-	 * 获取对象下载地址
-	 * 
-	 * @param signExpiredMs
-	 * @param objectName
-	 * @return
-	 */
-	String getObjectDownloadUrl(long signExpiredMs, String objectName);
-
-	/**
-	 * 获取对象下载地址
-	 * 
-	 * @param signExpiredMs
-	 * @param objectName
-	 * @param params
-	 * @return
-	 */
-	String getObjectDownloadUrl(long signExpiredMs, String objectName, WaterMarkParams params);
-
-	/**
-	 * 删除对象
-	 * 
-	 * @param bucketName
-	 * @param objectName
-	 * @throws CloudSDKException
-	 */
-	void delete(String bucketName, String objectName) throws CloudSDKException;
-
-	/**
-	 * 删除对象
-	 * 
-	 * @param bucketName
-	 * @param objectNames
-	 * @throws CloudSDKException
-	 */
-	void delete(String bucketName, Collection<String> objectNames) throws CloudSDKException;
-
-	/**
-	 * 上传对象
-	 * 
-	 * @param objectName
-	 * @param localFile
-	 * @throws CloudSDKException
-	 */
-	void putObject(String objectName, File localFile) throws CloudSDKException;
+	boolean doesBucketExist(String bucketName) throws CloudSDKException;
 
 	/**
 	 * 获取对象存储服务
@@ -104,7 +48,14 @@ public interface BucketStroageService
 	ObjectStorageService getObjectStorageService();
 
 	/**
+	 * 获取CDNSignService
+	 * 
+	 * @return
+	 */
+	CDNSignService getCDNSignService();
+
+	/**
 	 * 销毁
 	 */
-	void destory();
+	void destroy();
 }

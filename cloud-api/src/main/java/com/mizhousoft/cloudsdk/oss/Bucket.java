@@ -14,6 +14,19 @@ public class Bucket
 	private String region;
 
 	/**
+	 * 构造函数
+	 *
+	 * @param bucketName
+	 * @param region
+	 */
+	public Bucket(String bucketName, String region)
+	{
+		super();
+		this.bucketName = bucketName;
+		this.region = region;
+	}
+
+	/**
 	 * 获取bucketName
 	 * 
 	 * @return

@@ -26,9 +26,7 @@ public class TestTencentCDNSignServiceImpl
 		CDNProfile profile = new CDNProfile();
 		profile.setEndpoint(ENDPOINT);
 
-		TencentCDNSignServiceImpl service = new TencentCDNSignServiceImpl();
-		service.init(profile);
-
+		TencentCDNSignServiceImpl service = new TencentCDNSignServiceImpl(profile);
 		this.cdnSignService = service;
 	}
 

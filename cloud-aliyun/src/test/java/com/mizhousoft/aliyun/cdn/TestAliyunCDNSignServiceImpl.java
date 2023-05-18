@@ -26,9 +26,7 @@ public class TestAliyunCDNSignServiceImpl
 		CDNProfile profile = new CDNProfile();
 		profile.setEndpoint(ENDPOINT);
 
-		AliyunCDNSignServiceImpl service = new AliyunCDNSignServiceImpl();
-		service.init(profile);
-
+		AliyunCDNSignServiceImpl service = new AliyunCDNSignServiceImpl(profile);
 		this.cdnSignService = service;
 	}
 

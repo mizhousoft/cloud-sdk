@@ -15,4 +15,11 @@ public interface CDNSignService
 	 * @return
 	 */
 	String signUrl(String path, long signExpiredMs);
+
+	/**
+	 * 获取endpoint
+	 * 
+	 * @return
+	 */
+	String getEndpoint();
 }

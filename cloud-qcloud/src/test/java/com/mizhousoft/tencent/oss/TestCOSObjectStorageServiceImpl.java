@@ -16,6 +16,7 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
 import com.mizhousoft.cloudsdk.util.FileDigestUtils;
+import com.qcloud.cos.COSClient;
 
 /**
  * COSObjectStorageServiceImpl Test
@@ -44,8 +45,9 @@ public class TestCOSObjectStorageServiceImpl
 		profile.setSecretKey(SECRETKEY);
 		profile.setRegion(REGION);
 
-		COSObjectStorageServiceImpl service = new COSObjectStorageServiceImpl();
-		service.init(profile);
+		COSClient cosClient = COSClientBuilder.build(profile);
+
+		COSObjectStorageServiceImpl service = new COSObjectStorageServiceImpl(cosClient, profile);
 
 		this.objectStoreageService = service;
 	}
