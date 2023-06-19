@@ -24,7 +24,6 @@
 	<modules>
 		<module>cloud-api</module>
 		<module>cloud-qcloud</module>
-		<module>cloud-tencent-nlp</module>
 		<module>cloud-aliyun</module>
 	</modules>
 

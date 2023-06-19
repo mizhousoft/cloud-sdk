@@ -26,9 +26,9 @@
 			<version>${cloudsdk.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mizhousoft.sdk</groupId>
-			<artifactId>cloud-tencent-nlp</artifactId>
-			<version>${cloudsdk.version}</version>
+			<groupId>com.tencentcloudapi</groupId>
+			<artifactId>tencentcloud-sdk-java-tms</artifactId>
+			<version>${tencentcloud.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>

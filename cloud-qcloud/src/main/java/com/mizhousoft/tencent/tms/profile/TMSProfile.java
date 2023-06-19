@@ -1,11 +1,11 @@
-package com.mizhousoft.tencent.nlp.profile;
+package com.mizhousoft.tencent.tms.profile;
 
 /**
  * 配置
  *
  * @version
  */
-public class NLPProfile
+public class TMSProfile
 {
 	// Access key
 	private volatile String accessKey;
