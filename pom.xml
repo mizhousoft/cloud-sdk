@@ -30,6 +30,7 @@
 		<module>cloud-tencent</module>
 		<module>cloud-aliyun</module>
 		<module>tencent-oss-spring-boot-starter</module>
+		<module>tencent-tms-spring-boot-starter</module>
 	</modules>
 
 </project>
