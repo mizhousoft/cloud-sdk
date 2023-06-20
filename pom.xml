@@ -25,6 +25,7 @@
 		<module>cloud-api</module>
 		<module>cloud-tencent</module>
 		<module>cloud-aliyun</module>
+		<module>tencent-oss-spring-boot-starter</module>
 	</modules>
 
 </project>
