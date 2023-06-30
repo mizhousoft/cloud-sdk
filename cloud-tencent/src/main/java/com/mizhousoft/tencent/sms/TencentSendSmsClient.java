@@ -78,7 +78,8 @@ public class TencentSendSmsClient implements SendSmsClient
 
 			if (!failedPhoneNumbers.isEmpty())
 			{
-				SmsSendException exception = new SmsSendException(message);
+				SmsSendException exception = new SmsSendException(
+				        "SMS appId is " + appId + ", template id is " + smsTemplate.getTemplateId().toString() + ", " + message);
 				exception.setFailedPhoneNumbers(failedPhoneNumbers.toArray(new String[failedPhoneNumbers.size()]));
 
 				throw exception;
