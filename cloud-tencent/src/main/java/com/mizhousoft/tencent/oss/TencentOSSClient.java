@@ -44,6 +44,11 @@ public class TencentOSSClient implements OSSClient
 	@Override
 	public String getBucketName(String identifier)
 	{
+		if (null == identifier)
+		{
+			throw new NestedRuntimeException("BucketName not found, identifier is " + identifier);
+		}
+
 		String bucketName = bucketNameMap.get(identifier);
 		if (null == bucketName)
 		{
@@ -59,6 +64,11 @@ public class TencentOSSClient implements OSSClient
 	@Override
 	public BucketStroageService getBucketService(String bucketName)
 	{
+		if (null == bucketName)
+		{
+			throw new NestedRuntimeException("BucketStroageService not found, bucket name is " + bucketName);
+		}
+
 		BucketStroageService bucketService = bucketServiceMap.get(bucketName);
 		if (null == bucketService)
 		{
@@ -217,22 +227,6 @@ public class TencentOSSClient implements OSSClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void destroy()
-	{
-		Iterator<Entry<String, BucketStroageService>> iter = bucketServiceMap.entrySet().iterator();
-		while (iter.hasNext())
-		{
-			Entry<String, BucketStroageService> entry = iter.next();
-
-			BucketStroageService bucketService = entry.getValue();
-			bucketService.destroy();
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void putObject(String bucketName, String objectName, File localFile) throws CloudSDKException
 	{
 		ObjectStorageService objectStorageService = getObjectService(bucketName);
@@ -270,6 +264,11 @@ public class TencentOSSClient implements OSSClient
 	@Override
 	public void deleteObject(String bucketName, String objectName) throws CloudSDKException
 	{
+		if (null == bucketName)
+		{
+			return;
+		}
+
 		ObjectStorageService objectStorageService = getObjectService(bucketName);
 
 		objectStorageService.deleteObject(bucketName, objectName);
@@ -281,6 +280,11 @@ public class TencentOSSClient implements OSSClient
 	@Override
 	public void deleteObjects(String bucketName, Collection<String> objectNames) throws CloudSDKException
 	{
+		if (null == bucketName)
+		{
+			return;
+		}
+
 		ObjectStorageService objectStorageService = getObjectService(bucketName);
 
 		objectStorageService.deleteObjects(bucketName, objectNames);
@@ -341,5 +345,21 @@ public class TencentOSSClient implements OSSClient
 		ObjectStorageService objectStorageService = getObjectService(bucketName);
 
 		return objectStorageService.genPresignedUploadUrl(bucketName, objectName, signExpired, contentMd5);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void destroy()
+	{
+		Iterator<Entry<String, BucketStroageService>> iter = bucketServiceMap.entrySet().iterator();
+		while (iter.hasNext())
+		{
+			Entry<String, BucketStroageService> entry = iter.next();
+
+			BucketStroageService bucketService = entry.getValue();
+			bucketService.destroy();
+		}
 	}
 }
