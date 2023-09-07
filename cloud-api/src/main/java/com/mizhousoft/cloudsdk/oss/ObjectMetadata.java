@@ -1,6 +1,6 @@
 package com.mizhousoft.cloudsdk.oss;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 对象元数据
@@ -19,7 +19,7 @@ public class ObjectMetadata
 	private String contentMD5;
 
 	// 最后修改时间
-	private Date lastModified;
+	private LocalDateTime lastModified;
 
 	// 内容类型
 	private String contentType;
@@ -89,7 +89,7 @@ public class ObjectMetadata
 	 * 
 	 * @return
 	 */
-	public Date getLastModified()
+	public LocalDateTime getLastModified()
 	{
 		return lastModified;
 	}
@@ -99,7 +99,7 @@ public class ObjectMetadata
 	 * 
 	 * @param lastModified
 	 */
-	public void setLastModified(Date lastModified)
+	public void setLastModified(LocalDateTime lastModified)
 	{
 		this.lastModified = lastModified;
 	}

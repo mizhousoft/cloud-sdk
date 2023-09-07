@@ -22,6 +22,7 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
+import com.mizhousoft.commons.lang.LocalDateTimeUtils;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.exception.CosServiceException;
 import com.qcloud.cos.exception.MultiObjectDeleteException;
@@ -371,7 +372,7 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 				objectMetadata.setContentLength(metadata.getContentLength());
 				objectMetadata.setContentMD5(metadata.getContentMD5());
 				objectMetadata.setContentType(metadata.getContentType());
-				objectMetadata.setLastModified(metadata.getLastModified());
+				objectMetadata.setLastModified(LocalDateTimeUtils.toLocalDateTime(metadata.getLastModified()));
 				objectMetadata.setObjectName(objectName);
 
 				return objectMetadata;

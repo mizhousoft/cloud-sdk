@@ -32,6 +32,7 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
+import com.mizhousoft.commons.lang.LocalDateTimeUtils;
 
 /**
  * 对象存储服务
@@ -233,7 +234,7 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 				objectMetadata.setContentLength(metadata.getContentLength());
 				objectMetadata.setContentMD5(metadata.getContentMD5());
 				objectMetadata.setContentType(metadata.getContentType());
-				objectMetadata.setLastModified(metadata.getLastModified());
+				objectMetadata.setLastModified(LocalDateTimeUtils.toLocalDateTime(metadata.getLastModified()));
 				objectMetadata.setObjectName(objectName);
 
 				return objectMetadata;
