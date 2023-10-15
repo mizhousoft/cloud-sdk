@@ -29,6 +29,7 @@
 		<module>cloud-api</module>
 		<module>cloud-tencent</module>
 		<module>cloud-aliyun</module>
+		<module>sms-spring-boot-starter</module>
 		<module>tencent-oss-spring-boot-starter</module>
 		<module>tencent-tms-spring-boot-starter</module>
 	</modules>
