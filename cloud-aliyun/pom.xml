@@ -16,7 +16,7 @@
 
 	<properties>
 		<aliyun.oss.version>3.17.2</aliyun.oss.version>
-		<aliyun.sms.version>2.0.1</aliyun.sms.version>
+		<aliyun.sms.version>2.0.24</aliyun.sms.version>
 	</properties>
 
 	<dependencies>
@@ -35,6 +35,11 @@
 			<artifactId>dysmsapi20170525</artifactId>
 			<version>${aliyun.sms.version}</version>
 		</dependency>
+		<dependency>
+	      <groupId>com.squareup.okhttp3</groupId>
+	      <artifactId>okhttp</artifactId>
+	      <version>3.12.13</version>
+	    </dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
