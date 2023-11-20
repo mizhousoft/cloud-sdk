@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
+import com.mizhousoft.aliyun.sms.AliyunSendSmsClient;
 import com.mizhousoft.boot.sms.properties.SmsApplication;
 import com.mizhousoft.boot.sms.properties.SmsApplicationProperties;
 import com.mizhousoft.cloudsdk.CloudProvider;
@@ -79,7 +80,21 @@ public class SmsApplicationFactoryImpl implements SmsApplicationFactory, Command
 
 	private SmsApplicationService buildService(SmsApplication application) throws CloudSDKException
 	{
-		if (CloudProvider.TENCENT.isSelf(application.getVendor()))
+		if (CloudProvider.ALIYUN.isSelf(application.getVendor()))
+		{
+			AliyunSendSmsClient sendSmsClient = new AliyunSendSmsClient();
+
+			SmsProfile profile = new SmsProfile();
+			profile.setAccessKeyId(application.getSecretId());
+			profile.setAccessKeySecret(application.getSecretKey());
+			profile.setEndpoint(application.getEndpoint());
+			sendSmsClient.init(profile);
+
+			SmsApplicationServiceImpl service = new SmsApplicationServiceImpl(application, sendSmsClient, smsTemplateContainer);
+
+			return service;
+		}
+		else if (CloudProvider.TENCENT.isSelf(application.getVendor()))
 		{
 			TencentSendSmsClient sendSmsClient = new TencentSendSmsClient();
 

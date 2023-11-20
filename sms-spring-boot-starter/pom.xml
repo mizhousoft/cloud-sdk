@@ -20,6 +20,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mizhousoft.sdk</groupId>
+			<artifactId>cloud-aliyun</artifactId>
+			<version>${cloudsdk.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mizhousoft.sdk</groupId>
 			<artifactId>cloud-tencent</artifactId>
 			<version>${cloudsdk.version}</version>
 			<scope>provided</scope>
