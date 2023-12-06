@@ -37,12 +37,11 @@ public class AliyunSendSmsClientTest
 	{
 		String phoneNumber = "";
 		Map<String, String> paramMap = null;
-		String appId = "";
 		CloudSmsTemplate smsTemplate = null;
 
 		try
 		{
-			sendSmsClient.send(phoneNumber, paramMap, appId, smsTemplate);
+			sendSmsClient.send(phoneNumber, paramMap, null, smsTemplate);
 		}
 		catch (SmsSendException e)
 		{
