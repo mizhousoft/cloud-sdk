@@ -1,10 +1,8 @@
 package com.mizhousoft.boot.sms;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.sms.CloudSmsTemplate;
@@ -17,7 +15,6 @@ import com.mizhousoft.cloudsdk.sms.SmsTemplateContainer;
  *
  * @version
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DemoApplication.class)
 public class TestAliyunSmsService
 {

@@ -1,1 +1,0 @@
-native2ascii.exe -encoding utf8 sms_zh_CN.txt sms_zh_CN.properties

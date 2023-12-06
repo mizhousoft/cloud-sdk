@@ -9,15 +9,10 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>cloud-aliyun</artifactId>
+	<artifactId>cloud-aliyun-oss</artifactId>
 	<packaging>jar</packaging>
 
-	<name>cloud-aliyun</name>
-
-	<properties>
-		<aliyun.oss.version>3.17.2</aliyun.oss.version>
-		<aliyun.sms.version>2.0.24</aliyun.sms.version>
-	</properties>
+	<name>cloud-aliyun-oss</name>
 
 	<dependencies>
 		<dependency>
@@ -35,20 +30,6 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.aliyun</groupId>
-			<artifactId>dysmsapi20170525</artifactId>
-			<version>${aliyun.sms.version}</version>
-		</dependency>
-		<dependency>
-	      <groupId>com.squareup.okhttp3</groupId>
-	      <artifactId>okhttp</artifactId>
-	      <version>3.12.13</version>
-	    </dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
     		<groupId>org.junit.jupiter</groupId>

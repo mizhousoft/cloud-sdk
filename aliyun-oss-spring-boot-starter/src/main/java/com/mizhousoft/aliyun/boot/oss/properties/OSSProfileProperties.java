@@ -1,4 +1,4 @@
-package com.mizhousoft.tencent.boot.oss.properties;
+package com.mizhousoft.aliyun.boot.oss.properties;
 
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @version
  */
 @Component
-public class COSProfileProperties
+public class OSSProfileProperties
 {
 	/**
 	 * identifier
@@ -34,6 +34,26 @@ public class COSProfileProperties
 	 * 区域
 	 */
 	private volatile String region;
+
+	/**
+	 * endpoint
+	 */
+	private String ossEndpoint;
+
+	/**
+	 * STS Endpoint
+	 */
+	private String stsEndpoint;
+
+	/**
+	 * 角色ARN
+	 */
+	private String roleArn;
+
+	/**
+	 * 用来标识临时访问凭证的名称，建议使用不同的应用程序用户来区分
+	 */
+	private String roleSessionName;
 
 	/**
 	 * CDN Endpoint
@@ -143,6 +163,86 @@ public class COSProfileProperties
 	public void setRegion(String region)
 	{
 		this.region = region;
+	}
+
+	/**
+	 * 获取ossEndpoint
+	 * 
+	 * @return
+	 */
+	public String getOssEndpoint()
+	{
+		return ossEndpoint;
+	}
+
+	/**
+	 * 设置ossEndpoint
+	 * 
+	 * @param ossEndpoint
+	 */
+	public void setOssEndpoint(String ossEndpoint)
+	{
+		this.ossEndpoint = ossEndpoint;
+	}
+
+	/**
+	 * 获取stsEndpoint
+	 * 
+	 * @return
+	 */
+	public String getStsEndpoint()
+	{
+		return stsEndpoint;
+	}
+
+	/**
+	 * 设置stsEndpoint
+	 * 
+	 * @param stsEndpoint
+	 */
+	public void setStsEndpoint(String stsEndpoint)
+	{
+		this.stsEndpoint = stsEndpoint;
+	}
+
+	/**
+	 * 获取roleArn
+	 * 
+	 * @return
+	 */
+	public String getRoleArn()
+	{
+		return roleArn;
+	}
+
+	/**
+	 * 设置roleArn
+	 * 
+	 * @param roleArn
+	 */
+	public void setRoleArn(String roleArn)
+	{
+		this.roleArn = roleArn;
+	}
+
+	/**
+	 * 获取roleSessionName
+	 * 
+	 * @return
+	 */
+	public String getRoleSessionName()
+	{
+		return roleSessionName;
+	}
+
+	/**
+	 * 设置roleSessionName
+	 * 
+	 * @param roleSessionName
+	 */
+	public void setRoleSessionName(String roleSessionName)
+	{
+		this.roleSessionName = roleSessionName;
 	}
 
 	/**

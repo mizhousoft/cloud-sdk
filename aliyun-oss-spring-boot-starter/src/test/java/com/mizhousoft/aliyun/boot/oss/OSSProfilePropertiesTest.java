@@ -1,22 +1,22 @@
-package com.mizhousoft.tencent.boot.oss;
+package com.mizhousoft.aliyun.boot.oss;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.mizhousoft.tencent.boot.oss.properties.COSProfileListProperties;
+import com.mizhousoft.aliyun.boot.oss.properties.OSSProfileListProperties;
 
 /**
- * COSProfileProperties Test
+ * OSSProfileProperties Test
  *
  * @version
  */
 @SpringBootTest(classes = DemoApplication.class)
-public class COSProfilePropertiesTest
+public class OSSProfilePropertiesTest
 {
 	@Autowired
-	private COSProfileListProperties listProperties;
+	private OSSProfileListProperties listProperties;
 
 	@Test
 	public void test()
