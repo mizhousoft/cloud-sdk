@@ -121,7 +121,12 @@ public class AliyunBucketStroageServiceImpl implements BucketStroageService
 		AliyunObjectStorageServiceImpl objectStorageService = new AliyunObjectStorageServiceImpl(this.ossClient, this.ossProfile);
 		this.objectStorageService = objectStorageService;
 
-		AliyunCDNSignServiceImpl cdnSignService = new AliyunCDNSignServiceImpl(cdnProfile);
-		this.cdnSignService = cdnSignService;
+		if (null != cdnProfile)
+		{
+			AliyunCDNSignServiceImpl cdnSignService = new AliyunCDNSignServiceImpl(cdnProfile);
+			this.cdnSignService = cdnSignService;
+		}
+
+		LOG.info("Init {} oss client successfully.", ossProfile.getBucketName());
 	}
 }
