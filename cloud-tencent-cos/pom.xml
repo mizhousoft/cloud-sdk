@@ -8,10 +8,10 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>cloud-tencent</artifactId>
+	<artifactId>cloud-tencent-cos</artifactId>
 	<packaging>jar</packaging>
 
-	<name>cloud-tencent</name>
+	<name>cloud-tencent-cos</name>
 
 	<dependencies>
 		<dependency>
@@ -20,43 +20,14 @@
 			<version>${cloudsdk.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.tencentcloudapi</groupId>
-			<artifactId>tencentcloud-sdk-java-sms</artifactId>
-			<version>${tencentcloud.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tencentcloudapi</groupId>
-			<artifactId>tencentcloud-sdk-java-vod</artifactId>
-			<version>${tencentcloud.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tencentcloudapi</groupId>
-			<artifactId>tencentcloud-sdk-java-sts</artifactId>
-			<version>${tencentcloud.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tencentcloudapi</groupId>
-			<artifactId>tencentcloud-sdk-java-ocr</artifactId>
-			<version>${tencentcloud.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.tencentcloudapi</groupId>
-			<artifactId>tencentcloud-sdk-java-captcha</artifactId>
-			<version>${tencentcloud.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.tencent.cloud</groupId>
 			<artifactId>cos-sts-java</artifactId>
 			<version>${tentcent.cos.sts.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.qcloud</groupId>
 			<artifactId>cos_api</artifactId>
 			<version>${tencent.cos-api.version}</version>
-			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.bouncycastle</groupId>

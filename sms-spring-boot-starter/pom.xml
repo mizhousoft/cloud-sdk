@@ -21,7 +21,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mizhousoft.sdk</groupId>
-			<artifactId>cloud-tencent</artifactId>
+			<artifactId>cloud-tencent-sms</artifactId>
 			<version>${cloudsdk.version}</version>
 			<scope>provided</scope>
 		</dependency>

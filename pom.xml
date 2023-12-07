@@ -30,7 +30,11 @@
 
 	<modules>
 		<module>cloud-api</module>
-		<module>cloud-tencent</module>
+		<module>cloud-tencent-captcha</module>
+		<module>cloud-tencent-cos</module>
+		<module>cloud-tencent-ocr</module>
+		<module>cloud-tencent-sms</module>
+		<module>cloud-tencent-vod</module>
 		<module>cloud-tencent-tms</module>
 		<module>cloud-aliyun-oss</module>
 		<module>cloud-aliyun-sms</module>

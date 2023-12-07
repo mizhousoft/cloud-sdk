@@ -16,28 +16,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.mizhousoft.sdk</groupId>
-			<artifactId>cloud-tencent</artifactId>
+			<artifactId>cloud-tencent-cos</artifactId>
 			<version>${cloudsdk.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tencent.cloud</groupId>
-			<artifactId>cos-sts-java</artifactId>
-			<version>${tentcent.cos.sts.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.qcloud</groupId>
-			<artifactId>cos_api</artifactId>
-			<version>${tencent.cos-api.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.bouncycastle</groupId>
-					<artifactId>bcprov-jdk15on</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
