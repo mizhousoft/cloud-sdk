@@ -3,7 +3,7 @@ package com.mizhousoft.tencent.tms.validator;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.tencent.RegionEnum;
+import com.mizhousoft.cloudsdk.TencentRegionEnum;
 import com.mizhousoft.tencent.tms.profile.TMSProfile;
 
 /**
@@ -35,7 +35,7 @@ public abstract class TMSProfileValidator
 			throw new CloudSDKException("TMS region is null.");
 		}
 
-		RegionEnum region = RegionEnum.get(profile.getRegion());
+		TencentRegionEnum region = TencentRegionEnum.get(profile.getRegion());
 		if (null == region)
 		{
 			throw new CloudSDKException("TMS region does not supported, region is " + profile.getRegion() + '.');

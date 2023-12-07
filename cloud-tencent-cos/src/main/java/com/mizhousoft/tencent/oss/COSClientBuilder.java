@@ -3,7 +3,7 @@ package com.mizhousoft.tencent.oss;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.tencent.RegionEnum;
+import com.mizhousoft.cloudsdk.TencentRegionEnum;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -32,7 +32,7 @@ public abstract class COSClientBuilder
 			credentials = new BasicSessionCredentials(cosProfile.getAccessKey(), cosProfile.getSecretKey(), cosProfile.getSessionToken());
 		}
 
-		RegionEnum region = RegionEnum.get(cosProfile.getRegion());
+		TencentRegionEnum region = TencentRegionEnum.get(cosProfile.getRegion());
 		ClientConfig clientConfig = new ClientConfig(new Region(region.getValue()));
 		clientConfig.setHttpProtocol(HttpProtocol.https);
 
@@ -63,7 +63,7 @@ public abstract class COSClientBuilder
 			throw new CloudSDKException("Cos region is null.");
 		}
 
-		RegionEnum region = RegionEnum.get(profile.getRegion());
+		TencentRegionEnum region = TencentRegionEnum.get(profile.getRegion());
 		if (null == region)
 		{
 			throw new CloudSDKException("Cos region does not supported, region is " + profile.getRegion() + '.');

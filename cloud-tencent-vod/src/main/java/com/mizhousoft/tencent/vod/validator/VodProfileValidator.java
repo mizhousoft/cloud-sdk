@@ -3,7 +3,7 @@ package com.mizhousoft.tencent.vod.validator;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.tencent.RegionEnum;
+import com.mizhousoft.cloudsdk.TencentRegionEnum;
 import com.mizhousoft.tencent.vod.profile.VodProfile;
 
 /**
@@ -35,7 +35,7 @@ public abstract class VodProfileValidator
 			throw new CloudSDKException("Vod region is null.");
 		}
 
-		RegionEnum region = RegionEnum.get(profile.getRegion());
+		TencentRegionEnum region = TencentRegionEnum.get(profile.getRegion());
 		if (null == region)
 		{
 			throw new CloudSDKException("Vod region does not supported, region is " + profile.getRegion() + '.');

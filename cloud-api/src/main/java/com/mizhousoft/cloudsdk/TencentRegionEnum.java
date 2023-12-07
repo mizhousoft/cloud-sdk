@@ -1,11 +1,11 @@
-package com.mizhousoft.tencent;
+package com.mizhousoft.cloudsdk;
 
 /**
  * 区域枚举
  *
  * @version
  */
-public enum RegionEnum
+public enum TencentRegionEnum
 {
     // 广州
 	GUANGZHOU("ap-guangzhou"),
@@ -19,7 +19,7 @@ public enum RegionEnum
 	 *
 	 * @param val
 	 */
-	private RegionEnum(String val)
+	private TencentRegionEnum(String val)
 	{
 		this.value = val;
 	}
@@ -45,10 +45,10 @@ public enum RegionEnum
 	 * @param status
 	 * @return
 	 */
-	public static RegionEnum get(String value)
+	public static TencentRegionEnum get(String value)
 	{
-		RegionEnum[] values = RegionEnum.values();
-		for (RegionEnum val : values)
+		TencentRegionEnum[] values = TencentRegionEnum.values();
+		for (TencentRegionEnum val : values)
 		{
 			if (val.getValue().equals(value))
 			{

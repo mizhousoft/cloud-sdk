@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.TempCredential;
+import com.mizhousoft.cloudsdk.TencentRegionEnum;
 import com.mizhousoft.cloudsdk.ocr.OCRProfile;
 import com.mizhousoft.cloudsdk.ocr.OCRService;
-import com.mizhousoft.tencent.RegionEnum;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -148,7 +148,7 @@ public class TencentOCRServiceImpl implements OCRService
 			throw new CloudSDKException("Region is null.");
 		}
 
-		RegionEnum region = RegionEnum.get(profile.getRegion());
+		TencentRegionEnum region = TencentRegionEnum.get(profile.getRegion());
 		if (null == region)
 		{
 			throw new CloudSDKException("Region does not supported, region is " + profile.getRegion() + '.');
