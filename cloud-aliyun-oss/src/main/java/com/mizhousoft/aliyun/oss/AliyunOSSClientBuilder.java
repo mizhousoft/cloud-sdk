@@ -2,8 +2,10 @@ package com.mizhousoft.aliyun.oss;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.aliyun.oss.ClientBuilderConfiguration;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.common.comm.Protocol;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 
 /**
@@ -21,8 +23,11 @@ public abstract class AliyunOSSClientBuilder
 		String accessKeyId = profile.getAccessKey();
 		String accessKeySecret = profile.getSecretKey();
 
+		ClientBuilderConfiguration conf = new ClientBuilderConfiguration();
+		conf.setProtocol(Protocol.HTTPS);
+
 		// 创建OSSClient实例。
-		OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+		OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret, conf);
 
 		return ossClient;
 	}
