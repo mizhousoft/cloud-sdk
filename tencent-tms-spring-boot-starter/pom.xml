@@ -16,19 +16,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.mizhousoft.sdk</groupId>
-			<artifactId>cloud-tencent</artifactId>
+			<artifactId>cloud-tencent-tms</artifactId>
 			<version>${cloudsdk.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tencentcloudapi</groupId>
-			<artifactId>tencentcloud-sdk-java-tms</artifactId>
-			<version>${tencentcloud.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
