@@ -57,6 +57,11 @@ public abstract class WaterMarkUriBuilder
 			buffer.append("/dy/");
 			buffer.append(params.getDy());
 		}
+		if (0 != params.getSpacing())
+		{
+			buffer.append("/spacing/");
+			buffer.append(params.getSpacing());
+		}
 		if (1 == params.getBatch())
 		{
 			buffer.append("/batch/1");

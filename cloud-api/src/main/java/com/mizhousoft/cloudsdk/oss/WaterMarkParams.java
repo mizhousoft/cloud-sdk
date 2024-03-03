@@ -28,6 +28,9 @@ public class WaterMarkParams
 	// 垂直（纵轴）边距，单位为像素，缺省值为0
 	private int dy;
 
+	// 平铺模式下的水平、垂直间距相对文字水印贴图的宽高百分比，范围为[0,100]，默认10
+	private int spacing;
+
 	// 平铺水印功能，可将文字水印平铺至整张图片。值为1时，表示开启平铺水印功能
 	private int batch;
 
@@ -175,6 +178,26 @@ public class WaterMarkParams
 	public void setDy(int dy)
 	{
 		this.dy = dy;
+	}
+
+	/**
+	 * 获取spacing
+	 * 
+	 * @return
+	 */
+	public int getSpacing()
+	{
+		return spacing;
+	}
+
+	/**
+	 * 设置spacing
+	 * 
+	 * @param spacing
+	 */
+	public void setSpacing(int spacing)
+	{
+		this.spacing = spacing;
 	}
 
 	/**
