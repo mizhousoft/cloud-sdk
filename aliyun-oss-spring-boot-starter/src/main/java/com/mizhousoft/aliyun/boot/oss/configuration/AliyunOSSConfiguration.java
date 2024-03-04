@@ -55,8 +55,9 @@ public class AliyunOSSConfiguration
 				{
 					CDNProfile cdnProfile = new CDNProfile();
 					cdnProfile.setEndpoint(item.getCdnEndpoint());
+					cdnProfile.setAuthzEnable(null != item.getSecretKey());
+					cdnProfile.setAuthzMode(item.getCdnAuthzMode());
 					cdnProfile.setSecretKey(item.getCdnSecretKey());
-					cdnProfile.setUrlAuthzEnable(null != item.getSecretKey());
 
 					ossClient.addBucketService(item.getIdentifier(), ossProfile, cdnProfile);
 				}

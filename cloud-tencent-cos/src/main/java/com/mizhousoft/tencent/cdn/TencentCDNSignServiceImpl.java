@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.cdn.CDNProfile;
 import com.mizhousoft.cloudsdk.cdn.CDNSignService;
+import com.mizhousoft.commons.crypto.generator.RandomGenerator;
 
 /**
  * CDN签名服务
@@ -16,6 +17,10 @@ import com.mizhousoft.cloudsdk.cdn.CDNSignService;
 public class TencentCDNSignServiceImpl implements CDNSignService
 {
 	private static final Logger LOG = LoggerFactory.getLogger(TencentCDNSignServiceImpl.class);
+
+	private static final String TYPE_A = "TypeA";
+
+	private static final String TYPE_D = "TypeD";
 
 	private volatile CDNProfile profile;
 
@@ -37,7 +42,8 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 
 		if (StringUtils.isBlank(profile.getSecretKey()))
 		{
-			profile.setUrlAuthzEnable(false);
+			profile.setAuthzEnable(false);
+			profile.setAuthzMode(null);
 		}
 
 		this.profile = profile;
@@ -47,7 +53,7 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String signUrl(String objectName, long signExpiredMs)
+	public String signUrl(String objectName, long uid, long signExpiredMs)
 	{
 		if (!StringUtils.startsWith(objectName, "/"))
 		{
@@ -55,12 +61,25 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 		}
 
 		String url = null;
-		if (profile.isUrlAuthzEnable())
+		if (profile.isAuthzEnable())
 		{
-			String expireTime = (System.currentTimeMillis() + signExpiredMs) / 1000 + "";
-			String data = profile.getSecretKey() + objectName + expireTime;
-			String sign = DigestUtils.md5Hex(data);
-			url = profile.getEndpoint() + objectName + "?sign=" + sign + "&t=" + expireTime;
+			if (TYPE_A.equals(profile.getAuthzMode()))
+			{
+				String expireTime = (System.currentTimeMillis() + signExpiredMs) / 1000 + "";
+				String rand = RandomGenerator.genHexString(5, true);
+				String data = objectName + "-" + expireTime + "-" + rand + "-" + uid + "-" + profile.getSecretKey();
+				String sign = DigestUtils.md5Hex(data);
+
+				String authKey = expireTime + "-" + rand + "-" + uid + "-" + sign;
+				url = profile.getEndpoint() + objectName + "?sign=" + authKey;
+			}
+			else if (TYPE_D.equals(profile.getAuthzMode()))
+			{
+				String expireTime = (System.currentTimeMillis() + signExpiredMs) / 1000 + "";
+				String data = profile.getSecretKey() + objectName + expireTime;
+				String sign = DigestUtils.md5Hex(data);
+				url = profile.getEndpoint() + objectName + "?sign=" + sign + "&t=" + expireTime;
+			}
 		}
 		else
 		{

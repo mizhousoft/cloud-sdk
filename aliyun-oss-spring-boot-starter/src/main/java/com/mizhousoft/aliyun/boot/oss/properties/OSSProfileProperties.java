@@ -61,6 +61,11 @@ public class OSSProfileProperties
 	private volatile String cdnEndpoint;
 
 	/**
+	 * CDN鉴权模式
+	 */
+	private volatile String cdnAuthzMode;
+
+	/**
 	 * CDN密钥
 	 */
 	private volatile String cdnSecretKey;
@@ -263,6 +268,26 @@ public class OSSProfileProperties
 	public void setCdnEndpoint(String cdnEndpoint)
 	{
 		this.cdnEndpoint = cdnEndpoint;
+	}
+
+	/**
+	 * 获取cdnAuthzMode
+	 * 
+	 * @return
+	 */
+	public String getCdnAuthzMode()
+	{
+		return cdnAuthzMode;
+	}
+
+	/**
+	 * 设置cdnAuthzMode
+	 * 
+	 * @param cdnAuthzMode
+	 */
+	public void setCdnAuthzMode(String cdnAuthzMode)
+	{
+		this.cdnAuthzMode = cdnAuthzMode;
 	}
 
 	/**

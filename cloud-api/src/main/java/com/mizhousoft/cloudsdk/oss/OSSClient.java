@@ -97,21 +97,23 @@ public interface OSSClient extends ObjectStorageService
 	 * 
 	 * @param bucketName
 	 * @param objectName
+	 * @param uid
 	 * @param signExpiredMs
 	 * @return
 	 */
-	String getCDNDownloadUrl(String bucketName, String objectName, long signExpiredMs);
+	String getCDNDownloadUrl(String bucketName, String objectName, long uid, long signExpiredMs);
 
 	/**
 	 * 获取对象下载地址
 	 * 
 	 * @param bucketName
 	 * @param objectName
+	 * @param uid
 	 * @param signExpiredMs
 	 * @param params
 	 * @return
 	 */
-	String getCDNDownloadUrl(String bucketName, String objectName, long signExpiredMs, WaterMarkParams params);
+	String getCDNDownloadUrl(String bucketName, String objectName, long uid, long signExpiredMs, WaterMarkParams params);
 
 	/**
 	 * 销毁

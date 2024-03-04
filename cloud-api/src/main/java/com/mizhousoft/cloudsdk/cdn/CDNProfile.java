@@ -11,7 +11,10 @@ public class CDNProfile
 	private String endpoint;
 
 	// URL鉴权是否启用
-	private boolean urlAuthzEnable;
+	private boolean authzEnable;
+
+	// 鉴权模式
+	private String authzMode;
 
 	// Secret key
 	private volatile String secretKey;
@@ -37,23 +40,43 @@ public class CDNProfile
 	}
 
 	/**
-	 * 获取urlAuthzEnable
+	 * 获取authzEnable
 	 * 
 	 * @return
 	 */
-	public boolean isUrlAuthzEnable()
+	public boolean isAuthzEnable()
 	{
-		return urlAuthzEnable;
+		return authzEnable;
 	}
 
 	/**
-	 * 设置urlAuthzEnable
+	 * 设置authzEnable
 	 * 
-	 * @param urlAuthzEnable
+	 * @param authzEnable
 	 */
-	public void setUrlAuthzEnable(boolean urlAuthzEnable)
+	public void setAuthzEnable(boolean authzEnable)
 	{
-		this.urlAuthzEnable = urlAuthzEnable;
+		this.authzEnable = authzEnable;
+	}
+
+	/**
+	 * 获取authzMode
+	 * 
+	 * @return
+	 */
+	public String getAuthzMode()
+	{
+		return authzMode;
+	}
+
+	/**
+	 * 设置authzMode
+	 * 
+	 * @param authzMode
+	 */
+	public void setAuthzMode(String authzMode)
+	{
+		this.authzMode = authzMode;
 	}
 
 	/**

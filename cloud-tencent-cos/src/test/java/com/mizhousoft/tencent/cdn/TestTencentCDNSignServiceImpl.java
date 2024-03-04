@@ -35,7 +35,7 @@ public class TestTencentCDNSignServiceImpl
 	{
 		long signExpiredMs = 60 * 1000;
 
-		String url = cdnSignService.signUrl(OBJECTNAME, signExpiredMs);
+		String url = cdnSignService.signUrl(OBJECTNAME, 0, signExpiredMs);
 		System.out.println(url);
 	}
 }

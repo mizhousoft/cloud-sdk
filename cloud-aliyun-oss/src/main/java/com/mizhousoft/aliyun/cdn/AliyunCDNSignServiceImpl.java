@@ -18,6 +18,8 @@ public class AliyunCDNSignServiceImpl implements CDNSignService
 {
 	private static final Logger LOG = LoggerFactory.getLogger(AliyunCDNSignServiceImpl.class);
 
+	private static final String TYPE_A = "TypeA";
+
 	// Profile
 	private CDNProfile profile;
 
@@ -39,7 +41,8 @@ public class AliyunCDNSignServiceImpl implements CDNSignService
 
 		if (StringUtils.isBlank(profile.getSecretKey()))
 		{
-			profile.setUrlAuthzEnable(false);
+			profile.setAuthzEnable(false);
+			profile.setAuthzMode(null);
 		}
 
 		this.profile = profile;
@@ -49,7 +52,7 @@ public class AliyunCDNSignServiceImpl implements CDNSignService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String signUrl(String path, long signExpiredMs)
+	public String signUrl(String path, long uid, long signExpiredMs)
 	{
 		if (!StringUtils.startsWith(path, "/"))
 		{
@@ -57,15 +60,18 @@ public class AliyunCDNSignServiceImpl implements CDNSignService
 		}
 
 		String url = null;
-		if (profile.isUrlAuthzEnable())
+		if (profile.isAuthzEnable())
 		{
-			String expireTime = (System.currentTimeMillis() + signExpiredMs) / 1000 + "";
-			String rand = RandomGenerator.genHexString(5, true);
-			String data = path + "-" + expireTime + "-" + rand + "-0-" + profile.getSecretKey();
-			String sign = DigestUtils.md5Hex(data);
+			if (TYPE_A.equals(profile.getAuthzMode()))
+			{
+				String expireTime = (System.currentTimeMillis() + signExpiredMs) / 1000 + "";
+				String rand = RandomGenerator.genHexString(5, true);
+				String data = path + "-" + expireTime + "-" + rand + "-" + uid + "-" + profile.getSecretKey();
+				String sign = DigestUtils.md5Hex(data);
 
-			String authKey = expireTime + "-" + rand + "-0-" + sign;
-			url = profile.getEndpoint() + path + "?auth_key=" + authKey;
+				String authKey = expireTime + "-" + rand + "-" + uid + "-" + sign;
+				url = profile.getEndpoint() + path + "?auth_key=" + authKey;
+			}
 		}
 		else
 		{

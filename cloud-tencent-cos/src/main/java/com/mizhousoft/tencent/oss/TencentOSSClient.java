@@ -192,7 +192,7 @@ public class TencentOSSClient implements OSSClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCDNDownloadUrl(String bucketName, String objectName, long signExpiredMs)
+	public String getCDNDownloadUrl(String bucketName, String objectName, long uid, long signExpiredMs)
 	{
 		CDNSignService cdnSignService = getCDNService(bucketName);
 		if (null == cdnSignService)
@@ -200,14 +200,14 @@ public class TencentOSSClient implements OSSClient
 			throw new NestedRuntimeException("Method not support.");
 		}
 
-		return cdnSignService.signUrl(objectName, signExpiredMs);
+		return cdnSignService.signUrl(objectName, uid, signExpiredMs);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCDNDownloadUrl(String bucketName, String objectName, long signExpiredMs, WaterMarkParams params)
+	public String getCDNDownloadUrl(String bucketName, String objectName, long uid, long signExpiredMs, WaterMarkParams params)
 	{
 		CDNSignService cdnSignService = getCDNService(bucketName);
 		if (null == cdnSignService)
@@ -215,7 +215,7 @@ public class TencentOSSClient implements OSSClient
 			throw new NestedRuntimeException("Method not support.");
 		}
 
-		String downloadUrl = cdnSignService.signUrl(objectName, signExpiredMs);
+		String downloadUrl = cdnSignService.signUrl(objectName, uid, signExpiredMs);
 
 		String waterMarkPath = WaterMarkUriBuilder.build(params);
 		downloadUrl = downloadUrl + "&" + waterMarkPath;
