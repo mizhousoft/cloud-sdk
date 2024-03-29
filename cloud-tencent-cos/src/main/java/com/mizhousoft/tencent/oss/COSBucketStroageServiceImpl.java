@@ -104,9 +104,9 @@ public class COSBucketStroageServiceImpl implements BucketStroageService
 		if (null != cosClient)
 		{
 			cosClient.shutdown();
-		}
 
-		LOG.info("Shutdown {} cos client successfully.", cosProfile.getBucketName());
+			LOG.info("Shutdown {} cos client successfully.", cosProfile.getBucketName());
+		}
 	}
 
 	/**
