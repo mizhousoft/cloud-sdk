@@ -1,9 +1,12 @@
 package com.mizhousoft.tencent.sms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections4.ListUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.sms.CloudSmsTemplate;
@@ -47,32 +50,39 @@ public class TencentSendSmsClient implements SendSmsClient
 	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, CloudSmsTemplate smsTemplate)
 	        throws SmsSendException
 	{
-		SendSmsRequest req = new SendSmsRequest();
-
-		req.setSmsSdkAppid(appId);
-		req.setSign(smsTemplate.getSignName());
-		req.setTemplateID(smsTemplate.getTemplateId().toString());
-
-		Collection<String> paramValues = paramMap.values();
-		String[] templateParamSet = paramValues.toArray(new String[paramValues.size()]);
-		req.setTemplateParamSet(templateParamSet);
-
-		req.setPhoneNumberSet(phoneNumbers);
-
 		try
 		{
-			SendSmsResponse res = smsClient.SendSms(req);
+			List<String> numberList = new ArrayList<String>(Arrays.asList(phoneNumbers));
+			List<List<String>> parts = ListUtils.partition(numberList, 200);
 
 			List<String> failedPhoneNumbers = new ArrayList<>(5);
 			String message = null;
 
-			SendStatus[] statusList = res.getSendStatusSet();
-			for (SendStatus status : statusList)
+			for (List<String> part : parts)
 			{
-				if (!"ok".equalsIgnoreCase(status.getCode()))
+				SendSmsRequest req = new SendSmsRequest();
+
+				req.setSmsSdkAppid(appId);
+				req.setSign(smsTemplate.getSignName());
+				req.setTemplateID(smsTemplate.getTemplateId().toString());
+
+				Collection<String> paramValues = paramMap.values();
+				String[] templateParamSet = paramValues.toArray(new String[paramValues.size()]);
+				req.setTemplateParamSet(templateParamSet);
+
+				String[] numbers = part.toArray(new String[part.size()]);
+				req.setPhoneNumberSet(numbers);
+
+				SendSmsResponse res = smsClient.SendSms(req);
+
+				SendStatus[] statusList = res.getSendStatusSet();
+				for (SendStatus status : statusList)
 				{
-					failedPhoneNumbers.add(status.getPhoneNumber());
-					message = status.getMessage();
+					if (!"ok".equalsIgnoreCase(status.getCode()))
+					{
+						failedPhoneNumbers.add(status.getPhoneNumber());
+						message = status.getMessage();
+					}
 				}
 			}
 
