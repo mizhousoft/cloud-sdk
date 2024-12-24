@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-tms</artifactId>
-			<version>${tencentcloud.version}</version>
+			<version>${tencent.tms.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>

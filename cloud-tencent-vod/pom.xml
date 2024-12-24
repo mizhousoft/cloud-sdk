@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-vod</artifactId>
-			<version>${tencentcloud.version}</version>
+			<version>${tencent.vod.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>

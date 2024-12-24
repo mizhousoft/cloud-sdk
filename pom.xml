@@ -20,12 +20,18 @@
 		<commons.version>2.1.1-SNAPSHOT</commons.version>
 		<cloudsdk.version>2.1.1-SNAPSHOT</cloudsdk.version>
 		
-		<aliyun.sms.version>2.0.24</aliyun.sms.version>
-		<aliyun.oss.version>3.17.2</aliyun.oss.version>
+		<aliyun.sms.version>3.1.0</aliyun.sms.version>
+		<aliyun.oss.version>3.18.1</aliyun.oss.version>
 		
 		<tentcent.cos.sts.version>3.0.8</tentcent.cos.sts.version>
-		<tencent.cos-api.version>5.6.187</tencent.cos-api.version>
-		<tencentcloud.version>3.1.213</tencentcloud.version>
+		<tencent.cos-api.version>5.6.238.2</tencent.cos-api.version>
+		<tencent.ocr.version>3.1.1137</tencent.ocr.version>
+		<tencent.sts.version>3.1.1126</tencent.sts.version>
+		<tencent.captcha.version>3.1.1129</tencent.captcha.version>
+		<tencent.sms.version>3.1.1135</tencent.sms.version>
+		<tencent.tms.version>3.1.1131</tencent.tms.version>
+		<tencent.vod.version>3.1.1138</tencent.vod.version>
+		<tencent.common.version>3.1.1138</tencent.common.version>
 	</properties>
 
 	<modules>
@@ -43,5 +49,20 @@
 		<module>tencent-tms-spring-boot-starter</module>
 		<module>aliyun-oss-spring-boot-starter</module>
 	</modules>
-
+	
+	<dependencyManagement>
+		<dependencies>
+		    <dependency>
+		      	<groupId>com.tencentcloudapi</groupId>
+		      	<artifactId>tencentcloud-sdk-java-common</artifactId>
+		      	<version>${tencent.common.version}</version>
+		    </dependency>
+		    <dependency>
+		      	<groupId>com.tencentcloudapi</groupId>
+		      	<artifactId>tencentcloud-sdk-java-kms</artifactId>
+		      	<version>${tencent.common.version}</version>
+		    </dependency>
+		</dependencies>
+	</dependencyManagement>
+	
 </project>

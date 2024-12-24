@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-ocr</artifactId>
-			<version>${tencentcloud.version}</version>
+			<version>${tencent.ocr.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-sts</artifactId>
-			<version>${tencentcloud.version}</version>
+			<version>${tencent.sts.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>

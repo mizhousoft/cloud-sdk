@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-captcha</artifactId>
-			<version>${tencentcloud.version}</version>
+			<version>${tencent.captcha.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
