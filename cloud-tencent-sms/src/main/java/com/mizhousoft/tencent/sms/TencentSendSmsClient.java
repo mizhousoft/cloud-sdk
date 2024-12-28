@@ -6,14 +6,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.ListUtils;
-
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.sms.CloudSmsTemplate;
 import com.mizhousoft.cloudsdk.sms.SendSmsClient;
 import com.mizhousoft.cloudsdk.sms.SmsProfile;
 import com.mizhousoft.cloudsdk.sms.SmsSendException;
 import com.mizhousoft.cloudsdk.util.AssertUtils;
+import com.mizhousoft.commons.lang.ListUtils;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;

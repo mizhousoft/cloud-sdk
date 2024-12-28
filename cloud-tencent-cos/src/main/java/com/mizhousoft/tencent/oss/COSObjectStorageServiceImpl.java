@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -22,6 +21,7 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.oss.OSSTempCredential;
 import com.mizhousoft.cloudsdk.oss.ObjectMetadata;
 import com.mizhousoft.cloudsdk.oss.ObjectStorageService;
+import com.mizhousoft.commons.lang.CollectionUtils;
 import com.mizhousoft.commons.lang.LocalDateTimeUtils;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.exception.CosServiceException;

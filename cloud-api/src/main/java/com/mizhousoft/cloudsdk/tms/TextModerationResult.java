@@ -2,7 +2,7 @@ package com.mizhousoft.cloudsdk.tms;
 
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
+import com.mizhousoft.commons.lang.CollectionUtils;
 
 /**
  * 识别结果
