@@ -20,8 +20,8 @@
 			<version>${cloudsdk.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.tencent.cloud</groupId>
-			<artifactId>cos-sts-java</artifactId>
+			<groupId>com.qcloud</groupId>
+    		<artifactId>cos-sts_api</artifactId>
 			<version>${tentcent.cos.sts.version}</version>
 		</dependency>
 		<dependency>

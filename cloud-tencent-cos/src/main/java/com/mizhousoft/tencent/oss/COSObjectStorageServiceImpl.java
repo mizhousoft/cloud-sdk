@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +31,8 @@ import com.qcloud.cos.model.DeleteObjectsRequest;
 import com.qcloud.cos.model.DeleteObjectsRequest.KeyVersion;
 import com.qcloud.cos.model.GeneratePresignedUrlRequest;
 import com.tencent.cloud.CosStsClient;
+import com.tencent.cloud.Credentials;
+import com.tencent.cloud.Response;
 import com.tencent.cloud.Scope;
 
 /**
@@ -260,13 +261,13 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 			String policy = CosStsClient.getPolicy(scopes);
 			config.put("policy", policy);
 
-			JSONObject credential = CosStsClient.getCredential(config);
-			JSONObject cre = credential.getJSONObject("credentials");
-			String tmpSecretId = cre.getString("tmpSecretId");
-			String tmpSecretKey = cre.getString("tmpSecretKey");
-			String token = cre.getString("sessionToken");
-			long startTime = credential.getLong("startTime");
-			long expiredTime = credential.getLong("expiredTime");
+			Response response = CosStsClient.getCredential(config);
+			Credentials credential = response.credentials;
+			String tmpSecretId = credential.tmpSecretId;
+			String tmpSecretKey = credential.tmpSecretKey;
+			String token = credential.sessionToken;
+			long startTime = response.startTime;
+			long expiredTime = response.expiredTime;
 
 			OSSTempCredential tc = new OSSTempCredential();
 			tc.setExpiredTime(expiredTime);
@@ -330,13 +331,13 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 			        "name/cos:CompleteMultipartUpload" };
 			config.put("allowActions", allowActions);
 
-			JSONObject credential = CosStsClient.getCredential(config);
-			JSONObject cre = credential.getJSONObject("credentials");
-			String tmpSecretId = cre.getString("tmpSecretId");
-			String tmpSecretKey = cre.getString("tmpSecretKey");
-			String token = cre.getString("sessionToken");
-			long startTime = credential.getLong("startTime");
-			long expiredTime = credential.getLong("expiredTime");
+			Response response = CosStsClient.getCredential(config);
+			Credentials credential = response.credentials;
+			String tmpSecretId = credential.tmpSecretId;
+			String tmpSecretKey = credential.tmpSecretKey;
+			String token = credential.sessionToken;
+			long startTime = response.startTime;
+			long expiredTime = response.expiredTime;
 
 			OSSTempCredential tc = new OSSTempCredential();
 			tc.setExpiredTime(expiredTime);
