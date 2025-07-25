@@ -2,6 +2,7 @@ package com.mizhousoft.tencent.cdn;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 	public TencentCDNSignServiceImpl(CDNProfile profile)
 	{
 		String endpoint = profile.getEndpoint();
-		if (StringUtils.endsWith(endpoint, "/"))
+		if (Strings.CS.endsWith(endpoint, "/"))
 		{
 			endpoint = endpoint.substring(0, endpoint.length() - 1);
 			profile.setEndpoint(endpoint);
@@ -55,7 +56,7 @@ public class TencentCDNSignServiceImpl implements CDNSignService
 	@Override
 	public String signUrl(String objectName, long uid, long signExpiredMs)
 	{
-		if (!StringUtils.startsWith(objectName, "/"))
+		if (!Strings.CS.startsWith(objectName, "/"))
 		{
 			objectName = '/' + objectName;
 		}

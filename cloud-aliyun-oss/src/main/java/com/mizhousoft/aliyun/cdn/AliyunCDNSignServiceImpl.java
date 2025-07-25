@@ -2,6 +2,7 @@ package com.mizhousoft.aliyun.cdn;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class AliyunCDNSignServiceImpl implements CDNSignService
 	public AliyunCDNSignServiceImpl(CDNProfile profile)
 	{
 		String endpoint = profile.getEndpoint();
-		if (StringUtils.endsWith(endpoint, "/"))
+		if (Strings.CS.endsWith(endpoint, "/"))
 		{
 			endpoint = endpoint.substring(0, endpoint.length() - 1);
 			profile.setEndpoint(endpoint);
@@ -54,7 +55,7 @@ public class AliyunCDNSignServiceImpl implements CDNSignService
 	@Override
 	public String signUrl(String path, long uid, long signExpiredMs)
 	{
-		if (!StringUtils.startsWith(path, "/"))
+		if (!Strings.CS.startsWith(path, "/"))
 		{
 			path = '/' + path;
 		}
