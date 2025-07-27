@@ -1,5 +1,7 @@
 package com.mizhousoft.cloudsdk.huawei.cdn.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * url对象
  *
@@ -10,33 +12,39 @@ public class UrlObject
 	/**
 	 * url的id
 	 */
+	@JsonProperty(value = "id")
 	private String id;
 
 	/**
 	 * 刷新预热url
 	 */
+	@JsonProperty(value = "url")
 	private String url;
 
 	/**
 	 * url的状态
 	 * processing 处理中，succeed 完成，failed 失败，waiting 等待，refreshing 刷新中，preheating 预热中
 	 */
+	@JsonProperty(value = "status")
 	private String status;
 
 	/**
 	 * url创建时间，相对于UTC 1970-01-01到当前时间相隔的毫秒数
 	 */
+	@JsonProperty(value = "create_time")
 	private Long createTime;
 
 	/**
 	 * 任务id
 	 */
+	@JsonProperty(value = "task_id")
 	private String taskId;
 
 	/**
 	 * 任务的类型， 其值可以为
 	 * REFRESH：刷新任务、PREHEATING：预热任务、REFRESH_AFTER_PREHEATING：预热后刷新
 	 */
+	@JsonProperty(value = "task_type")
 	private String taskType;
 
 	/**
@@ -45,11 +53,13 @@ public class UrlObject
 	 * INNER_ERROR：内部错误。
 	 * UNKNOWN_ERROR：未知错误。
 	 */
+	@JsonProperty(value = "fail_classify")
 	private String failClassify;
 
 	/**
 	 * 刷新预热失败描述
 	 */
+	@JsonProperty(value = "fail_desc")
 	private String failDesc;
 
 	/**

@@ -2,67 +2,74 @@ package com.mizhousoft.cloudsdk.huawei.cdn.response;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * 查询历史任务详情响应
  *
  * @version
  */
-public class ShowHistoryTaskDetailsResponse
+public class ShowHistoryTaskDetailsResponse extends CDNResponse
 {
 	/**
 	 * 任务id。
 	 */
+	@JsonProperty(value = "id")
 	private String id;
 
 	/**
 	 * 任务类型，refresh：刷新任务；preheating：预热任务
 	 */
+	@JsonProperty(value = "task_type")
 	private String taskType;
 
 	/**
 	 * 任务执行结果,task_done:成功，task_inprocess:处理中
 	 */
+	@JsonProperty(value = "status")
 	private String status;
 
 	/**
 	 * 本次提交的url列表
 	 */
+	@JsonProperty(value = "urls")
 	private List<UrlObject> urls;
 
 	/**
 	 * 创建时间
 	 */
+	@JsonProperty(value = "create_time")
 	private Long createTime;
 
 	/**
 	 * 处理中的url个数
 	 */
+	@JsonProperty(value = "processing")
 	private Integer processing;
 
 	/**
 	 * 成功处理的url个数
 	 */
+	@JsonProperty(value = "succeed")
 	private Integer succeed;
 
 	/**
 	 * 处理失败的url个数
 	 */
+	@JsonProperty(value = "failed")
 	private Integer failed;
 
 	/**
 	 * 总的url个数
 	 */
+	@JsonProperty(value = "total")
 	private Integer total;
 
 	/**
 	 * 文件类型，file：文件；directory：目录，默认是文件file
 	 */
+	@JsonProperty(value = "file_type")
 	private String fileType;
-
-	/**
-	 * 请求ID
-	 */
-	private String xRequestId;
 
 	/**
 	 * 获取id
@@ -265,26 +272,6 @@ public class ShowHistoryTaskDetailsResponse
 	}
 
 	/**
-	 * 获取xRequestId
-	 * 
-	 * @return
-	 */
-	public String getxRequestId()
-	{
-		return xRequestId;
-	}
-
-	/**
-	 * 设置xRequestId
-	 * 
-	 * @param xRequestId
-	 */
-	public void setxRequestId(String xRequestId)
-	{
-		this.xRequestId = xRequestId;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -331,10 +318,6 @@ public class ShowHistoryTaskDetailsResponse
 		if (fileType != null)
 		{
 			builder.append("fileType\":\"").append(fileType).append("\", \"");
-		}
-		if (xRequestId != null)
-		{
-			builder.append("xRequestId\":\"").append(xRequestId);
 		}
 		builder.append("\"}");
 		return builder.toString();

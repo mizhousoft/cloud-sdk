@@ -13,8 +13,11 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.huawei.core.HttpRequest;
 import com.mizhousoft.cloudsdk.huawei.core.auth.SignUtils;
+import com.mizhousoft.commons.json.JSONException;
+import com.mizhousoft.commons.json.JSONUtils;
 import com.mizhousoft.commons.lang.CollectionUtils;
 
 import kong.unirest.core.HttpMethod;
@@ -197,6 +200,27 @@ public class DefaultHttpRequest implements HttpRequest
 			impl.stringBody = stringBody;
 
 			return this;
+		}
+
+		/**
+		 * 设置字符串body
+		 * 
+		 * @param object
+		 * @return
+		 * @throws CloudSDKException
+		 */
+		public Builder bodyAsString(Object object) throws CloudSDKException
+		{
+			try
+			{
+				impl.stringBody = JSONUtils.toJSONString(object);
+
+				return this;
+			}
+			catch (JSONException e)
+			{
+				throw new CloudSDKException("Object serialize to a string failed.", e);
+			}
 		}
 
 		/**

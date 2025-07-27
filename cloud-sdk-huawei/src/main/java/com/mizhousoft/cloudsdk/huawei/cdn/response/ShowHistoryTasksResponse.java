@@ -9,7 +9,7 @@ import com.mizhousoft.cloudsdk.huawei.core.annotation.QueryParam;
  *
  * @version
  */
-public class ShowHistoryTasksResponse
+public class ShowHistoryTasksResponse extends CDNResponse
 {
 	/**
 	 * 总共的任务个数。
@@ -22,12 +22,6 @@ public class ShowHistoryTasksResponse
 	 */
 	@QueryParam(value = "tasks")
 	private List<TasksObject> tasks;
-
-	/**
-	 * 
-	 */
-	@QueryParam(value = "X-Request-Id")
-	private String xRequestId;
 
 	/**
 	 * 获取total
@@ -69,32 +63,4 @@ public class ShowHistoryTasksResponse
 		this.tasks = tasks;
 	}
 
-	/**
-	 * 获取xRequestId
-	 * 
-	 * @return
-	 */
-	public String getxRequestId()
-	{
-		return xRequestId;
-	}
-
-	/**
-	 * 设置xRequestId
-	 * 
-	 * @param xRequestId
-	 */
-	public void setxRequestId(String xRequestId)
-	{
-		this.xRequestId = xRequestId;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString()
-	{
-		return "ShowHistoryTasksResponse [total=" + total + ", tasks=" + tasks + ", xRequestId=" + xRequestId + "]";
-	}
 }

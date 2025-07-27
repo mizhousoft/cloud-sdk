@@ -1,6 +1,6 @@
 package com.mizhousoft.cloudsdk.huawei.cdn.response;
 
-import com.mizhousoft.cloudsdk.huawei.core.annotation.QueryParam;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 任务对象
@@ -12,55 +12,55 @@ public class TasksObject
 	/**
 	 * 任务id。
 	 */
-	@QueryParam(value = "id")
+	@JsonProperty(value = "id")
 	private String id;
 
 	/**
 	 * 任务的类型， 其值可以为refresh：刷新任务，或preheating：预热任务。
 	 */
-	@QueryParam(value = "task_type")
+	@JsonProperty(value = "task_type")
 	private String taskType;
 
 	/**
 	 * 任务执行结果，task_done表示成功 ，task_inprocess表示执行中。
 	 */
-	@QueryParam(value = "status")
+	@JsonProperty(value = "status")
 	private String status;
 
 	/**
 	 * 处理中的url个数。
 	 */
-	@QueryParam(value = "processing")
+	@JsonProperty(value = "processing")
 	private Integer processing;
 
 	/**
 	 * 成功处理的url个数。
 	 */
-	@QueryParam(value = "succeed")
+	@JsonProperty(value = "succeed")
 	private Integer succeed;
 
 	/**
 	 * 处理失败的url个数。
 	 */
-	@QueryParam(value = "failed")
+	@JsonProperty(value = "failed")
 	private Integer failed;
 
 	/**
 	 * url总数
 	 */
-	@QueryParam(value = "total")
+	@JsonProperty(value = "total")
 	private Integer total;
 
 	/**
 	 * 任务的创建时间，相对于UTC 1970-01-01到当前时间相隔的毫秒数。
 	 */
-	@QueryParam(value = "create_time")
+	@JsonProperty(value = "create_time")
 	private Long createTime;
 
 	/**
 	 * 文件类型，file：文件；directory：目录。
 	 */
-	@QueryParam(value = "file_type")
+	@JsonProperty(value = "file_type")
 	private String fileType;
 
 	/**
