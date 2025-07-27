@@ -53,15 +53,23 @@ public class DefaultCdnClient implements CdnClient
 	@Override
 	public CreateRefreshTasksResponse createRefreshTasks(CreateRefreshTasksRequest request) throws CloudSDKException
 	{
-		Map<String, String> queryParamsMap = QueryRequestHandler.extractQueryParams(request);
+		return createRefreshTasks(null, request);
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CreateRefreshTasksResponse createRefreshTasks(String enterpriseProjectId, CreateRefreshTasksRequest request)
+	        throws CloudSDKException
+	{
 		DefaultHttpRequest httpRequest = DefaultHttpRequest.builder()
 		        .name("CreateRefreshTasks")
 		        .endpoint(ENDPOINT)
 		        .path("/v1.0/cdn/content/refresh-tasks")
 		        .httpMethod(HttpMethod.POST)
-		        .queryString(queryParamsMap)
-		        .bodyAsString(request.getBody())
+		        .queryString("enterprise_project_id", enterpriseProjectId)
+		        .bodyAsString(request)
 		        .build();
 
 		Map<String, String> headers = AKSKSigner.getInstance().sign(httpRequest, credential);

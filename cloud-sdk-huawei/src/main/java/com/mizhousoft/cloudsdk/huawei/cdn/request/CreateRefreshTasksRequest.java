@@ -1,63 +1,37 @@
 package com.mizhousoft.cloudsdk.huawei.cdn.request;
 
-import com.mizhousoft.cloudsdk.huawei.core.QueryRequest;
-import com.mizhousoft.cloudsdk.huawei.core.annotation.QueryParam;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 任务请求
  *
  * @version
  */
-public class CreateRefreshTasksRequest implements QueryRequest
+public class CreateRefreshTasksRequest
 {
 	/**
-	 * 企业项目id。您可以通过调用企业项目管理服务（EPS）的查询企业项目列表接口（ListEnterpriseProject）查询企业项目id
+	 * 缓存刷新
 	 */
-	@QueryParam(value = "enterprise_project_id")
-	private String enterpriseProjectId;
+	@JsonProperty(value = "refresh_task")
+	private RefreshTaskRequestBody refreshTask;
 
 	/**
-	 * 请求Body
-	 */
-	private RefreshTaskRequest body;
-
-	/**
-	 * 获取enterpriseProjectId
+	 * 获取refreshTask
 	 * 
 	 * @return
 	 */
-	public String getEnterpriseProjectId()
+	public RefreshTaskRequestBody getRefreshTask()
 	{
-		return enterpriseProjectId;
+		return refreshTask;
 	}
 
 	/**
-	 * 设置enterpriseProjectId
+	 * 设置refreshTask
 	 * 
-	 * @param enterpriseProjectId
+	 * @param refreshTask
 	 */
-	public void setEnterpriseProjectId(String enterpriseProjectId)
+	public void setRefreshTask(RefreshTaskRequestBody refreshTask)
 	{
-		this.enterpriseProjectId = enterpriseProjectId;
-	}
-
-	/**
-	 * 获取body
-	 * 
-	 * @return
-	 */
-	public RefreshTaskRequest getBody()
-	{
-		return body;
-	}
-
-	/**
-	 * 设置body
-	 * 
-	 * @param body
-	 */
-	public void setBody(RefreshTaskRequest body)
-	{
-		this.body = body;
+		this.refreshTask = refreshTask;
 	}
 }

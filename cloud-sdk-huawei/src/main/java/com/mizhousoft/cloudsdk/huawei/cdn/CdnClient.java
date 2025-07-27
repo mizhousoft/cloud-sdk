@@ -25,6 +25,16 @@ public interface CdnClient
 	CreateRefreshTasksResponse createRefreshTasks(CreateRefreshTasksRequest request) throws CloudSDKException;
 
 	/**
+	 * 创建刷新缓存任务
+	 * 
+	 * @param enterpriseProjectId
+	 * @param request
+	 * @return
+	 * @throws CloudSDKException
+	 */
+	CreateRefreshTasksResponse createRefreshTasks(String enterpriseProjectId, CreateRefreshTasksRequest request) throws CloudSDKException;
+
+	/**
 	 * 查询历史任务
 	 * 
 	 * @param request
