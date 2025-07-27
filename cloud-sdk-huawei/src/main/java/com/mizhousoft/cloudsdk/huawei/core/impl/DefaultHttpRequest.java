@@ -52,7 +52,7 @@ public class DefaultHttpRequest implements HttpRequest
 	/**
 	 * HttpMethod
 	 */
-	private HttpMethod method;
+	private HttpMethod httpMethod;
 
 	/**
 	 * contentType
@@ -169,9 +169,9 @@ public class DefaultHttpRequest implements HttpRequest
 		 * @param method
 		 * @return
 		 */
-		public Builder httpMethod(HttpMethod method)
+		public Builder httpMethod(HttpMethod httpMethod)
 		{
-			impl.method = method;
+			impl.httpMethod = httpMethod;
 
 			return this;
 		}
@@ -378,9 +378,9 @@ public class DefaultHttpRequest implements HttpRequest
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HttpMethod getMethod()
+	public HttpMethod getHttpMethod()
 	{
-		return method;
+		return httpMethod;
 	}
 
 	/**

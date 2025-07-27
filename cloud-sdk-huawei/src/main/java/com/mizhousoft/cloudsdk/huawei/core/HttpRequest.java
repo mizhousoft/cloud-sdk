@@ -47,7 +47,7 @@ public interface HttpRequest
 	 * 
 	 * @return
 	 */
-	HttpMethod getMethod();
+	HttpMethod getHttpMethod();
 
 	/**
 	 * 获取ContentType

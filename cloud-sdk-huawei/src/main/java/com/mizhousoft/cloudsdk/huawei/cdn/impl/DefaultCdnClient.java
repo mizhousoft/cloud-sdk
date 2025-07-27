@@ -7,6 +7,7 @@ import com.mizhousoft.cloudsdk.huawei.cdn.CdnClient;
 import com.mizhousoft.cloudsdk.huawei.cdn.request.CreateRefreshTasksRequest;
 import com.mizhousoft.cloudsdk.huawei.cdn.request.ShowHistoryTaskDetailsRequest;
 import com.mizhousoft.cloudsdk.huawei.cdn.request.ShowHistoryTasksRequest;
+import com.mizhousoft.cloudsdk.huawei.cdn.response.CDNResponse;
 import com.mizhousoft.cloudsdk.huawei.cdn.response.CreateRefreshTasksResponse;
 import com.mizhousoft.cloudsdk.huawei.cdn.response.ShowHistoryTaskDetailsResponse;
 import com.mizhousoft.cloudsdk.huawei.cdn.response.ShowHistoryTasksResponse;
@@ -21,6 +22,7 @@ import kong.unirest.core.HttpMethod;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.HttpStatus;
 import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
 
 /**
  * CDN客户端
@@ -68,31 +70,16 @@ public class DefaultCdnClient implements CdnClient
 		        .endpoint(ENDPOINT)
 		        .path("/v1.0/cdn/content/refresh-tasks")
 		        .httpMethod(HttpMethod.POST)
+		        .contentType(MediaType.APPLICATION_JSON)
 		        .queryString("enterprise_project_id", enterpriseProjectId)
 		        .bodyAsString(request)
 		        .build();
 
 		Map<String, String> headers = AKSKSigner.getInstance().sign(httpRequest, credential);
-		headers.put(HeaderConstants.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-		HttpResponse<CreateRefreshTasksResponse> response = Unirest.post(httpRequest.getUrl().toString())
-		        .headers(headers)
-		        .body(httpRequest.getStringBody())
-		        .asObject(CreateRefreshTasksResponse.class);
+		CreateRefreshTasksResponse response = executeRequest(httpRequest, headers, CreateRefreshTasksResponse.class);
 
-		if (response.getStatus() == HttpStatus.OK)
-		{
-			CreateRefreshTasksResponse respBody = response.getBody();
-
-			respBody.setHttpStatusCode(response.getStatus());
-			respBody.setxRequestId(response.getHeaders().getFirst(HeaderConstants.X_REQUEST_ID));
-
-			return respBody;
-		}
-		else
-		{
-			throw new CloudSDKException("Request failed, status is " + response.getStatus() + "，response body: " + response.getBody());
-		}
+		return response;
 	}
 
 	/**
@@ -108,29 +95,15 @@ public class DefaultCdnClient implements CdnClient
 		        .endpoint(ENDPOINT)
 		        .path("/v1.0/cdn/historytasks")
 		        .httpMethod(HttpMethod.GET)
+		        .contentType(MediaType.APPLICATION_JSON)
 		        .queryString(queryParamsMap)
 		        .build();
 
 		Map<String, String> headers = AKSKSigner.getInstance().sign(httpRequest, credential);
-		headers.put(HeaderConstants.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-		HttpResponse<ShowHistoryTasksResponse> response = Unirest.get(httpRequest.getUrl().toString())
-		        .headers(headers)
-		        .asObject(ShowHistoryTasksResponse.class);
+		ShowHistoryTasksResponse response = executeRequest(httpRequest, headers, ShowHistoryTasksResponse.class);
 
-		if (response.getStatus() == HttpStatus.OK)
-		{
-			ShowHistoryTasksResponse respBody = response.getBody();
-
-			respBody.setHttpStatusCode(response.getStatus());
-			respBody.setxRequestId(response.getHeaders().getFirst(HeaderConstants.X_REQUEST_ID));
-
-			return respBody;
-		}
-		else
-		{
-			throw new CloudSDKException("Request failed, status is " + response.getStatus() + "，response body: " + response.getBody());
-		}
+		return response;
 	}
 
 	/**
@@ -146,29 +119,66 @@ public class DefaultCdnClient implements CdnClient
 		        .endpoint(ENDPOINT)
 		        .path("/v1.0/cdn/historytasks/{taskId}/detail")
 		        .httpMethod(HttpMethod.GET)
+		        .contentType(MediaType.APPLICATION_JSON)
 		        .routeParam("taskId", request.getHistoryTasksId())
 		        .queryString(queryParamsMap)
 		        .build();
 
 		Map<String, String> headers = AKSKSigner.getInstance().sign(httpRequest, credential);
-		headers.put(HeaderConstants.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-		HttpResponse<ShowHistoryTaskDetailsResponse> response = Unirest.get(httpRequest.getUrl().toString())
-		        .headers(headers)
-		        .asObject(ShowHistoryTaskDetailsResponse.class);
+		ShowHistoryTaskDetailsResponse response = executeRequest(httpRequest, headers, ShowHistoryTaskDetailsResponse.class);
 
-		if (response.getStatus() == HttpStatus.OK)
+		return response;
+	}
+
+	/**
+	 * 執行请求
+	 * 
+	 * @param <T>
+	 * @param request
+	 * @param headers
+	 * @param responseClass
+	 * @return
+	 * @throws CloudSDKException
+	 */
+	private <T extends CDNResponse> T executeRequest(DefaultHttpRequest request, Map<String, String> headers, Class<T> responseClass)
+	        throws CloudSDKException
+	{
+		if (null != request.getContentType())
 		{
-			ShowHistoryTaskDetailsResponse respBody = response.getBody();
-
-			respBody.setHttpStatusCode(response.getStatus());
-			respBody.setxRequestId(response.getHeaders().getFirst(HeaderConstants.X_REQUEST_ID));
-
-			return respBody;
+			headers.put(HeaderConstants.CONTENT_TYPE, request.getContentType());
 		}
-		else
+
+		try
 		{
-			throw new CloudSDKException("Request failed, status is " + response.getStatus() + "，response body: " + response.getBody());
+			HttpResponse<T> response = null;
+
+			if (HttpMethod.POST.equals(request.getHttpMethod()))
+			{
+				response = Unirest.post(request.getUrl().toString()).headers(headers).body(request.getStringBody()).asObject(responseClass);
+			}
+			else
+			{
+				response = Unirest.get(request.getUrl().toString()).headers(headers).asObject(responseClass);
+			}
+
+			if (response.getStatus() == HttpStatus.OK)
+			{
+				T respBody = response.getBody();
+
+				respBody.setHttpStatusCode(response.getStatus());
+				respBody.setxRequestId(response.getHeaders().getFirst(HeaderConstants.X_REQUEST_ID));
+
+				return respBody;
+			}
+			else
+			{
+				throw new CloudSDKException("Request failed, status is " + response.getStatus() + "，response body: " + response.getBody());
+			}
+		}
+		catch (UnirestException e)
+		{
+			throw new CloudSDKException("HTTP request execution failed", e);
 		}
 	}
 

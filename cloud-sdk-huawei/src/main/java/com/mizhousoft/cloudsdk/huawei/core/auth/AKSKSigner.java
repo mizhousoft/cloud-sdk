@@ -83,7 +83,7 @@ public class AKSKSigner
 		// requests, the payload is an empty string ("").
 		String payloadHash = buildPayloadHash(request);
 		// Step 7: Combine elements to create canonical request
-		String canonicalRequest = buildCanonicalRequest(request.getMethod().name(), canonicalUri, canonicalQueryString, canonicalHeaders,
+		String canonicalRequest = buildCanonicalRequest(request.getHttpMethod().name(), canonicalUri, canonicalQueryString, canonicalHeaders,
 		        signedHeaderNames, payloadHash);
 		String canonicalRequestHash = hasher.hashHexString(canonicalRequest.getBytes(StandardCharsets.UTF_8));
 		// ************* TASK 2: CREATE THE STRING TO SIGN*************
