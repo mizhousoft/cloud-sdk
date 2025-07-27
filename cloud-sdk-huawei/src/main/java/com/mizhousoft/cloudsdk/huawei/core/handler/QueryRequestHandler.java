@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.huawei.cdn.request.ShowHistoryTaskDetailsRequest;
 import com.mizhousoft.cloudsdk.huawei.core.QueryRequest;
 import com.mizhousoft.cloudsdk.huawei.core.annotation.QueryParam;
 
@@ -31,7 +30,7 @@ public abstract class QueryRequestHandler
 	 */
 	public static Map<String, String> extractQueryParams(QueryRequest request) throws CloudSDKException
 	{
-		Map<String, Field> fields = getClassFields(request);
+		Map<String, Field> fields = getClassFields(request.getClass());
 		Iterator<Entry<String, Field>> iter = fields.entrySet().iterator();
 
 		Map<String, String> queryParamMap = new HashMap<>(10);
@@ -58,7 +57,7 @@ public abstract class QueryRequestHandler
 		return queryParamMap;
 	}
 
-	private synchronized static Map<String, Field> getClassFields(QueryRequest request)
+	private synchronized static <T> Map<String, Field> getClassFields(Class<T> request)
 	{
 		String name = request.getClass().getName();
 
@@ -70,7 +69,7 @@ public abstract class QueryRequestHandler
 
 		fields = new HashMap<>(5);
 
-		for (Field field : ShowHistoryTaskDetailsRequest.class.getDeclaredFields())
+		for (Field field : request.getClass().getDeclaredFields())
 		{
 			if (field.isAnnotationPresent(QueryParam.class))
 			{

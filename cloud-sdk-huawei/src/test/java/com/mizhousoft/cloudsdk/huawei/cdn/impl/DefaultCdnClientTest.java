@@ -1,12 +1,15 @@
 package com.mizhousoft.cloudsdk.huawei.cdn.impl;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.huawei.cdn.request.ShowHistoryTaskDetailsRequest;
+import com.mizhousoft.cloudsdk.huawei.cdn.request.ShowHistoryTasksRequest;
 import com.mizhousoft.cloudsdk.huawei.cdn.response.ShowHistoryTaskDetailsResponse;
+import com.mizhousoft.cloudsdk.huawei.cdn.response.ShowHistoryTasksResponse;
 import com.mizhousoft.cloudsdk.huawei.core.auth.ICredential;
 import com.mizhousoft.commons.httpclient.unirest.UnirestLogInterceptor;
 
@@ -25,11 +28,40 @@ public class DefaultCdnClientTest
 
 	private static final String SECRET_KEY = "";
 
+	@BeforeAll
+	public static void before()
+	{
+		Unirest.config().interceptor(new UnirestLogInterceptor());
+	}
+
+	@Test
+	public void showHistoryTasks()
+	{
+		try
+		{
+			ICredential credential = new ICredential();
+			credential.setAccessKey(ACCESS_KEY);
+			credential.setSecretKey(SECRET_KEY);
+
+			ShowHistoryTasksRequest request = new ShowHistoryTasksRequest();
+
+			DefaultCdnClient cdnClient = new DefaultCdnClient(credential);
+
+			ShowHistoryTasksResponse response = cdnClient.showHistoryTasks(request);
+
+			LOG.info("Result: {}", response);
+
+			Assertions.assertNotNull(response);
+		}
+		catch (Exception e)
+		{
+			Assertions.fail(e.getMessage(), e);
+		}
+	}
+
 	@Test
 	public void showHistoryTaskDetails()
 	{
-		Unirest.config().interceptor(new UnirestLogInterceptor());
-
 		try
 		{
 			ICredential credential = new ICredential();
