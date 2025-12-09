@@ -6,19 +6,19 @@
 	<parent>
 		<groupId>com.mizhousoft</groupId>
 		<artifactId>mizhousoft-bom</artifactId>
-		<version>2.1.3-SNAPSHOT</version>
+		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.mizhousoft.sdk</groupId>
 	<artifactId>cloud-sdk</artifactId>
-	<version>2.1.3-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>cloud-sdk</name>
 	<description>Cloud Platform SDK</description>
 
 	<properties>
-		<commons.version>2.1.3-SNAPSHOT</commons.version>
-		<cloudsdk.version>2.1.3-SNAPSHOT</cloudsdk.version>
+		<commons.version>3.0.0-SNAPSHOT</commons.version>
+		<cloudsdk.version>3.0.0-SNAPSHOT</cloudsdk.version>
 		
 		<aliyun.sms.version>3.1.0</aliyun.sms.version>
 		<aliyun.oss.version>3.18.1</aliyun.oss.version>
@@ -27,7 +27,6 @@
 		<tencent.cos-api.version>5.6.245</tencent.cos-api.version>
 		<tencent.ocr.version>3.1.1137</tencent.ocr.version>
 		<tencent.sts.version>3.1.1126</tencent.sts.version>
-		<tencent.captcha.version>3.1.1129</tencent.captcha.version>
 		<tencent.sms.version>3.1.1135</tencent.sms.version>
 		<tencent.tms.version>3.1.1131</tencent.tms.version>
 		<tencent.vod.version>3.1.1138</tencent.vod.version>
@@ -36,7 +35,6 @@
 
 	<modules>
 		<module>cloud-api</module>
-		<module>cloud-tencent-captcha</module>
 		<module>cloud-tencent-cos</module>
 		<module>cloud-tencent-ocr</module>
 		<module>cloud-tencent-sms</module>
