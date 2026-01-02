@@ -17,7 +17,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import com.mizhousoft.cloudsdk.huawei.core.http.HeaderConstants;
 import com.mizhousoft.cloudsdk.huawei.core.impl.DefaultHttpRequest;
 import com.mizhousoft.commons.lang.HexUtils;
 

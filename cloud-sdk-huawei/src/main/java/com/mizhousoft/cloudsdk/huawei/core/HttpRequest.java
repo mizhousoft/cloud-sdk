@@ -113,4 +113,18 @@ public interface HttpRequest
 	 * @return
 	 */
 	String getHeader(String name);
+
+	/**
+	 * 是否跳过请求签名
+	 * 
+	 * @return
+	 */
+	boolean isSkipRequestSign();
+
+	/**
+	 * 是否不签名
+	 * 
+	 * @return
+	 */
+	boolean isUnsignedPayload();
 }

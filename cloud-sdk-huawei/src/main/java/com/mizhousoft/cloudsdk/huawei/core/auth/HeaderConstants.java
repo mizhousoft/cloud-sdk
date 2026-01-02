@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.huawei.core.http;
+package com.mizhousoft.cloudsdk.huawei.core.auth;
 
 /**
  * 常量

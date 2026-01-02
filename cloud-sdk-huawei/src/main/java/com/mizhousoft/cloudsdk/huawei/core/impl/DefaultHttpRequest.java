@@ -95,6 +95,16 @@ public class DefaultHttpRequest implements HttpRequest
 	private String queryParamsString;
 
 	/**
+	 * 是否跳过请求签名
+	 */
+	private boolean skipRequestSign = false;
+
+	/**
+	 * 是否不签名Payload
+	 */
+	private boolean unsignedPayload = false;
+
+	/**
 	 * 创建Builder
 	 * 
 	 * @return
@@ -315,6 +325,30 @@ public class DefaultHttpRequest implements HttpRequest
 		}
 
 		/**
+		 * 是否跳过请求签名
+		 * 
+		 * @return
+		 */
+		public Builder skipRequestSign()
+		{
+			impl.skipRequestSign = true;
+
+			return this;
+		}
+
+		/**
+		 * 是否不签名
+		 * 
+		 * @return
+		 */
+		public Builder unsignedPayload()
+		{
+			impl.unsignedPayload = true;
+
+			return this;
+		}
+
+		/**
 		 * 生成结果
 		 * 
 		 * @return
@@ -489,5 +523,23 @@ public class DefaultHttpRequest implements HttpRequest
 	public String getHeader(String name)
 	{
 		return headers.get(name);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isSkipRequestSign()
+	{
+		return skipRequestSign;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isUnsignedPayload()
+	{
+		return unsignedPayload;
 	}
 }
