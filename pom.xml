@@ -43,6 +43,7 @@
 		<module>cloud-aliyun-oss</module>
 		<module>cloud-aliyun-sms</module>
 		<module>cloud-sdk-huawei</module>
+		<module>cloud-sdk-tencent</module>
 		<module>sms-spring-boot-starter</module>
 		<module>tencent-oss-spring-boot-starter</module>
 		<module>tencent-tms-spring-boot-starter</module>
