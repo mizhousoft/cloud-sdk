@@ -13,12 +13,15 @@ import com.mizhousoft.cloudsdk.huawei.core.GeneralRequest;
 import com.mizhousoft.cloudsdk.huawei.core.annotation.HeaderParam;
 
 /**
- * 处理器
+ * 请求Header处理器
  *
  * @version
  */
 public abstract class RequestHeaderHandler
 {
+	/**
+	 * 类字段容器，Map<className, Map<AttributeName, Field>>
+	 */
 	private static Map<String, Map<String, Field>> classFieldMap = new HashMap<>(40);
 
 	/**
@@ -57,6 +60,13 @@ public abstract class RequestHeaderHandler
 		return headerParamMap;
 	}
 
+	/**
+	 * 获取类属性
+	 * 
+	 * @param <T>
+	 * @param clazz
+	 * @return
+	 */
 	private synchronized static <T> Map<String, Field> getClassFields(Class<T> clazz)
 	{
 		String name = clazz.getClass().getName();

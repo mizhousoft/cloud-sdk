@@ -13,12 +13,15 @@ import com.mizhousoft.cloudsdk.huawei.core.QueryRequest;
 import com.mizhousoft.cloudsdk.huawei.core.annotation.QueryParam;
 
 /**
- * 处理器
+ * 查询请求处理器
  *
  * @version
  */
 public abstract class QueryRequestHandler
 {
+	/**
+	 * 类字段容器，Map<className, Map<AttributeName, Field>>
+	 */
 	private static Map<String, Map<String, Field>> classFieldMap = new HashMap<>(40);
 
 	/**
@@ -57,6 +60,13 @@ public abstract class QueryRequestHandler
 		return queryParamMap;
 	}
 
+	/**
+	 * 获取类属性
+	 * 
+	 * @param <T>
+	 * @param clazz
+	 * @return
+	 */
 	private synchronized static <T> Map<String, Field> getClassFields(Class<T> clazz)
 	{
 		String name = clazz.getName();
