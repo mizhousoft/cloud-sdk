@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mizhousoft.cloudsdk.huawei.auth.ICredential;
 import com.mizhousoft.cloudsdk.huawei.cdn.request.ShowHistoryTaskDetailsRequest;
 import com.mizhousoft.cloudsdk.huawei.cdn.request.ShowHistoryTasksRequest;
 import com.mizhousoft.cloudsdk.huawei.cdn.response.ShowHistoryTaskDetailsResponse;
 import com.mizhousoft.cloudsdk.huawei.cdn.response.ShowHistoryTasksResponse;
-import com.mizhousoft.cloudsdk.huawei.core.auth.ICredential;
 import com.mizhousoft.commons.httpclient.unirest.UnirestLogInterceptor;
 
 import kong.unirest.core.Unirest;
