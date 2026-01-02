@@ -288,6 +288,34 @@ public class DefaultHttpRequest implements HttpRequest
 		}
 
 		/**
+		 * 设置Header
+		 * 
+		 * @param headerMap
+		 * @return
+		 */
+		public Builder headers(Map<String, String> headerMap)
+		{
+			headerMap.forEach((key, value) -> header(key, value));
+
+			return this;
+		}
+
+		/**
+		 * 设置Header
+		 * 
+		 * @param key
+		 * @param value
+		 * @return
+		 */
+		public Builder header(String key, String value)
+		{
+			List<String> list = impl.headers.computeIfAbsent(key, k -> new ArrayList<>(1));
+			list.add(value);
+
+			return this;
+		}
+
+		/**
 		 * 生成结果
 		 * 
 		 * @return

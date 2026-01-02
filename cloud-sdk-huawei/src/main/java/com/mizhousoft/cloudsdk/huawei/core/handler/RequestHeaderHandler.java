@@ -9,15 +9,15 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.huawei.core.QueryRequest;
-import com.mizhousoft.cloudsdk.huawei.core.annotation.QueryParam;
+import com.mizhousoft.cloudsdk.huawei.core.GeneralRequest;
+import com.mizhousoft.cloudsdk.huawei.core.annotation.HeaderParam;
 
 /**
  * 处理器
  *
  * @version
  */
-public abstract class QueryRequestHandler
+public abstract class RequestHeaderHandler
 {
 	private static Map<String, Map<String, Field>> classFieldMap = new HashMap<>(40);
 
@@ -28,12 +28,12 @@ public abstract class QueryRequestHandler
 	 * @return
 	 * @throws CloudSDKException
 	 */
-	public static Map<String, String> extractQueryParams(QueryRequest request) throws CloudSDKException
+	public static Map<String, String> extractHeaderParams(GeneralRequest request) throws CloudSDKException
 	{
 		Map<String, Field> fields = getClassFields(request.getClass());
 		Iterator<Entry<String, Field>> iter = fields.entrySet().iterator();
 
-		Map<String, String> queryParamMap = new HashMap<>(10);
+		Map<String, String> headerParamMap = new HashMap<>(10);
 
 		while (iter.hasNext())
 		{
@@ -45,21 +45,21 @@ public abstract class QueryRequestHandler
 				Object object = field.get(request);
 				if (null != object)
 				{
-					queryParamMap.put(entry.getKey(), object.toString());
+					headerParamMap.put(entry.getKey(), object.toString());
 				}
 			}
 			catch (IllegalArgumentException | IllegalAccessException e)
 			{
-				throw new CloudSDKException("Query param extract failed.", e);
+				throw new CloudSDKException("Header param extract failed.", e);
 			}
 		}
 
-		return queryParamMap;
+		return headerParamMap;
 	}
 
 	private synchronized static <T> Map<String, Field> getClassFields(Class<T> clazz)
 	{
-		String name = clazz.getName();
+		String name = clazz.getClass().getName();
 
 		Map<String, Field> fields = classFieldMap.get(name);
 		if (null != fields)
@@ -71,9 +71,9 @@ public abstract class QueryRequestHandler
 
 		for (Field field : clazz.getDeclaredFields())
 		{
-			if (field.isAnnotationPresent(QueryParam.class))
+			if (field.isAnnotationPresent(HeaderParam.class))
 			{
-				QueryParam annotation = field.getAnnotation(QueryParam.class);
+				HeaderParam annotation = field.getAnnotation(HeaderParam.class);
 
 				String value = annotation.value();
 				if (!StringUtils.isBlank(value))

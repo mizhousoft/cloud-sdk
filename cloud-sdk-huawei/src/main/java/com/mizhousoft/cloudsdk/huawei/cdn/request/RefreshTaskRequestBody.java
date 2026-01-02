@@ -3,13 +3,14 @@ package com.mizhousoft.cloudsdk.huawei.cdn.request;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mizhousoft.cloudsdk.huawei.core.GeneralRequest;
 
 /**
  * 请求Body
  *
  * @version
  */
-public class RefreshTaskRequestBody
+public class RefreshTaskRequestBody implements GeneralRequest
 {
 	/**
 	 * 刷新的类型，其值可以为file：文件，或directory：目录，默认为file。

@@ -1,13 +1,14 @@
 package com.mizhousoft.cloudsdk.huawei.cdn.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mizhousoft.cloudsdk.huawei.core.GeneralRequest;
 
 /**
  * 任务请求
  *
  * @version
  */
-public class CreateRefreshTasksRequest
+public class CreateRefreshTasksRequest implements GeneralRequest
 {
 	/**
 	 * 缓存刷新

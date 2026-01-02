@@ -1,11 +1,11 @@
 package com.mizhousoft.cloudsdk.huawei.core;
 
 /**
- * 查询请求
+ * 通用请求
  *
  * @version
  */
-public interface QueryRequest extends GeneralRequest
+public interface GeneralRequest
 {
 
 }
