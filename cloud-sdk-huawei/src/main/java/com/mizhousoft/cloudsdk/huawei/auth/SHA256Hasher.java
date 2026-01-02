@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.huawei.core.auth;
+package com.mizhousoft.cloudsdk.huawei.auth;
 
 import com.mizhousoft.commons.crypto.CryptoException;
 import com.mizhousoft.commons.crypto.digest.HmacSHA256Digest;

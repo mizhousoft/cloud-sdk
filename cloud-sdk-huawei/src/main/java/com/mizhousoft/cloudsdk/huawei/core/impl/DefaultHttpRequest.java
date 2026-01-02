@@ -15,8 +15,8 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.huawei.auth.SignUtils;
 import com.mizhousoft.cloudsdk.huawei.core.HttpRequest;
-import com.mizhousoft.cloudsdk.huawei.core.auth.SignUtils;
 import com.mizhousoft.commons.json.JSONException;
 import com.mizhousoft.commons.json.JSONUtils;
 

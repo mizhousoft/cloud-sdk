@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.huawei.core.auth;
+package com.mizhousoft.cloudsdk.huawei.auth;
 
 import java.io.IOException;
 import java.net.URL;
