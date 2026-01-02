@@ -2,6 +2,7 @@ package com.mizhousoft.cloudsdk.huawei.core.impl;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +19,6 @@ import com.mizhousoft.cloudsdk.huawei.core.HttpRequest;
 import com.mizhousoft.cloudsdk.huawei.core.auth.SignUtils;
 import com.mizhousoft.commons.json.JSONException;
 import com.mizhousoft.commons.json.JSONUtils;
-import com.mizhousoft.commons.lang.CollectionUtils;
 
 import kong.unirest.core.HttpMethod;
 
@@ -82,7 +82,7 @@ public class DefaultHttpRequest implements HttpRequest
 	/**
 	 * Header
 	 */
-	private final Map<String, List<String>> headers = new HashMap<>();
+	private final Map<String, String> headers = new HashMap<>();
 
 	/**
 	 * url
@@ -309,8 +309,7 @@ public class DefaultHttpRequest implements HttpRequest
 		 */
 		public Builder header(String key, String value)
 		{
-			List<String> list = impl.headers.computeIfAbsent(key, k -> new ArrayList<>(1));
-			list.add(value);
+			impl.headers.put(key, value);
 
 			return this;
 		}
@@ -350,11 +349,11 @@ public class DefaultHttpRequest implements HttpRequest
 			{
 				if (!StringUtils.isEmpty(impl.queryParamsString))
 				{
-					impl.url = new URL(impl.endpoint + impl.canonicalPath + "?" + impl.queryParamsString);
+					impl.url = URI.create(impl.endpoint + impl.canonicalPath + "?" + impl.queryParamsString).toURL();
 				}
 				else
 				{
-					impl.url = new URL(impl.endpoint + impl.canonicalPath);
+					impl.url = URI.create(impl.endpoint + impl.canonicalPath).toURL();
 				}
 			}
 			catch (MalformedURLException e)
@@ -469,7 +468,7 @@ public class DefaultHttpRequest implements HttpRequest
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, List<String>> getHeaders()
+	public Map<String, String> getHeaders()
 	{
 		return Collections.unmodifiableMap(headers);
 	}
@@ -487,19 +486,8 @@ public class DefaultHttpRequest implements HttpRequest
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<String> getHeader(String name)
+	public String getHeader(String name)
 	{
 		return headers.get(name);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getFirstHeader(String name)
-	{
-		List<String> values = headers.get(name);
-
-		return CollectionUtils.isEmpty(values) ? null : values.get(0);
 	}
 }

@@ -96,7 +96,7 @@ public interface HttpRequest
 	 * 
 	 * @return
 	 */
-	Map<String, List<String>> getHeaders();
+	Map<String, String> getHeaders();
 
 	/**
 	 * 是否包含Header
@@ -112,13 +112,5 @@ public interface HttpRequest
 	 * @param name
 	 * @return
 	 */
-	List<String> getHeader(String name);
-
-	/**
-	 * 获取第一个Header
-	 * 
-	 * @param name
-	 * @return
-	 */
-	String getFirstHeader(String name);
+	String getHeader(String name);
 }

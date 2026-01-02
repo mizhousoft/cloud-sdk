@@ -83,8 +83,8 @@ public class AKSKSigner
 		// requests, the payload is an empty string ("").
 		String payloadHash = buildPayloadHash(request);
 		// Step 7: Combine elements to create canonical request
-		String canonicalRequest = buildCanonicalRequest(request.getHttpMethod().name(), canonicalUri, canonicalQueryString, canonicalHeaders,
-		        signedHeaderNames, payloadHash);
+		String canonicalRequest = buildCanonicalRequest(request.getHttpMethod().name(), canonicalUri, canonicalQueryString,
+		        canonicalHeaders, signedHeaderNames, payloadHash);
 		String canonicalRequestHash = hasher.hashHexString(canonicalRequest.getBytes(StandardCharsets.UTF_8));
 		// ************* TASK 2: CREATE THE STRING TO SIGN*************
 		// Match the algorithm to the hashing algorithm you use, either SHA-1 or SHA-256
@@ -113,7 +113,7 @@ public class AKSKSigner
 	{
 		if (request.containHeader(HeaderConstants.X_SDK_DATE))
 		{
-			return request.getFirstHeader(HeaderConstants.X_SDK_DATE);
+			return request.getHeader(HeaderConstants.X_SDK_DATE);
 		}
 
 		SimpleDateFormat isoDateFormat = new SimpleDateFormat(HeaderConstants.ISO_8601_BASIC_FORMAT, Locale.US);
@@ -132,7 +132,7 @@ public class AKSKSigner
 		        .entrySet()
 		        .stream()
 		        .filter(entry -> !(entry.getKey().equalsIgnoreCase(HeaderConstants.CONTENT_TYPE) || entry.getKey().contains("_")))
-		        .collect(Collectors.toMap(entry -> entry.getKey().toLowerCase(Locale.US), entry -> entry.getValue().get(0))));
+		        .collect(Collectors.toMap(entry -> entry.getKey().toLowerCase(Locale.US), entry -> entry.getValue())));
 		allHeaders.putAll(authenticationHeaders.entrySet()
 		        .stream()
 		        .collect(Collectors.toMap(entry -> entry.getKey().toLowerCase(Locale.US), Map.Entry::getValue)));
@@ -208,7 +208,7 @@ public class AKSKSigner
 	{
 		if (request.containHeader(contentHeader))
 		{
-			return request.getFirstHeader(contentHeader);
+			return request.getHeader(contentHeader);
 		}
 		if (Objects.nonNull(request.getStringBody()) && !request.getStringBody().isEmpty())
 		{

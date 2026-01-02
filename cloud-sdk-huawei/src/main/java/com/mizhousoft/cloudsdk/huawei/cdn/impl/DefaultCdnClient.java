@@ -75,9 +75,9 @@ public class DefaultCdnClient implements CdnClient
 		        .bodyAsString(request)
 		        .build();
 
-		Map<String, String> headers = AKSKSigner.getInstance().sign(httpRequest, credential);
+		Map<String, String> authHeaders = AKSKSigner.getInstance().sign(httpRequest, credential);
 
-		CreateRefreshTasksResponse response = executeRequest(httpRequest, headers, CreateRefreshTasksResponse.class);
+		CreateRefreshTasksResponse response = executeRequest(httpRequest, authHeaders, CreateRefreshTasksResponse.class);
 
 		return response;
 	}
@@ -99,9 +99,9 @@ public class DefaultCdnClient implements CdnClient
 		        .queryString(queryParamsMap)
 		        .build();
 
-		Map<String, String> headers = AKSKSigner.getInstance().sign(httpRequest, credential);
+		Map<String, String> authHeaders = AKSKSigner.getInstance().sign(httpRequest, credential);
 
-		ShowHistoryTasksResponse response = executeRequest(httpRequest, headers, ShowHistoryTasksResponse.class);
+		ShowHistoryTasksResponse response = executeRequest(httpRequest, authHeaders, ShowHistoryTasksResponse.class);
 
 		return response;
 	}
@@ -124,9 +124,9 @@ public class DefaultCdnClient implements CdnClient
 		        .queryString(queryParamsMap)
 		        .build();
 
-		Map<String, String> headers = AKSKSigner.getInstance().sign(httpRequest, credential);
+		Map<String, String> authHeaders = AKSKSigner.getInstance().sign(httpRequest, credential);
 
-		ShowHistoryTaskDetailsResponse response = executeRequest(httpRequest, headers, ShowHistoryTaskDetailsResponse.class);
+		ShowHistoryTaskDetailsResponse response = executeRequest(httpRequest, authHeaders, ShowHistoryTaskDetailsResponse.class);
 
 		return response;
 	}
