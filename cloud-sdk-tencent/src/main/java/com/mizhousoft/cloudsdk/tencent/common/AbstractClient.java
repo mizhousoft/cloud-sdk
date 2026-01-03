@@ -12,8 +12,12 @@ import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
+import com.mizhousoft.commons.crypto.CryptoException;
+import com.mizhousoft.commons.crypto.digest.HmacSHA256Digest;
+import com.mizhousoft.commons.crypto.digest.SHA256Digest;
 import com.mizhousoft.commons.json.JSONException;
 import com.mizhousoft.commons.json.JSONUtils;
+import com.mizhousoft.commons.lang.CharEncoding;
 import com.mizhousoft.commons.lang.HexUtils;
 
 import kong.unirest.core.HttpMethod;
@@ -30,10 +34,6 @@ import tools.jackson.core.type.TypeReference;
  */
 public abstract class AbstractClient
 {
-	public static final String REQ_POST = "POST";
-
-	public static final String REQ_GET = "GET";
-
 	/**
 	 * Credential
 	 */
@@ -77,13 +77,18 @@ public abstract class AbstractClient
 		this.profile = profile;
 	}
 
-	public Map<String, String> doRequestWithTC3(HttpRequest request, ClientProfile profile, Credential credential) throws CloudSDKException
+	/**
+	 * 构建签名Header
+	 * 
+	 * @param request
+	 * @param profile
+	 * @param credential
+	 * @return
+	 * @throws CloudSDKException
+	 */
+	protected Map<String, String> buildSignHeader(HttpRequest request, ClientProfile profile, Credential credential)
+	        throws CloudSDKException
 	{
-		String httpRequestMethod = request.getHttpMethod().toString();
-		if (httpRequestMethod == null)
-		{
-			throw new CloudSDKException("Request method should not be null, can only be GET or POST");
-		}
 		String contentType = "application/x-www-form-urlencoded";
 		byte[] requestPayload = "".getBytes(StandardCharsets.UTF_8);
 
@@ -92,7 +97,7 @@ public abstract class AbstractClient
 		{
 
 		}
-		else if (httpRequestMethod.equals(REQ_POST))
+		else if (HttpMethod.POST.equals(request.getHttpMethod()))
 		{
 			requestPayload = request.getStringBody().getBytes(StandardCharsets.UTF_8);
 			// okhttp always set charset even we don't specify it,
@@ -108,14 +113,14 @@ public abstract class AbstractClient
 		String hashedRequestPayload = "";
 		if (request.isUnsignedPayload())
 		{
-			hashedRequestPayload = Sign.sha256Hex("UNSIGNED-PAYLOAD".getBytes(StandardCharsets.UTF_8));
+			hashedRequestPayload = sha256Hex("UNSIGNED-PAYLOAD".getBytes(StandardCharsets.UTF_8));
 		}
 		else
 		{
-			hashedRequestPayload = Sign.sha256Hex(requestPayload);
+			hashedRequestPayload = sha256Hex(requestPayload);
 		}
-		String canonicalRequest = httpRequestMethod + "\n" + canonicalUri + "\n" + canonicalQueryString + "\n" + canonicalHeaders + "\n"
-		        + signedHeaders + "\n" + hashedRequestPayload;
+		String canonicalRequest = request.getHttpMethod() + "\n" + canonicalUri + "\n" + canonicalQueryString + "\n" + canonicalHeaders
+		        + "\n" + signedHeaders + "\n" + hashedRequestPayload;
 
 		String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -123,7 +128,7 @@ public abstract class AbstractClient
 		String date = sdf.format(new Date(Long.valueOf(timestamp + "000")));
 		String service = endpoint.split("\\.")[0];
 		String credentialScope = date + "/" + service + "/" + "tc3_request";
-		String hashedCanonicalRequest = Sign.sha256Hex(canonicalRequest.getBytes(StandardCharsets.UTF_8));
+		String hashedCanonicalRequest = sha256Hex(canonicalRequest.getBytes(StandardCharsets.UTF_8));
 		String stringToSign = "TC3-HMAC-SHA256\n" + timestamp + "\n" + credentialScope + "\n" + hashedCanonicalRequest;
 		String authorization = "";
 
@@ -135,10 +140,10 @@ public abstract class AbstractClient
 		{
 			String secretId = credential.getAccessKey();
 			String secretKey = credential.getSecretKey();
-			byte[] secretDate = Sign.hmac256(("TC3" + secretKey).getBytes(StandardCharsets.UTF_8), date);
-			byte[] secretService = Sign.hmac256(secretDate, service);
-			byte[] secretSigning = Sign.hmac256(secretService, "tc3_request");
-			String signature = HexUtils.encodeHexString(Sign.hmac256(secretSigning, stringToSign), true);
+			byte[] secretDate = hmac256(("TC3" + secretKey).getBytes(StandardCharsets.UTF_8), date);
+			byte[] secretService = hmac256(secretDate, service);
+			byte[] secretSigning = hmac256(secretService, "tc3_request");
+			String signature = HexUtils.encodeHexString(hmac256(secretSigning, stringToSign), true);
 			authorization = "TC3-HMAC-SHA256 " + "Credential=" + secretId + "/" + credentialScope + ", " + "SignedHeaders=" + signedHeaders
 			        + ", " + "Signature=" + signature;
 		}
@@ -203,6 +208,11 @@ public abstract class AbstractClient
 			if (response.getStatus() == HttpStatus.OK)
 			{
 				APIResponse<T> respBody = JSONUtils.parseWithTypeRef(response.getBody(), valueTypeRef);
+				if (null == respBody.getResponse())
+				{
+					throw new CloudSDKException(
+					        "Request failed, code is " + respBody.getError().getCode() + "，message: " + respBody.getError().getMessage());
+				}
 
 				return respBody.getResponse();
 			}
@@ -218,6 +228,45 @@ public abstract class AbstractClient
 		catch (JSONException e)
 		{
 			throw new CloudSDKException("String deserialize to Object failed.", e);
+		}
+	}
+
+	/**
+	 * SHA256
+	 * 
+	 * @param b
+	 * @return
+	 * @throws CloudSDKException
+	 */
+	private String sha256Hex(byte[] b) throws CloudSDKException
+	{
+		try
+		{
+			return SHA256Digest.hashHex(b);
+		}
+		catch (CryptoException e)
+		{
+			throw new CloudSDKException("SHA-256 is not supported. " + e.getMessage());
+		}
+	}
+
+	/**
+	 * hmac256
+	 * 
+	 * @param key
+	 * @param msg
+	 * @return
+	 * @throws CloudSDKException
+	 */
+	private byte[] hmac256(byte[] key, String msg) throws CloudSDKException
+	{
+		try
+		{
+			return HmacSHA256Digest.hash(key, msg.getBytes(CharEncoding.UTF8));
+		}
+		catch (CryptoException e)
+		{
+			throw new CloudSDKException("HmacSHA256 is not supported. " + e.getMessage());
 		}
 	}
 }

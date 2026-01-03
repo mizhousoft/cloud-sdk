@@ -82,7 +82,7 @@ public class DefaultStsClient extends AbstractClient implements StsClient
 		        .bodyAsString(request)
 		        .build();
 
-		Map<String, String> headerMap = doRequestWithTC3(httpRequest, profile, credential);
+		Map<String, String> headerMap = buildSignHeader(httpRequest, profile, credential);
 
 		GetFederationTokenResponse response = executeRequest(httpRequest, headerMap,
 		        new TypeReference<APIResponse<GetFederationTokenResponse>>()

@@ -110,7 +110,7 @@ public class DefaultOcrClient extends AbstractClient implements OcrClient
 		        .bodyAsString(ocrRequest)
 		        .build();
 
-		Map<String, String> headerMap = doRequestWithTC3(httpRequest, profile, credential);
+		Map<String, String> headerMap = buildSignHeader(httpRequest, profile, credential);
 
 		VinOCRResponse response = executeRequest(httpRequest, headerMap, new TypeReference<APIResponse<VinOCRResponse>>()
 		{
@@ -137,7 +137,7 @@ public class DefaultOcrClient extends AbstractClient implements OcrClient
 		        .bodyAsString(ocrRequest)
 		        .build();
 
-		Map<String, String> headerMap = doRequestWithTC3(httpRequest, profile, credential);
+		Map<String, String> headerMap = buildSignHeader(httpRequest, profile, credential);
 
 		VinOCRResponse response = executeRequest(httpRequest, headerMap, new TypeReference<APIResponse<VinOCRResponse>>()
 		{

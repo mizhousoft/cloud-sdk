@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,11 +16,11 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.tencent.common.Sign;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
 import com.mizhousoft.cloudsdk.tencent.core.http.HttpProtocol;
 import com.mizhousoft.commons.json.JSONException;
 import com.mizhousoft.commons.json.JSONUtils;
+import com.mizhousoft.commons.lang.CharEncoding;
 
 import kong.unirest.core.HttpMethod;
 
@@ -392,7 +393,8 @@ public class DefaultHttpRequest implements HttpRequest
 					}
 					else
 					{
-						sb.append(String.format("%s=%s&", key, Sign.urlEncode(value)));
+						String encoded = URLEncoder.encode(value, CharEncoding.UTF8);
+						sb.append(String.format("%s=%s&", key, encoded));
 					}
 				});
 			});
