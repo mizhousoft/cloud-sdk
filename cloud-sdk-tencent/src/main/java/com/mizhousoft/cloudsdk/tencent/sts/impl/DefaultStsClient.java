@@ -34,6 +34,17 @@ public class DefaultStsClient extends AbstractClient implements StsClient
 	 *
 	 * @param region
 	 * @param credential
+	 */
+	public DefaultStsClient(String region, Credential credential)
+	{
+		this(ENDPOINT, API_VERSION, region, credential, new ClientProfile());
+	}
+
+	/**
+	 * 构造函数
+	 *
+	 * @param region
+	 * @param credential
 	 * @param profile
 	 */
 	public DefaultStsClient(String region, Credential credential, ClientProfile profile)

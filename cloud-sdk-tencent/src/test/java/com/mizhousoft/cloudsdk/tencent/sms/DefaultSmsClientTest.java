@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
 import com.mizhousoft.cloudsdk.tencent.sms.impl.DefaultSmsClient;
 import com.mizhousoft.cloudsdk.tencent.sms.request.SmsPackageStatisticsRequest;
@@ -35,14 +34,11 @@ public class DefaultSmsClientTest
 	{
 		Unirest.config().interceptor(new UnirestLogInterceptor());
 
-		ClientProfile profile = new ClientProfile();
-		profile.setRegion("ap-guangzhou");
-
 		Credential credential = new Credential();
 		credential.setAccessKey(ACCESS_KEY);
 		credential.setSecretKey(SECRET_KEY);
 
-		smsClient = new DefaultSmsClient("ap-guangzhou", credential, profile);
+		smsClient = new DefaultSmsClient("ap-guangzhou", credential);
 	}
 
 	@Test

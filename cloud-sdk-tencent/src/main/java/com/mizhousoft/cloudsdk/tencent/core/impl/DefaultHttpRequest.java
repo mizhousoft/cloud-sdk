@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.auth.Sign;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
+import com.mizhousoft.cloudsdk.tencent.core.http.HttpProtocol;
 import com.mizhousoft.commons.json.JSONException;
 import com.mizhousoft.commons.json.JSONUtils;
 
@@ -37,7 +38,7 @@ public class DefaultHttpRequest implements HttpRequest
 	/**
 	 * 请求协议
 	 */
-	private String protocol;
+	private HttpProtocol protocol;
 
 	/**
 	 * endpoint
@@ -158,7 +159,7 @@ public class DefaultHttpRequest implements HttpRequest
 		 * @param protocol
 		 * @return
 		 */
-		public Builder protocol(String protocol)
+		public Builder protocol(HttpProtocol protocol)
 		{
 			impl.protocol = protocol;
 
@@ -431,7 +432,7 @@ public class DefaultHttpRequest implements HttpRequest
 	 * 
 	 * @return
 	 */
-	public String getProtocol()
+	public HttpProtocol getProtocol()
 	{
 		return protocol;
 	}

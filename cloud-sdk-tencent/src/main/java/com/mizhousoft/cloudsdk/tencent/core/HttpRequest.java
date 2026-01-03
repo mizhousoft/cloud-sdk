@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import com.mizhousoft.cloudsdk.tencent.core.http.HttpProtocol;
+
 import kong.unirest.core.HttpMethod;
 
 /**
@@ -20,6 +22,13 @@ public interface HttpRequest
 	 * @return
 	 */
 	String getName();
+
+	/**
+	 * 获取协议
+	 * 
+	 * @return
+	 */
+	HttpProtocol getProtocol();
 
 	/**
 	 * 获取Endpoint

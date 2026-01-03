@@ -1,5 +1,7 @@
 package com.mizhousoft.cloudsdk.tencent.auth;
 
+import com.mizhousoft.cloudsdk.tencent.core.http.HttpProtocol;
+
 /**
  * 配置
  *
@@ -7,15 +9,10 @@ package com.mizhousoft.cloudsdk.tencent.auth;
  */
 public class ClientProfile
 {
-	// Constants for request protocols and methods
-	public static final String REQ_HTTPS = "https://";
-
-	public static final String REQ_HTTP = "http://";
-
 	/**
 	 * The protocol used for the request. Currently, only HTTPS is valid.
 	 */
-	private String protocol;
+	private HttpProtocol protocol;
 
 	/**
 	 * valid choices: zh-CN, en-US
@@ -23,17 +20,12 @@ public class ClientProfile
 	private Language language;
 
 	/**
-	 * 区域
-	 */
-	private String region;
-
-	/**
 	 * 构造函数
 	 *
 	 */
 	public ClientProfile()
 	{
-		this.protocol = REQ_HTTPS;
+		this.protocol = HttpProtocol.HTTPS;
 	}
 
 	/**
@@ -41,7 +33,7 @@ public class ClientProfile
 	 * 
 	 * @return
 	 */
-	public String getProtocol()
+	public HttpProtocol getProtocol()
 	{
 		return protocol;
 	}
@@ -51,7 +43,7 @@ public class ClientProfile
 	 * 
 	 * @param protocol
 	 */
-	public void setProtocol(String protocol)
+	public void setProtocol(HttpProtocol protocol)
 	{
 		this.protocol = protocol;
 	}
@@ -75,25 +67,4 @@ public class ClientProfile
 	{
 		this.language = language;
 	}
-
-	/**
-	 * 获取region
-	 * 
-	 * @return
-	 */
-	public String getRegion()
-	{
-		return region;
-	}
-
-	/**
-	 * 设置region
-	 * 
-	 * @param region
-	 */
-	public void setRegion(String region)
-	{
-		this.region = region;
-	}
-
 }

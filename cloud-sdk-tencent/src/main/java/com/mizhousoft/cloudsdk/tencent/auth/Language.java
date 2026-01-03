@@ -19,8 +19,16 @@ public enum Language
 	 */
 	EN_US("en-US");
 
+	/**
+	 * 语言
+	 */
 	private final String lang;
 
+	/**
+	 * 构造函数
+	 *
+	 * @param lang
+	 */
 	Language(String lang)
 	{
 		this.lang = lang;
@@ -37,6 +45,11 @@ public enum Language
 		return this.lang;
 	}
 
+	/**
+	 * 获取值
+	 * 
+	 * @return
+	 */
 	public String getValue()
 	{
 		return this.lang;

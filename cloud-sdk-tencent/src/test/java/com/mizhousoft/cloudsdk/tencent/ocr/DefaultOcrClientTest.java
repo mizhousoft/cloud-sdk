@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.TempCredential;
-import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
 import com.mizhousoft.cloudsdk.tencent.ocr.impl.DefaultOcrClient;
 import com.mizhousoft.commons.httpclient.unirest.UnirestLogInterceptor;
@@ -34,14 +33,11 @@ public class DefaultOcrClientTest
 	{
 		Unirest.config().interceptor(new UnirestLogInterceptor());
 
-		ClientProfile profile = new ClientProfile();
-		profile.setRegion("ap-guangzhou");
-
 		Credential credential = new Credential();
 		credential.setAccessKey(ACCESS_KEY);
 		credential.setSecretKey(SECRET_KEY);
 
-		ocrClient = new DefaultOcrClient("ap-guangzhou", credential, profile);
+		ocrClient = new DefaultOcrClient("ap-guangzhou", credential);
 	}
 
 	@Test
