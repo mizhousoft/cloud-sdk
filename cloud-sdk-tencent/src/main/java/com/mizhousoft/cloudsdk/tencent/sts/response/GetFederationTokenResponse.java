@@ -1,14 +1,14 @@
 package com.mizhousoft.cloudsdk.tencent.sts.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
+import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
 
 /**
  * GetFederationToken Response
  *
  * @version
  */
-public class GetFederationTokenResponse extends GeneralResponse
+public class GetFederationTokenResponse extends TencentResponse
 {
 	/**
 	 * 临时访问凭证

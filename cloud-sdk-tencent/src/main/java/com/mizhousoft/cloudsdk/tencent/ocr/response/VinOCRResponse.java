@@ -1,14 +1,14 @@
 package com.mizhousoft.cloudsdk.tencent.ocr.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
+import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
 
 /**
  * VIN OCR响应
  *
  * @version
  */
-public class VinOCRResponse extends GeneralResponse
+public class VinOCRResponse extends TencentResponse
 {
 	/**
 	 * 检测到的车辆 VIN 码。

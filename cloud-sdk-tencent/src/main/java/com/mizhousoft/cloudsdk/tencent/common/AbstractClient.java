@@ -9,7 +9,6 @@ import java.util.TimeZone;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
-import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
 import com.mizhousoft.commons.crypto.CryptoException;
@@ -189,7 +188,7 @@ public abstract class AbstractClient
 	 * @return
 	 * @throws CloudSDKException
 	 */
-	protected <T extends GeneralResponse> T executeRequest(DefaultHttpRequest request, Map<String, String> headers,
+	protected <T extends TencentResponse> T executeRequest(DefaultHttpRequest request, Map<String, String> headers,
 	        TypeReference<APIResponse<T>> valueTypeRef) throws CloudSDKException
 	{
 		try
@@ -208,10 +207,12 @@ public abstract class AbstractClient
 			if (response.getStatus() == HttpStatus.OK)
 			{
 				APIResponse<T> respBody = JSONUtils.parseWithTypeRef(response.getBody(), valueTypeRef);
-				if (null == respBody.getResponse())
+				if (null != respBody.getResponse().getError())
 				{
-					throw new CloudSDKException(
-					        "Request failed, code is " + respBody.getError().getCode() + "，message: " + respBody.getError().getMessage());
+					APIError error = respBody.getResponse().getError();
+
+					throw new CloudSDKException("Request failed, code is " + error.getCode() + "，message: " + error.getMessage()
+					        + ", requestId is " + respBody.getResponse().getRequestId());
 				}
 
 				return respBody.getResponse();

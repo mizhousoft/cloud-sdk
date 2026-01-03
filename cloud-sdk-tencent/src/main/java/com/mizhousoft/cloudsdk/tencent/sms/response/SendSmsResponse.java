@@ -1,14 +1,14 @@
 package com.mizhousoft.cloudsdk.tencent.sms.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
+import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
 
 /**
  * 发送响应
  *
  * @version
  */
-public class SendSmsResponse extends GeneralResponse
+public class SendSmsResponse extends TencentResponse
 {
 	/**
 	 * 短信发送状态。

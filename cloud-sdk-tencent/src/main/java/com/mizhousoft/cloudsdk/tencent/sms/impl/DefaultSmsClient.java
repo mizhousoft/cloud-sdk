@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.sms.CloudSmsTemplate;
 import com.mizhousoft.cloudsdk.sms.SmsSendException;
 import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
@@ -79,11 +78,12 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void send(String phoneNumber, Map<String, String> paramMap, String appId, CloudSmsTemplate smsTemplate) throws CloudSDKException
+	public void send(String phoneNumber, Map<String, String> paramMap, String appId, String sign, String templateId)
+	        throws CloudSDKException
 	{
 		String[] phoneNumbers = { phoneNumber };
 
-		multiSend(phoneNumbers, paramMap, appId, smsTemplate);
+		multiSend(phoneNumbers, paramMap, appId, sign, templateId);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * @throws CloudSDKException
 	 */
 	@Override
-	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, CloudSmsTemplate smsTemplate)
+	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, String sign, String templateId)
 	        throws CloudSDKException
 	{
 		List<String> numberList = new ArrayList<String>(Arrays.asList(phoneNumbers));
@@ -103,18 +103,18 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 
 		for (List<String> part : parts)
 		{
-			SendSmsRequest req = new SendSmsRequest();
+			SendSmsRequest request = new SendSmsRequest();
 
-			req.setSmsSdkAppid(appId);
-			req.setSign(smsTemplate.getSignName());
-			req.setTemplateID(smsTemplate.getTemplateId().toString());
+			request.setSmsSdkAppid(appId);
+			request.setSign(sign);
+			request.setTemplateID(templateId);
 
 			Collection<String> paramValues = paramMap.values();
 			String[] templateParamSet = paramValues.toArray(new String[paramValues.size()]);
-			req.setTemplateParamSet(templateParamSet);
+			request.setTemplateParamSet(templateParamSet);
 
 			String[] numbers = part.toArray(new String[part.size()]);
-			req.setPhoneNumberSet(numbers);
+			request.setPhoneNumberSet(numbers);
 
 			DefaultHttpRequest httpRequest = DefaultHttpRequest.builder()
 			        .name("SendSms")
@@ -122,16 +122,16 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 			        .endpoint(endpoint)
 			        .httpMethod(HttpMethod.POST)
 			        .contentType(MediaType.APPLICATION_JSON)
-			        .bodyAsString(req)
+			        .bodyAsString(request)
 			        .build();
 
 			Map<String, String> headerMap = buildSignHeader(httpRequest, profile, credential);
 
-			SendSmsResponse res = executeRequest(httpRequest, headerMap, new TypeReference<APIResponse<SendSmsResponse>>()
+			SendSmsResponse response = executeRequest(httpRequest, headerMap, new TypeReference<APIResponse<SendSmsResponse>>()
 			{
 			});
 
-			SendStatus[] statusList = res.getSendStatusSet();
+			SendStatus[] statusList = response.getSendStatusSet();
 			for (SendStatus status : statusList)
 			{
 				if (!"ok".equalsIgnoreCase(status.getCode()))
@@ -144,8 +144,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 
 		if (!failedPhoneNumbers.isEmpty())
 		{
-			SmsSendException exception = new SmsSendException(
-			        "SMS appId is " + appId + ", template id is " + smsTemplate.getTemplateId().toString() + ", " + message);
+			SmsSendException exception = new SmsSendException("SMS appId is " + appId + ", template id is " + templateId + ", " + message);
 			exception.setFailedPhoneNumbers(failedPhoneNumbers.toArray(new String[failedPhoneNumbers.size()]));
 
 			throw exception;

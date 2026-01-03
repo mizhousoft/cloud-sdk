@@ -16,12 +16,6 @@ public class APIResponse<T>
 	private T response;
 
 	/**
-	 * 错误
-	 */
-	@JsonProperty("Error")
-	private APIError error;
-
-	/**
 	 * 获取response
 	 * 
 	 * @return
@@ -39,25 +33,5 @@ public class APIResponse<T>
 	public void setResponse(T response)
 	{
 		this.response = response;
-	}
-
-	/**
-	 * 获取error
-	 * 
-	 * @return
-	 */
-	public APIError getError()
-	{
-		return error;
-	}
-
-	/**
-	 * 设置error
-	 * 
-	 * @param error
-	 */
-	public void setError(APIError error)
-	{
-		this.error = error;
 	}
 }

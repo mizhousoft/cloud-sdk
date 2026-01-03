@@ -3,14 +3,14 @@ package com.mizhousoft.cloudsdk.tencent.sms.response;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
+import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
 
 /**
  * 套餐包信息统计响应
  *
  * @version
  */
-public class SmsPackagesStatisticsResponse extends GeneralResponse
+public class SmsPackagesStatisticsResponse extends TencentResponse
 {
 	/**
 	 * 发送数据统计响应包体。
