@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @version
  */
-public class TencentResponse<T>
+public class APIResponse<T>
 {
 	/**
 	 * 发送数据统计响应包体。
@@ -19,7 +19,7 @@ public class TencentResponse<T>
 	 * 错误
 	 */
 	@JsonProperty("Error")
-	private TencentError error;
+	private APIError error;
 
 	/**
 	 * 获取response
@@ -46,7 +46,7 @@ public class TencentResponse<T>
 	 * 
 	 * @return
 	 */
-	public TencentError getError()
+	public APIError getError()
 	{
 		return error;
 	}
@@ -56,7 +56,7 @@ public class TencentResponse<T>
 	 * 
 	 * @param error
 	 */
-	public void setError(TencentError error)
+	public void setError(APIError error)
 	{
 		this.error = error;
 	}

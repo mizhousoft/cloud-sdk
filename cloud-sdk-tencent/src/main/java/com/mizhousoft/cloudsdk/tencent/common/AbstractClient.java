@@ -185,7 +185,7 @@ public abstract class AbstractClient
 	 * @throws CloudSDKException
 	 */
 	protected <T extends GeneralResponse> T executeRequest(DefaultHttpRequest request, Map<String, String> headers,
-	        TypeReference<TencentResponse<T>> valueTypeRef) throws CloudSDKException
+	        TypeReference<APIResponse<T>> valueTypeRef) throws CloudSDKException
 	{
 		try
 		{
@@ -202,7 +202,7 @@ public abstract class AbstractClient
 
 			if (response.getStatus() == HttpStatus.OK)
 			{
-				TencentResponse<T> respBody = JSONUtils.parseWithTypeRef(response.getBody(), valueTypeRef);
+				APIResponse<T> respBody = JSONUtils.parseWithTypeRef(response.getBody(), valueTypeRef);
 
 				return respBody.getResponse();
 			}

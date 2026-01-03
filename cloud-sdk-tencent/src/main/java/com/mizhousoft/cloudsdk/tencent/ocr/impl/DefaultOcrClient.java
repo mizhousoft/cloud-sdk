@@ -7,7 +7,7 @@ import com.mizhousoft.cloudsdk.TempCredential;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
-import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
+import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
@@ -112,7 +112,7 @@ public class DefaultOcrClient extends AbstractClient implements OcrClient
 
 		Map<String, String> headerMap = doRequestWithTC3(httpRequest, profile, credential);
 
-		VinOCRResponse response = executeRequest(httpRequest, headerMap, new TypeReference<TencentResponse<VinOCRResponse>>()
+		VinOCRResponse response = executeRequest(httpRequest, headerMap, new TypeReference<APIResponse<VinOCRResponse>>()
 		{
 		});
 
@@ -139,7 +139,7 @@ public class DefaultOcrClient extends AbstractClient implements OcrClient
 
 		Map<String, String> headerMap = doRequestWithTC3(httpRequest, profile, credential);
 
-		VinOCRResponse response = executeRequest(httpRequest, headerMap, new TypeReference<TencentResponse<VinOCRResponse>>()
+		VinOCRResponse response = executeRequest(httpRequest, headerMap, new TypeReference<APIResponse<VinOCRResponse>>()
 		{
 		});
 

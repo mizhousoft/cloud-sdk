@@ -6,7 +6,7 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
-import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
+import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
@@ -83,7 +83,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 		Map<String, String> headerMap = doRequestWithTC3(httpRequest, profile, credential);
 
 		SmsPackagesStatisticsResponse response = executeRequest(httpRequest, headerMap,
-		        new TypeReference<TencentResponse<SmsPackagesStatisticsResponse>>()
+		        new TypeReference<APIResponse<SmsPackagesStatisticsResponse>>()
 		        {
 		        });
 

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @version
  */
-public class TencentError
+public class APIError
 {
 	/**
 	 * 错误码
