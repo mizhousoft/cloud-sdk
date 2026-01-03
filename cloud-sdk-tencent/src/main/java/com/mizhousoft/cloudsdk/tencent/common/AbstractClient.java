@@ -10,6 +10,7 @@ import java.util.TimeZone;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
+import com.mizhousoft.cloudsdk.tencent.auth.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.auth.Sign;
 import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
@@ -54,7 +55,7 @@ public abstract class AbstractClient
 	/**
 	 * region
 	 */
-	protected String region;
+	protected RegionEnum region;
 
 	/**
 	 * 版本
@@ -70,7 +71,7 @@ public abstract class AbstractClient
 	 * @param credential
 	 * @param profile
 	 */
-	public AbstractClient(String endpoint, String apiVersion, String region, Credential credential, ClientProfile profile)
+	public AbstractClient(String endpoint, String apiVersion, RegionEnum region, Credential credential, ClientProfile profile)
 	{
 		this.endpoint = endpoint;
 		this.apiVersion = apiVersion;
@@ -162,7 +163,7 @@ public abstract class AbstractClient
 
 		if (null != region)
 		{
-			headerMap.put("X-TC-Region", region);
+			headerMap.put("X-TC-Region", region.getValue());
 		}
 		if (request.isUnsignedPayload())
 		{

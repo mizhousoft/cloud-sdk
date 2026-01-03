@@ -6,6 +6,7 @@ import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.TempCredential;
 import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
+import com.mizhousoft.cloudsdk.tencent.auth.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
@@ -35,7 +36,7 @@ public class DefaultStsClient extends AbstractClient implements StsClient
 	 * @param region
 	 * @param credential
 	 */
-	public DefaultStsClient(String region, Credential credential)
+	public DefaultStsClient(RegionEnum region, Credential credential)
 	{
 		this(ENDPOINT, API_VERSION, region, credential, new ClientProfile());
 	}
@@ -47,7 +48,7 @@ public class DefaultStsClient extends AbstractClient implements StsClient
 	 * @param credential
 	 * @param profile
 	 */
-	public DefaultStsClient(String region, Credential credential, ClientProfile profile)
+	public DefaultStsClient(RegionEnum region, Credential credential, ClientProfile profile)
 	{
 		this(ENDPOINT, API_VERSION, region, credential, profile);
 	}
@@ -61,7 +62,7 @@ public class DefaultStsClient extends AbstractClient implements StsClient
 	 * @param credential
 	 * @param profile
 	 */
-	public DefaultStsClient(String endpoint, String apiVersion, String region, Credential credential, ClientProfile profile)
+	public DefaultStsClient(String endpoint, String apiVersion, RegionEnum region, Credential credential, ClientProfile profile)
 	{
 		super(endpoint, apiVersion, region, credential, profile);
 	}

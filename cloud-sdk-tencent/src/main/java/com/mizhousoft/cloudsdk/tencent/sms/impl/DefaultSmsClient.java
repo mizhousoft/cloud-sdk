@@ -5,6 +5,7 @@ import java.util.Map;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
+import com.mizhousoft.cloudsdk.tencent.auth.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
@@ -33,7 +34,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * @param region
 	 * @param credential
 	 */
-	public DefaultSmsClient(String region, Credential credential)
+	public DefaultSmsClient(RegionEnum region, Credential credential)
 	{
 		this(ENDPOINT, API_VERSION, region, credential, new ClientProfile());
 	}
@@ -45,7 +46,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * @param credential
 	 * @param profile
 	 */
-	public DefaultSmsClient(String region, Credential credential, ClientProfile profile)
+	public DefaultSmsClient(RegionEnum region, Credential credential, ClientProfile profile)
 	{
 		this(ENDPOINT, API_VERSION, region, credential, profile);
 	}
@@ -59,7 +60,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * @param credential
 	 * @param profile
 	 */
-	public DefaultSmsClient(String endpoint, String apiVersion, String region, Credential credential, ClientProfile profile)
+	public DefaultSmsClient(String endpoint, String apiVersion, RegionEnum region, Credential credential, ClientProfile profile)
 	{
 		super(endpoint, apiVersion, region, credential, profile);
 	}

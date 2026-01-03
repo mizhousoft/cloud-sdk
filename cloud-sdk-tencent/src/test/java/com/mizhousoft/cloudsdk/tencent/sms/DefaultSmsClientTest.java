@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
+import com.mizhousoft.cloudsdk.tencent.auth.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.sms.impl.DefaultSmsClient;
 import com.mizhousoft.cloudsdk.tencent.sms.request.SmsPackageStatisticsRequest;
 import com.mizhousoft.cloudsdk.tencent.sms.response.SmsPackagesStatisticsResponse;
@@ -38,7 +39,7 @@ public class DefaultSmsClientTest
 		credential.setAccessKey(ACCESS_KEY);
 		credential.setSecretKey(SECRET_KEY);
 
-		smsClient = new DefaultSmsClient("ap-guangzhou", credential);
+		smsClient = new DefaultSmsClient(RegionEnum.GUANGZHOU, credential);
 	}
 
 	@Test
