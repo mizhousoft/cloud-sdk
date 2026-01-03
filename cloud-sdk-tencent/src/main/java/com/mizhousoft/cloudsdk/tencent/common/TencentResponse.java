@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.tencent.core;
+package com.mizhousoft.cloudsdk.tencent.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,6 +14,12 @@ public class TencentResponse<T>
 	 */
 	@JsonProperty("Response")
 	private T response;
+
+	/**
+	 * 错误
+	 */
+	@JsonProperty("Error")
+	private TencentError error;
 
 	/**
 	 * 获取response
@@ -33,5 +39,25 @@ public class TencentResponse<T>
 	public void setResponse(T response)
 	{
 		this.response = response;
+	}
+
+	/**
+	 * 获取error
+	 * 
+	 * @return
+	 */
+	public TencentError getError()
+	{
+		return error;
+	}
+
+	/**
+	 * 设置error
+	 * 
+	 * @param error
+	 */
+	public void setError(TencentError error)
+	{
+		this.error = error;
 	}
 }

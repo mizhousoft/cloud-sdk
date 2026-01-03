@@ -5,22 +5,15 @@ import java.util.Map;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
-import com.mizhousoft.cloudsdk.tencent.auth.TencentAuth;
-import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
-import com.mizhousoft.cloudsdk.tencent.core.TencentResponse;
+import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
+import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
 import com.mizhousoft.cloudsdk.tencent.sms.SmsClient;
 import com.mizhousoft.cloudsdk.tencent.sms.request.SmsPackageStatisticsRequest;
 import com.mizhousoft.cloudsdk.tencent.sms.response.SmsPackagesStatisticsResponse;
-import com.mizhousoft.commons.json.JSONException;
-import com.mizhousoft.commons.json.JSONUtils;
 
 import kong.unirest.core.HttpMethod;
-import kong.unirest.core.HttpResponse;
-import kong.unirest.core.HttpStatus;
-import kong.unirest.core.Unirest;
-import kong.unirest.core.UnirestException;
 import tools.jackson.core.type.TypeReference;
 
 /**
@@ -28,29 +21,36 @@ import tools.jackson.core.type.TypeReference;
  *
  * @version
  */
-public class DefaultSmsClient implements SmsClient
+public class DefaultSmsClient extends AbstractClient implements SmsClient
 {
-	/**
-	 * Credential
-	 */
-	private Credential credential;
+	private static String ENDPOINT = "sms.tencentcloudapi.com";
 
-	/**
-	 * Profile
-	 */
-	private ClientProfile profile;
+	private static String API_VERSION = "2021-01-11";
 
 	/**
 	 * 构造函数
 	 *
+	 * @param region
 	 * @param credential
 	 * @param profile
 	 */
-	public DefaultSmsClient(Credential credential, ClientProfile profile)
+	public DefaultSmsClient(String region, Credential credential, ClientProfile profile)
 	{
-		super();
-		this.credential = credential;
-		this.profile = profile;
+		this(ENDPOINT, API_VERSION, region, credential, profile);
+	}
+
+	/**
+	 * 构造函数
+	 *
+	 * @param endpoint
+	 * @param apiVersion
+	 * @param region
+	 * @param credential
+	 * @param profile
+	 */
+	public DefaultSmsClient(String endpoint, String apiVersion, String region, Credential credential, ClientProfile profile)
+	{
+		super(endpoint, apiVersion, region, credential, profile);
 	}
 
 	/**
@@ -62,14 +62,13 @@ public class DefaultSmsClient implements SmsClient
 		DefaultHttpRequest httpRequest = DefaultHttpRequest.builder()
 		        .name("SmsPackagesStatistics")
 		        .protocol(profile.getProtocol())
-		        .endpoint(profile.getEndpoint())
-		        .path("")
+		        .endpoint(endpoint)
 		        .httpMethod(HttpMethod.POST)
 		        .contentType(MediaType.APPLICATION_JSON)
 		        .bodyAsString(request)
 		        .build();
 
-		Map<String, String> headerMap = TencentAuth.doRequestWithTC3(httpRequest, profile, credential);
+		Map<String, String> headerMap = doRequestWithTC3(httpRequest, profile, credential);
 
 		SmsPackagesStatisticsResponse response = executeRequest(httpRequest, headerMap,
 		        new TypeReference<TencentResponse<SmsPackagesStatisticsResponse>>()
@@ -77,45 +76,5 @@ public class DefaultSmsClient implements SmsClient
 		        });
 
 		return response;
-	}
-
-	private <T extends GeneralResponse> T executeRequest(DefaultHttpRequest request, Map<String, String> headers,
-	        TypeReference<TencentResponse<T>> valueTypeRef) throws CloudSDKException
-	{
-		try
-		{
-			HttpResponse<String> response = null;
-
-			if (HttpMethod.POST.equals(request.getHttpMethod()))
-			{
-				response = Unirest.post(request.getUrl().toString()).headers(headers).body(request.getStringBody()).asString();
-			}
-			else
-			{
-				response = Unirest.get(request.getUrl().toString()).headers(headers).asString();
-			}
-
-			if (response.getStatus() == HttpStatus.OK)
-			{
-				try
-				{
-					TencentResponse<T> respBody = JSONUtils.parseWithTypeRef(response.getBody(), valueTypeRef);
-
-					return respBody.getResponse();
-				}
-				catch (JSONException e)
-				{
-					throw new CloudSDKException("HTTP request execution failed", e);
-				}
-			}
-			else
-			{
-				throw new CloudSDKException("Request failed, status is " + response.getStatus() + "，response body: " + response.getBody());
-			}
-		}
-		catch (UnirestException e)
-		{
-			throw new CloudSDKException("HTTP request execution failed", e);
-		}
 	}
 }

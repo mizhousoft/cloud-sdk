@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.tencent.sms.impl;
+package com.mizhousoft.cloudsdk.tencent.sms;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.auth.Credential;
+import com.mizhousoft.cloudsdk.tencent.sms.impl.DefaultSmsClient;
 import com.mizhousoft.cloudsdk.tencent.sms.request.SmsPackageStatisticsRequest;
 import com.mizhousoft.cloudsdk.tencent.sms.response.SmsPackagesStatisticsResponse;
 import com.mizhousoft.commons.httpclient.unirest.UnirestLogInterceptor;
@@ -27,26 +28,26 @@ public class DefaultSmsClientTest
 
 	private static final String SECRET_KEY = System.getenv("TENCENTCLOUD_SECRET_KEY");
 
+	private static DefaultSmsClient smsClient;
+
 	@BeforeAll
 	public static void before()
 	{
 		Unirest.config().interceptor(new UnirestLogInterceptor());
-	}
 
-	@Test
-	public void querySmsPackageStatistics() throws CloudSDKException
-	{
 		ClientProfile profile = new ClientProfile();
-		profile.setVersion("2021-01-11");
-		profile.setEndpoint("sms.tencentcloudapi.com");
 		profile.setRegion("ap-guangzhou");
 
 		Credential credential = new Credential();
 		credential.setAccessKey(ACCESS_KEY);
 		credential.setSecretKey(SECRET_KEY);
 
-		DefaultSmsClient smsClient = new DefaultSmsClient(credential, profile);
+		smsClient = new DefaultSmsClient("ap-guangzhou", credential, profile);
+	}
 
+	@Test
+	public void querySmsPackageStatistics() throws CloudSDKException
+	{
 		SmsPackageStatisticsRequest request = new SmsPackageStatisticsRequest();
 		request.setSmsSdkAppId("1400119865");
 		request.setBeginTime("2025050113");

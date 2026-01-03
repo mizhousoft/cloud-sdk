@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.tencent.auth;
+package com.mizhousoft.cloudsdk.tencent.common;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
@@ -8,25 +8,79 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
+import com.mizhousoft.cloudsdk.tencent.auth.Credential;
+import com.mizhousoft.cloudsdk.tencent.auth.Sign;
+import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
+import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
+import com.mizhousoft.commons.json.JSONException;
+import com.mizhousoft.commons.json.JSONUtils;
 import com.mizhousoft.commons.lang.HexUtils;
 
+import kong.unirest.core.HttpMethod;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.HttpStatus;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
+import tools.jackson.core.type.TypeReference;
+
 /**
- * TODO
+ * 客户端
  *
  * @version
  */
-public class TencentAuth
+public abstract class AbstractClient
 {
 	public static final String REQ_POST = "POST";
 
 	public static final String REQ_GET = "GET";
 
-	public static Map<String, String> doRequestWithTC3(HttpRequest request, ClientProfile profile, Credential credential)
-	        throws CloudSDKException
-	{
-		String endpoint = profile.getEndpoint();
+	/**
+	 * Credential
+	 */
+	protected Credential credential;
 
+	/**
+	 * Profile
+	 */
+	protected ClientProfile profile;
+
+	/**
+	 * Endpoint
+	 */
+	protected String endpoint;
+
+	/**
+	 * region
+	 */
+	protected String region;
+
+	/**
+	 * 版本
+	 */
+	protected String apiVersion;
+
+	/**
+	 * 构造函数
+	 *
+	 * @param endpoint
+	 * @param apiVersion
+	 * @param region
+	 * @param credential
+	 * @param profile
+	 */
+	public AbstractClient(String endpoint, String apiVersion, String region, Credential credential, ClientProfile profile)
+	{
+		this.endpoint = endpoint;
+		this.apiVersion = apiVersion;
+		this.region = region;
+		this.credential = credential;
+		this.profile = profile;
+	}
+
+	public Map<String, String> doRequestWithTC3(HttpRequest request, ClientProfile profile, Credential credential) throws CloudSDKException
+	{
 		String httpRequestMethod = request.getHttpMethod().toString();
 		if (httpRequestMethod == null)
 		{
@@ -96,7 +150,7 @@ public class TencentAuth
 		headerMap.put("Authorization", authorization);
 		headerMap.put("X-TC-Action", request.getName());
 		headerMap.put("X-TC-Timestamp", timestamp);
-		headerMap.put("X-TC-Version", profile.getVersion());
+		headerMap.put("X-TC-Version", apiVersion);
 		headerMap.put("X-TC-RequestClient", "SDK_JAVA_BAREBONE");
 		if (null != request.getHeaders())
 		{
@@ -106,9 +160,9 @@ public class TencentAuth
 			}
 		}
 
-		if (null != profile.getRegion())
+		if (null != region)
 		{
-			headerMap.put("X-TC-Region", profile.getRegion());
+			headerMap.put("X-TC-Region", region);
 		}
 		if (request.isUnsignedPayload())
 		{
@@ -122,4 +176,50 @@ public class TencentAuth
 		return headerMap;
 	}
 
+	/**
+	 * 执行请求
+	 * 
+	 * @param <T>
+	 * @param request
+	 * @param headers
+	 * @param valueTypeRef
+	 * @return
+	 * @throws CloudSDKException
+	 */
+	protected <T extends GeneralResponse> T executeRequest(DefaultHttpRequest request, Map<String, String> headers,
+	        TypeReference<TencentResponse<T>> valueTypeRef) throws CloudSDKException
+	{
+		try
+		{
+			HttpResponse<String> response = null;
+
+			if (HttpMethod.POST.equals(request.getHttpMethod()))
+			{
+				response = Unirest.post(request.getUrl().toString()).headers(headers).body(request.getStringBody()).asString();
+			}
+			else
+			{
+				response = Unirest.get(request.getUrl().toString()).headers(headers).asString();
+			}
+
+			if (response.getStatus() == HttpStatus.OK)
+			{
+				TencentResponse<T> respBody = JSONUtils.parseWithTypeRef(response.getBody(), valueTypeRef);
+
+				return respBody.getResponse();
+			}
+			else
+			{
+				throw new CloudSDKException("Request failed, status is " + response.getStatus() + "，response body: " + response.getBody());
+			}
+		}
+		catch (UnirestException e)
+		{
+			throw new CloudSDKException("HTTP request execution failed.", e);
+		}
+		catch (JSONException e)
+		{
+			throw new CloudSDKException("String deserialize to Object failed.", e);
+		}
+	}
 }

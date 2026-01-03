@@ -13,11 +13,6 @@ public class ClientProfile
 	public static final String REQ_HTTP = "http://";
 
 	/**
-	 * The endpoint for the API request (e.g., "cvm.tencentcloudapi.com").
-	 */
-	private String endpoint;
-
-	/**
 	 * The protocol used for the request. Currently, only HTTPS is valid.
 	 */
 	private String protocol;
@@ -26,11 +21,6 @@ public class ClientProfile
 	 * valid choices: zh-CN, en-US
 	 */
 	private Language language;
-
-	/**
-	 * 版本
-	 */
-	private String version;
 
 	/**
 	 * 区域
@@ -43,28 +33,7 @@ public class ClientProfile
 	 */
 	public ClientProfile()
 	{
-		this.endpoint = null;
 		this.protocol = REQ_HTTPS;
-	}
-
-	/**
-	 * 获取endpoint
-	 * 
-	 * @return
-	 */
-	public String getEndpoint()
-	{
-		return endpoint;
-	}
-
-	/**
-	 * 设置endpoint
-	 * 
-	 * @param endpoint
-	 */
-	public void setEndpoint(String endpoint)
-	{
-		this.endpoint = endpoint;
 	}
 
 	/**
@@ -105,26 +74,6 @@ public class ClientProfile
 	public void setLanguage(Language language)
 	{
 		this.language = language;
-	}
-
-	/**
-	 * 获取version
-	 * 
-	 * @return
-	 */
-	public String getVersion()
-	{
-		return version;
-	}
-
-	/**
-	 * 设置version
-	 * 
-	 * @param version
-	 */
-	public void setVersion(String version)
-	{
-		this.version = version;
 	}
 
 	/**
