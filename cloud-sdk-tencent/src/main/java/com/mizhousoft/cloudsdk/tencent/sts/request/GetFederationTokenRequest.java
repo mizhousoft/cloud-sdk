@@ -3,7 +3,7 @@ package com.mizhousoft.cloudsdk.tencent.sts.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * TODO
+ * GetFederationToken Request
  *
  * @version
  */

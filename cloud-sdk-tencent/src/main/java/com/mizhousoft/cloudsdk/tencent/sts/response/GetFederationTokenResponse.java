@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mizhousoft.cloudsdk.tencent.core.GeneralResponse;
 
 /**
- * TODO
+ * GetFederationToken Response
  *
  * @version
  */

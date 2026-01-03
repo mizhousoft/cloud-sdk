@@ -3,7 +3,7 @@ package com.mizhousoft.cloudsdk.tencent.sts.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * TODO
+ * 凭证
  *
  * @version
  */
@@ -13,19 +13,19 @@ public class Credentials
 	 * token。token长度和绑定的策略有关，最长不超过4096字节。
 	 */
 	@JsonProperty("Token")
-	private String token;
+	private transient String token;
 
 	/**
 	 * 临时证书密钥ID。最长不超过1024字节。
 	 */
 	@JsonProperty("TmpSecretId")
-	private String tmpSecretId;
+	private transient String tmpSecretId;
 
 	/**
 	 * 临时证书密钥Key。最长不超过1024字节。
 	 */
 	@JsonProperty("TmpSecretKey")
-	private String tmpSecretKey;
+	private transient String tmpSecretKey;
 
 	/**
 	 * 获取token
