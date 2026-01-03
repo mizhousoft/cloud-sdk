@@ -15,7 +15,7 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.tencent.auth.Sign;
+import com.mizhousoft.cloudsdk.tencent.common.Sign;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
 import com.mizhousoft.cloudsdk.tencent.core.http.HttpProtocol;
 import com.mizhousoft.commons.json.JSONException;

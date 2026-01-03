@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.tencent.auth;
+package com.mizhousoft.cloudsdk.tencent.common;
 
 /**
  * 区域枚举

@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.tencent.auth.Credential;
-import com.mizhousoft.cloudsdk.tencent.auth.RegionEnum;
+import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
+import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.sms.impl.DefaultSmsClient;
 import com.mizhousoft.cloudsdk.tencent.sms.request.SmsPackageStatisticsRequest;
 import com.mizhousoft.cloudsdk.tencent.sms.response.SmsPackagesStatisticsResponse;

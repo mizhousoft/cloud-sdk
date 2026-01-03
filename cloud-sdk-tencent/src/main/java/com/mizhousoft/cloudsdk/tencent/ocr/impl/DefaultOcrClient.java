@@ -4,11 +4,11 @@ import java.util.Map;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
 import com.mizhousoft.cloudsdk.TempCredential;
-import com.mizhousoft.cloudsdk.tencent.auth.ClientProfile;
-import com.mizhousoft.cloudsdk.tencent.auth.Credential;
-import com.mizhousoft.cloudsdk.tencent.auth.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
+import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
+import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.common.TencentResponse;
+import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
 import com.mizhousoft.cloudsdk.tencent.ocr.OcrClient;

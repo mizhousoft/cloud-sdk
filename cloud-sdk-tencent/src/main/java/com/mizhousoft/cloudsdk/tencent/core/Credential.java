@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.tencent.auth;
+package com.mizhousoft.cloudsdk.tencent.core;
 
 /**
  * 凭证
