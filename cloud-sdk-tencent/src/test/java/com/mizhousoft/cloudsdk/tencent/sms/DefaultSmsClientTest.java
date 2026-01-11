@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.sms.impl.DefaultSmsClient;
@@ -58,7 +58,7 @@ public class DefaultSmsClientTest
 		{
 			smsClient.send(phoneNumber, paramMap, appId, sign, templateId);
 		}
-		catch (CloudSDKException e)
+		catch (CloudSDKNewException e)
 		{
 			Assertions.fail(e);
 		}
@@ -79,7 +79,7 @@ public class DefaultSmsClientTest
 
 			LOG.info(response.toString());
 		}
-		catch (CloudSDKException e)
+		catch (CloudSDKNewException e)
 		{
 			Assertions.fail(e);
 		}

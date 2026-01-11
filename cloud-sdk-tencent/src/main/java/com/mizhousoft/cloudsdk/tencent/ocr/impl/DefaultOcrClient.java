@@ -2,12 +2,12 @@ package com.mizhousoft.cloudsdk.tencent.ocr.impl;
 
 import java.util.Map;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.TempCredential;
+import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
-import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
@@ -80,7 +80,7 @@ public class DefaultOcrClient extends AbstractClient implements OcrClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TempCredential genTempCredential(long durationSecond) throws CloudSDKException
+	public TempCredential genTempCredential(long durationSecond) throws CloudSDKNewException
 	{
 		GetFederationTokenRequest request = new GetFederationTokenRequest();
 		request.setName("ocr");
@@ -96,7 +96,7 @@ public class DefaultOcrClient extends AbstractClient implements OcrClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String imageBase64OCR(String imageBase64) throws CloudSDKException
+	public String imageBase64OCR(String imageBase64) throws CloudSDKNewException
 	{
 		VinOCRRequest ocrRequest = new VinOCRRequest();
 		ocrRequest.setImageBase64(imageBase64);
@@ -123,7 +123,7 @@ public class DefaultOcrClient extends AbstractClient implements OcrClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String imageUrlOCR(String imageUrl) throws CloudSDKException
+	public String imageUrlOCR(String imageUrl) throws CloudSDKNewException
 	{
 		VinOCRRequest ocrRequest = new VinOCRRequest();
 		ocrRequest.setImageUrl(imageUrl);

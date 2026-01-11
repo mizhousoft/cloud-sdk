@@ -2,7 +2,7 @@ package com.mizhousoft.cloudsdk.tencent.sms;
 
 import java.util.Map;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.tencent.sms.request.SmsPackageStatisticsRequest;
 import com.mizhousoft.cloudsdk.tencent.sms.response.SmsPackagesStatisticsResponse;
 
@@ -21,9 +21,9 @@ public interface SmsClient
 	 * @param appId
 	 * @param sign
 	 * @param templateId
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	void send(String phoneNumber, Map<String, String> paramMap, String appId, String sign, String templateId) throws CloudSDKException;
+	void send(String phoneNumber, Map<String, String> paramMap, String appId, String sign, String templateId) throws CloudSDKNewException;
 
 	/**
 	 * 发送多个
@@ -33,17 +33,17 @@ public interface SmsClient
 	 * @param appId
 	 * @param sign
 	 * @param templateId
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
 	void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, String sign, String templateId)
-	        throws CloudSDKException;
+	        throws CloudSDKNewException;
 
 	/**
 	 * 查询套餐包信息统计
 	 * 
 	 * @param request
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	SmsPackagesStatisticsResponse querySmsPackageStatistics(SmsPackageStatisticsRequest request) throws CloudSDKException;
+	SmsPackagesStatisticsResponse querySmsPackageStatistics(SmsPackageStatisticsRequest request) throws CloudSDKNewException;
 }

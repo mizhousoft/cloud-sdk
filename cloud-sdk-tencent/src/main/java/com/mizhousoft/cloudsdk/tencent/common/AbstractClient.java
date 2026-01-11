@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
@@ -33,6 +37,8 @@ import tools.jackson.core.type.TypeReference;
  */
 public abstract class AbstractClient
 {
+	private static final Logger LOG = LoggerFactory.getLogger("cloudsdk");
+
 	/**
 	 * Credential
 	 */
@@ -83,10 +89,10 @@ public abstract class AbstractClient
 	 * @param profile
 	 * @param credential
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
 	protected Map<String, String> buildSignHeader(HttpRequest request, ClientProfile profile, Credential credential)
-	        throws CloudSDKException
+	        throws CloudSDKNewException
 	{
 		String contentType = "application/x-www-form-urlencoded";
 		byte[] requestPayload = "".getBytes(StandardCharsets.UTF_8);
@@ -186,10 +192,41 @@ public abstract class AbstractClient
 	 * @param headers
 	 * @param valueTypeRef
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
 	protected <T extends TencentResponse> T executeRequest(DefaultHttpRequest request, Map<String, String> headers,
-	        TypeReference<APIResponse<T>> valueTypeRef) throws CloudSDKException
+	        TypeReference<APIResponse<T>> valueTypeRef) throws CloudSDKNewException
+	{
+		long start = System.currentTimeMillis();
+
+		try
+		{
+			T response = doExecuteRequest(request, headers, valueTypeRef);
+
+			logRequestSuccess(start, request, response);
+
+			return response;
+		}
+		catch (CloudSDKNewException e)
+		{
+			logRequestFailure(start, request, e);
+
+			throw e;
+		}
+	}
+
+	/**
+	 * 执行请求
+	 * 
+	 * @param <T>
+	 * @param request
+	 * @param headers
+	 * @param valueTypeRef
+	 * @return
+	 * @throws CloudSDKNewException
+	 */
+	private <T extends TencentResponse> T doExecuteRequest(DefaultHttpRequest request, Map<String, String> headers,
+	        TypeReference<APIResponse<T>> valueTypeRef) throws CloudSDKNewException
 	{
 		try
 		{
@@ -210,25 +247,28 @@ public abstract class AbstractClient
 				if (null != respBody.getResponse().getError())
 				{
 					APIError error = respBody.getResponse().getError();
+					String requestId = respBody.getResponse().getRequestId();
 
-					throw new CloudSDKException("Request failed, code is " + error.getCode() + "，message: " + error.getMessage()
-					        + ", requestId is " + respBody.getResponse().getRequestId());
+					throw new CloudSDKNewException(response.getStatus(), requestId, error.getCode(), error.getMessage());
 				}
 
-				return respBody.getResponse();
+				T result = respBody.getResponse();
+				result.setHttpStatusCode(response.getStatus());
+
+				return result;
 			}
 			else
 			{
-				throw new CloudSDKException("Request failed, status is " + response.getStatus() + "，response body: " + response.getBody());
+				throw new CloudSDKNewException(response.getStatus(), response.getBody());
 			}
 		}
 		catch (UnirestException e)
 		{
-			throw new CloudSDKException("HTTP request execution failed.", e);
+			throw new CloudSDKNewException("HTTP request execution failed.", e);
 		}
 		catch (JSONException e)
 		{
-			throw new CloudSDKException("String deserialize to Object failed.", e);
+			throw new CloudSDKNewException("String deserialize to Object failed.", e);
 		}
 	}
 
@@ -237,9 +277,9 @@ public abstract class AbstractClient
 	 * 
 	 * @param b
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	private String sha256Hex(byte[] b) throws CloudSDKException
+	private String sha256Hex(byte[] b) throws CloudSDKNewException
 	{
 		try
 		{
@@ -247,7 +287,7 @@ public abstract class AbstractClient
 		}
 		catch (CryptoException e)
 		{
-			throw new CloudSDKException("SHA-256 is not supported. " + e.getMessage());
+			throw new CloudSDKNewException("SHA-256 is not supported. " + e.getMessage());
 		}
 	}
 
@@ -257,9 +297,9 @@ public abstract class AbstractClient
 	 * @param key
 	 * @param msg
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	private byte[] hmac256(byte[] key, String msg) throws CloudSDKException
+	private byte[] hmac256(byte[] key, String msg) throws CloudSDKNewException
 	{
 		try
 		{
@@ -267,7 +307,82 @@ public abstract class AbstractClient
 		}
 		catch (CryptoException e)
 		{
-			throw new CloudSDKException("HmacSHA256 is not supported. " + e.getMessage());
+			throw new CloudSDKNewException("HmacSHA256 is not supported. " + e.getMessage());
 		}
+	}
+
+	/**
+	 * 记录请求成功
+	 * 
+	 * @param <T>
+	 * @param start
+	 * @param request
+	 * @param response
+	 */
+	private <T extends TencentResponse> void logRequestSuccess(long start, DefaultHttpRequest request, T response)
+	{
+		long duration = System.currentTimeMillis() - start;
+
+		StringBuilder buff = new StringBuilder(100);
+		buff.append("v1")
+		        .append("|")
+		        .append("tencent")
+		        .append("|")
+		        .append("T")
+		        .append("|")
+		        .append(apiVersion)
+		        .append("|")
+		        .append(region)
+		        .append("|")
+		        .append(request.getName())
+		        .append("|")
+		        .append(response.getHttpStatusCode())
+		        .append("|")
+		        .append(response.getRequestId())
+		        .append("|")
+		        .append(duration)
+		        .append("|")
+		        .append(request.getHttpMethod())
+		        .append("|")
+		        .append(request.getUrl());
+
+		LOG.info(buff.toString());
+	}
+
+	/**
+	 * 记录请求失败
+	 * 
+	 * @param start
+	 * @param request
+	 * @param cause
+	 */
+	private void logRequestFailure(long start, DefaultHttpRequest request, CloudSDKNewException cause)
+	{
+		long duration = System.currentTimeMillis() - start;
+
+		StringBuilder buff = new StringBuilder(100);
+		buff.append("v1")
+		        .append("|")
+		        .append("tencent")
+		        .append("|")
+		        .append("F")
+		        .append("|")
+		        .append(apiVersion)
+		        .append("|")
+		        .append(region)
+		        .append("|")
+		        .append(request.getName())
+		        .append("|")
+		        .append(cause.getHttpStatusCode())
+		        .append("|")
+		        .append(StringUtils.trimToEmpty(cause.getRequestId()))
+		        .append("|")
+		        .append(duration)
+		        .append("|")
+		        .append(request.getHttpMethod())
+		        .append("|")
+		        .append(request.getUrl());
+
+		LOG.info(buff.toString());
 	}
 }

@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
-import com.mizhousoft.cloudsdk.sms.SmsSendException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
+import com.mizhousoft.cloudsdk.sms.SmsSendNewException;
 import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
@@ -79,7 +79,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 */
 	@Override
 	public void send(String phoneNumber, Map<String, String> paramMap, String appId, String sign, String templateId)
-	        throws CloudSDKException
+	        throws CloudSDKNewException
 	{
 		String[] phoneNumbers = { phoneNumber };
 
@@ -89,11 +89,11 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
 	@Override
 	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, String sign, String templateId)
-	        throws CloudSDKException
+	        throws CloudSDKNewException
 	{
 		List<String> numberList = new ArrayList<String>(Arrays.asList(phoneNumbers));
 		List<List<String>> parts = ListUtils.partition(numberList, 200);
@@ -144,7 +144,8 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 
 		if (!failedPhoneNumbers.isEmpty())
 		{
-			SmsSendException exception = new SmsSendException("SMS appId is " + appId + ", template id is " + templateId + ", " + message);
+			SmsSendNewException exception = new SmsSendNewException(
+			        "SMS appId is " + appId + ", template id is " + templateId + ", " + message);
 			exception.setFailedPhoneNumbers(failedPhoneNumbers.toArray(new String[failedPhoneNumbers.size()]));
 
 			throw exception;
@@ -155,7 +156,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SmsPackagesStatisticsResponse querySmsPackageStatistics(SmsPackageStatisticsRequest request) throws CloudSDKException
+	public SmsPackagesStatisticsResponse querySmsPackageStatistics(SmsPackageStatisticsRequest request) throws CloudSDKNewException
 	{
 		DefaultHttpRequest httpRequest = DefaultHttpRequest.builder()
 		        .name("SmsPackagesStatistics")

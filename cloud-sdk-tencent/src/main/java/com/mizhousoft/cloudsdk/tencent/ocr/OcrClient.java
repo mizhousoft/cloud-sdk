@@ -1,6 +1,6 @@
 package com.mizhousoft.cloudsdk.tencent.ocr;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.TempCredential;
 
 /**
@@ -15,25 +15,25 @@ public interface OcrClient
 	 * 
 	 * @param durationSecond
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	TempCredential genTempCredential(long durationSecond) throws CloudSDKException;
+	TempCredential genTempCredential(long durationSecond) throws CloudSDKNewException;
 
 	/**
 	 * 识别
 	 * 
 	 * @param imageBase64
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	String imageBase64OCR(String imageBase64) throws CloudSDKException;
+	String imageBase64OCR(String imageBase64) throws CloudSDKNewException;
 
 	/**
 	 * 识别
 	 * 
 	 * @param imageUrl
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	String imageUrlOCR(String imageUrl) throws CloudSDKException;
+	String imageUrlOCR(String imageUrl) throws CloudSDKNewException;
 }

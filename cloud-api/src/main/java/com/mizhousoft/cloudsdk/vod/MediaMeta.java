@@ -199,6 +199,7 @@ public class MediaMeta
 
 	/**
 	 * 获取width
+	 * 
 	 * @return
 	 */
 	public long getWidth()
@@ -208,6 +209,7 @@ public class MediaMeta
 
 	/**
 	 * 设置width
+	 * 
 	 * @param width
 	 */
 	public void setWidth(long width)
@@ -217,6 +219,7 @@ public class MediaMeta
 
 	/**
 	 * 获取height
+	 * 
 	 * @return
 	 */
 	public long getHeight()
@@ -226,6 +229,7 @@ public class MediaMeta
 
 	/**
 	 * 设置height
+	 * 
 	 * @param height
 	 */
 	public void setHeight(long height)

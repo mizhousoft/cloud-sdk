@@ -1,6 +1,6 @@
 package com.mizhousoft.cloudsdk.tencent.sts;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.TempCredential;
 import com.mizhousoft.cloudsdk.tencent.sts.request.GetFederationTokenRequest;
 
@@ -16,7 +16,7 @@ public interface StsClient
 	 * 
 	 * @param req
 	 * @return
-	 * @throws CloudSDKException
+	 * @throws CloudSDKNewException
 	 */
-	TempCredential getFederationToken(GetFederationTokenRequest req) throws CloudSDKException;
+	TempCredential getFederationToken(GetFederationTokenRequest req) throws CloudSDKNewException;
 }

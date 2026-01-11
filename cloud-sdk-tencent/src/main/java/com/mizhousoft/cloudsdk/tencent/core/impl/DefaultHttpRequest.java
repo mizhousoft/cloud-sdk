@@ -15,7 +15,7 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.tencent.core.HttpRequest;
 import com.mizhousoft.cloudsdk.tencent.core.http.HttpProtocol;
 import com.mizhousoft.commons.json.JSONException;
@@ -237,9 +237,9 @@ public class DefaultHttpRequest implements HttpRequest
 		 * 
 		 * @param object
 		 * @return
-		 * @throws CloudSDKException
+		 * @throws CloudSDKNewException
 		 */
-		public Builder bodyAsString(Object object) throws CloudSDKException
+		public Builder bodyAsString(Object object) throws CloudSDKNewException
 		{
 			try
 			{
@@ -249,7 +249,7 @@ public class DefaultHttpRequest implements HttpRequest
 			}
 			catch (JSONException e)
 			{
-				throw new CloudSDKException("Object serialize to a string failed.", e);
+				throw new CloudSDKNewException("Object serialize to a string failed.", e);
 			}
 		}
 

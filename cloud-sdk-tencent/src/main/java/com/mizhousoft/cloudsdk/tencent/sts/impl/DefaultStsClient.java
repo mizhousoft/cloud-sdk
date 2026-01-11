@@ -2,12 +2,12 @@ package com.mizhousoft.cloudsdk.tencent.sts.impl;
 
 import java.util.Map;
 
-import com.mizhousoft.cloudsdk.CloudSDKException;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.TempCredential;
+import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
 import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
-import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.core.http.MediaType;
 import com.mizhousoft.cloudsdk.tencent.core.impl.DefaultHttpRequest;
@@ -71,7 +71,7 @@ public class DefaultStsClient extends AbstractClient implements StsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TempCredential getFederationToken(GetFederationTokenRequest request) throws CloudSDKException
+	public TempCredential getFederationToken(GetFederationTokenRequest request) throws CloudSDKNewException
 	{
 		DefaultHttpRequest httpRequest = DefaultHttpRequest.builder()
 		        .name("GetFederationToken")
