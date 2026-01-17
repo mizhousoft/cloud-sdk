@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mizhousoft.cloudsdk.CloudSDKNewException;
-import com.mizhousoft.cloudsdk.sms.SmsSendNewException;
+import com.mizhousoft.cloudsdk.sms2.SmsException;
 import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
@@ -46,6 +46,18 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	public DefaultSmsClient(RegionEnum region, Credential credential)
 	{
 		this(ENDPOINT, API_VERSION, region, credential, new ClientProfile());
+	}
+
+	/**
+	 * 构造函数
+	 *
+	 * @param endpoint
+	 * @param region
+	 * @param credential
+	 */
+	public DefaultSmsClient(String endpoint, RegionEnum region, Credential credential)
+	{
+		super(endpoint, API_VERSION, region, credential, new ClientProfile());
 	}
 
 	/**
@@ -144,8 +156,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 
 		if (!failedPhoneNumbers.isEmpty())
 		{
-			SmsSendNewException exception = new SmsSendNewException(
-			        "SMS appId is " + appId + ", template id is " + templateId + ", " + message);
+			SmsException exception = new SmsException("SMS appId is " + appId + ", template id is " + templateId + ", " + message);
 			exception.setFailedPhoneNumbers(failedPhoneNumbers.toArray(new String[failedPhoneNumbers.size()]));
 
 			throw exception;

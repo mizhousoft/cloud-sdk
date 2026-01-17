@@ -5,7 +5,7 @@ import com.mizhousoft.cloudsdk.tencent.vod.VodClient;
 /**
  * VodClient
  *
- * @version  
+ * @version
  */
 public class DefaultVodClient implements VodClient
 {

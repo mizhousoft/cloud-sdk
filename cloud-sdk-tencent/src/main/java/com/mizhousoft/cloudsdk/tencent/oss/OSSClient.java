@@ -3,7 +3,7 @@ package com.mizhousoft.cloudsdk.tencent.oss;
 /**
  * OSSClient
  *
- * @version  
+ * @version
  */
 public interface OSSClient
 {

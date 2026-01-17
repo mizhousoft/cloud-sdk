@@ -45,6 +45,7 @@
 		<module>cloud-sdk-huawei</module>
 		<module>cloud-sdk-tencent</module>
 		<module>sms-spring-boot-starter</module>
+		<module>sms2-spring-boot-starter</module>
 		<module>tencent-oss-spring-boot-starter</module>
 		<module>tencent-tms-spring-boot-starter</module>
 		<module>aliyun-oss-spring-boot-starter</module>

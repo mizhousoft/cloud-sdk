@@ -1,4 +1,4 @@
-package com.mizhousoft.cloudsdk.sms;
+package com.mizhousoft.cloudsdk.sms2;
 
 import com.mizhousoft.cloudsdk.CloudSDKNewException;
 
@@ -7,7 +7,7 @@ import com.mizhousoft.cloudsdk.CloudSDKNewException;
  *
  * @version
  */
-public class SmsSendNewException extends CloudSDKNewException
+public class SmsException extends CloudSDKNewException
 {
 	private static final long serialVersionUID = -5000706925600173532L;
 
@@ -23,7 +23,7 @@ public class SmsSendNewException extends CloudSDKNewException
 	 * @param requestId
 	 * @param errorCode
 	 */
-	public SmsSendNewException(int statusCode, String requestId, String errorCode)
+	public SmsException(int statusCode, String requestId, String errorCode)
 	{
 		super(statusCode, requestId, errorCode);
 	}
@@ -34,7 +34,7 @@ public class SmsSendNewException extends CloudSDKNewException
 	 * @param message
 	 * @param throwable
 	 */
-	public SmsSendNewException(String message, Throwable throwable)
+	public SmsException(String message, Throwable throwable)
 	{
 		super(message, throwable);
 	}
@@ -44,7 +44,7 @@ public class SmsSendNewException extends CloudSDKNewException
 	 *
 	 * @param message
 	 */
-	public SmsSendNewException(String message)
+	public SmsException(String message)
 	{
 		super(message);
 	}

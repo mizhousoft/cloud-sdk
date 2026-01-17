@@ -3,7 +3,7 @@ package com.mizhousoft.cloudsdk.tencent.vod;
 /**
  * VodClient
  *
- * @version  
+ * @version
  */
 public interface VodClient
 {
