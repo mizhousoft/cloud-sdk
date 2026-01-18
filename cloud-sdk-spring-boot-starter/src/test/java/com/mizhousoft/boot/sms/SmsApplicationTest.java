@@ -4,18 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.mizhousoft.boot.DemoApplication;
 import com.mizhousoft.cloudsdk.sms2.SmsApplicationClient;
 import com.mizhousoft.cloudsdk.sms2.SmsApplicationFactory;
 import com.mizhousoft.cloudsdk.sms2.SmsException;
 import com.mizhousoft.cloudsdk.sms2.SmsTemplate;
 
 /**
- * TencentSmsApplication Test
+ * SmsApplication Test
  *
  * @version
  */
 @SpringBootTest(classes = DemoApplication.class)
-public class TencentSmsApplicationTest
+public class SmsApplicationTest
 {
 	@Autowired
 	private SmsApplicationFactory smsApplicationFactory;

@@ -8,9 +8,9 @@
 		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>sms2-spring-boot-starter</artifactId>
+	<artifactId>cloud-sdk-spring-boot-starter</artifactId>
 	<packaging>jar</packaging>
-	<name>sms2-spring-boot-starter</name>
+	<name>cloud-sdk-spring-boot-starter</name>
 
 	<dependencies>
 		<dependency>
