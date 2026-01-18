@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.cloudsdk.CloudSDKNewException;
+import com.mizhousoft.cloudsdk.sms2.SmsTemplate;
 import com.mizhousoft.cloudsdk.tencent.common.RegionEnum;
 import com.mizhousoft.cloudsdk.tencent.core.Credential;
 import com.mizhousoft.cloudsdk.tencent.sms.impl.DefaultSmsClient;
@@ -48,15 +49,18 @@ public class DefaultSmsClientTest
 	@Test
 	public void send()
 	{
+		String templateCode = "register";
+		String signName = "";
+		Object templateId = "";
+		SmsTemplate smsTemplate = new SmsTemplate(templateCode, signName, templateId);
+
 		String phoneNumber = "";
 		String appId = "";
-		String sign = "";
-		String templateId = "";
 		Map<String, String> paramMap = Map.of("1", "223332", "2", "10");
 
 		try
 		{
-			smsClient.send(phoneNumber, paramMap, appId, sign, templateId);
+			smsClient.send(phoneNumber, paramMap, appId, smsTemplate);
 		}
 		catch (CloudSDKNewException e)
 		{

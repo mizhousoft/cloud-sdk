@@ -75,7 +75,7 @@ public class SmsApplicationClientImpl implements SmsApplicationClient
 
 		try
 		{
-			smsClient.multiSend(phoneNumbers, paramMap, application.getAppId(), smsTemplate.getSignName(), smsTemplate.getTemplateCode());
+			smsClient.multiSend(phoneNumbers, paramMap, application.getAppId(), smsTemplate);
 
 			SmsLogTracker.log(application, phoneNumbers, true, smsTemplate);
 		}
@@ -102,7 +102,7 @@ public class SmsApplicationClientImpl implements SmsApplicationClient
 
 		try
 		{
-			smsClient.send(phoneNumber, paramMap, application.getAppId(), smsTemplate.getSignName(), smsTemplate.getTemplateCode());
+			smsClient.send(phoneNumber, paramMap, application.getAppId(), smsTemplate);
 
 			SmsLogTracker.log(application, phoneNumber, true, smsTemplate);
 

@@ -94,7 +94,7 @@ public class VerificationCodeSmsServiceImpl implements VerificationCodeSmsServic
 
 		try
 		{
-			smsClient.send(phoneNumber, paramMap, application.getAppId(), smsTemplate.getSignName(), smsTemplate.getTemplateCode());
+			smsClient.send(phoneNumber, paramMap, application.getAppId(), smsTemplate);
 		}
 		catch (CloudSDKNewException e)
 		{

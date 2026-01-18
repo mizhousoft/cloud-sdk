@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.sms2.SmsException;
+import com.mizhousoft.cloudsdk.sms2.SmsTemplate;
 import com.mizhousoft.cloudsdk.tencent.common.APIResponse;
 import com.mizhousoft.cloudsdk.tencent.common.AbstractClient;
 import com.mizhousoft.cloudsdk.tencent.common.ClientProfile;
@@ -90,12 +91,11 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void send(String phoneNumber, Map<String, String> paramMap, String appId, String sign, String templateId)
-	        throws CloudSDKNewException
+	public void send(String phoneNumber, Map<String, String> paramMap, String appId, SmsTemplate smsTemplate) throws CloudSDKNewException
 	{
 		String[] phoneNumbers = { phoneNumber };
 
-		multiSend(phoneNumbers, paramMap, appId, sign, templateId);
+		multiSend(phoneNumbers, paramMap, appId, smsTemplate);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 	 * @throws CloudSDKNewException
 	 */
 	@Override
-	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, String sign, String templateId)
+	public void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, SmsTemplate smsTemplate)
 	        throws CloudSDKNewException
 	{
 		List<String> numberList = new ArrayList<String>(Arrays.asList(phoneNumbers));
@@ -118,8 +118,8 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 			SendSmsRequest request = new SendSmsRequest();
 
 			request.setSmsSdkAppid(appId);
-			request.setSign(sign);
-			request.setTemplateID(templateId);
+			request.setSign(smsTemplate.getSignName());
+			request.setTemplateID(smsTemplate.getTemplateId().toString());
 
 			Collection<String> paramValues = paramMap.values();
 			String[] templateParamSet = paramValues.toArray(new String[paramValues.size()]);
@@ -156,7 +156,8 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 
 		if (!failedPhoneNumbers.isEmpty())
 		{
-			SmsException exception = new SmsException("SMS appId is " + appId + ", template id is " + templateId + ", " + message);
+			SmsException exception = new SmsException(
+			        "SMS appId is " + appId + ", template id is " + smsTemplate.getTemplateId() + ", " + message);
 			exception.setFailedPhoneNumbers(failedPhoneNumbers.toArray(new String[failedPhoneNumbers.size()]));
 
 			throw exception;

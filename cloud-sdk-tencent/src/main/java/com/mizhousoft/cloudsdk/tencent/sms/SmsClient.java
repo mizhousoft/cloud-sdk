@@ -3,6 +3,7 @@ package com.mizhousoft.cloudsdk.tencent.sms;
 import java.util.Map;
 
 import com.mizhousoft.cloudsdk.CloudSDKNewException;
+import com.mizhousoft.cloudsdk.sms2.SmsTemplate;
 import com.mizhousoft.cloudsdk.tencent.sms.request.SmsPackageStatisticsRequest;
 import com.mizhousoft.cloudsdk.tencent.sms.response.SmsPackagesStatisticsResponse;
 
@@ -19,11 +20,10 @@ public interface SmsClient
 	 * @param phoneNumber
 	 * @param paramMap
 	 * @param appId
-	 * @param sign
-	 * @param templateId
+	 * @param smsTemplate
 	 * @throws CloudSDKNewException
 	 */
-	void send(String phoneNumber, Map<String, String> paramMap, String appId, String sign, String templateId) throws CloudSDKNewException;
+	void send(String phoneNumber, Map<String, String> paramMap, String appId, SmsTemplate smsTemplate) throws CloudSDKNewException;
 
 	/**
 	 * 发送多个
@@ -31,12 +31,10 @@ public interface SmsClient
 	 * @param phoneNumbers
 	 * @param paramMap
 	 * @param appId
-	 * @param sign
-	 * @param templateId
+	 * @param smsTemplate
 	 * @throws CloudSDKNewException
 	 */
-	void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, String sign, String templateId)
-	        throws CloudSDKNewException;
+	void multiSend(String[] phoneNumbers, Map<String, String> paramMap, String appId, SmsTemplate smsTemplate) throws CloudSDKNewException;
 
 	/**
 	 * 查询套餐包信息统计
