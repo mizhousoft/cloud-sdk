@@ -192,7 +192,7 @@ public class SmsApplicationClientImpl implements SmsApplicationClient
 	{
 		templateMap.put(template.getTemplateCode(), template);
 
-		LOG.info("Register sms template to container, body is {}.", template.toString());
+		LOG.info("Add sms template to container, body is {}.", template.toString());
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class SmsApplicationClientImpl implements SmsApplicationClient
 	{
 		SmsTemplate template = templateMap.remove(templateCode);
 
-		LOG.info("Register sms template to container, body is {}.", template);
+		LOG.info("Remove sms template from container, body is {}.", template);
 
 		return template;
 	}
