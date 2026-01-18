@@ -40,6 +40,15 @@ public enum RegionEnum
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString()
+	{
+		return value;
+	}
+
+	/**
 	 * 获取状态
 	 * 
 	 * @param status

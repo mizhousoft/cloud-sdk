@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.mizhousoft.boot.sms.properties.SmsApplication;
 import com.mizhousoft.boot.sms.service.VerificationCodeSmsService;
 import com.mizhousoft.boot.sms.util.SmsLogTracker;
+import com.mizhousoft.cloudsdk.CloudSDKNewException;
 import com.mizhousoft.cloudsdk.sms2.SmsApplicationClient;
 import com.mizhousoft.cloudsdk.sms2.SmsException;
 import com.mizhousoft.cloudsdk.sms2.SmsTemplate;
@@ -78,7 +79,7 @@ public class SmsApplicationClientImpl implements SmsApplicationClient
 
 			SmsLogTracker.log(application, phoneNumbers, true, smsTemplate);
 		}
-		catch (Throwable e)
+		catch (CloudSDKNewException e)
 		{
 			SmsLogTracker.log(application, phoneNumbers, false, smsTemplate);
 
@@ -107,7 +108,7 @@ public class SmsApplicationClientImpl implements SmsApplicationClient
 
 			return true;
 		}
-		catch (Throwable e)
+		catch (CloudSDKNewException e)
 		{
 			SmsLogTracker.log(application, phoneNumber, false, smsTemplate);
 
@@ -138,7 +139,7 @@ public class SmsApplicationClientImpl implements SmsApplicationClient
 
 			return code;
 		}
-		catch (Throwable e)
+		catch (CloudSDKNewException e)
 		{
 			SmsLogTracker.log(application, phoneNumber, false, host, smsTemplate);
 

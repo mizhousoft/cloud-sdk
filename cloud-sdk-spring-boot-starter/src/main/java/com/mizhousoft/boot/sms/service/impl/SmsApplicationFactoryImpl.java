@@ -7,10 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Service;
 
 import com.mizhousoft.boot.sms.properties.SmsApplication;
 import com.mizhousoft.boot.sms.properties.SmsApplicationProperties;
@@ -27,22 +23,30 @@ import com.mizhousoft.cloudsdk.tencent.sms.impl.DefaultSmsClient;
  *
  * @version
  */
-@Service
-@Order(value = Integer.MIN_VALUE)
-public class SmsApplicationFactoryImpl implements SmsApplicationFactory, CommandLineRunner
+public class SmsApplicationFactoryImpl implements SmsApplicationFactory
 {
 	private static final Logger LOG = LoggerFactory.getLogger(SmsApplicationFactoryImpl.class);
 
 	/**
 	 * SmsApplicationProperties
 	 */
-	@Autowired
 	private SmsApplicationProperties applicationProperties;
 
 	/**
 	 * <Name, SmsApplicationClient>
 	 */
 	private Map<String, SmsApplicationClient> clientMap = new ConcurrentHashMap<>(10);
+
+	/**
+	 * 构造函数
+	 *
+	 * @param applicationProperties
+	 */
+	public SmsApplicationFactoryImpl(SmsApplicationProperties applicationProperties)
+	{
+		super();
+		this.applicationProperties = applicationProperties;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -56,10 +60,11 @@ public class SmsApplicationFactoryImpl implements SmsApplicationFactory, Command
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * 创建短信应用
+	 * 
+	 * @throws CloudSDKException
 	 */
-	@Override
-	public void run(String... args) throws Exception
+	public void createSmsApplication() throws CloudSDKException
 	{
 		List<SmsApplication> applications = applicationProperties.getApplications();
 

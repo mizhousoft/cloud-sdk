@@ -29,10 +29,10 @@ public class SmsApplicationTest
 		Object templateId = "650126";
 		SmsTemplate smsTemplate = new SmsTemplate(templateCode, signName, templateId);
 
-		SmsApplicationClient smsAppClient = smsApplicationFactory.getByName("tencent");
+		SmsApplicationClient smsAppClient = smsApplicationFactory.getByName("default");
 		smsAppClient.addSmsTemplate(smsTemplate);
 
-		String phoneNumber = "+8618902844821";
+		String phoneNumber = "";
 		String host = "127.0.0.1";
 		smsAppClient.sendVerificationCode(phoneNumber, host, templateCode);
 	}

@@ -14,7 +14,7 @@ import com.mizhousoft.cloudsdk.sms2.SmsTemplate;
  */
 public abstract class SmsLogTracker
 {
-	private static final Logger SMS_LOG = LoggerFactory.getLogger("SMS");
+	private static final Logger LOG = LoggerFactory.getLogger("SMS");
 
 	/**
 	 * 记录
@@ -78,7 +78,7 @@ public abstract class SmsLogTracker
 		        .append("|")
 		        .append(result);
 
-		SMS_LOG.info(buffer.toString());
+		LOG.info(buffer.toString());
 	}
 
 }
