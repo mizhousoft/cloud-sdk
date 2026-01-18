@@ -25,8 +25,8 @@ public class SmsApplicationTest
 	public void sendVerificationCode() throws SmsException
 	{
 		String templateCode = "register";
-		String signName = "米舟科技";
-		Object templateId = "650126";
+		String signName = "";
+		Object templateId = "";
 		SmsTemplate smsTemplate = new SmsTemplate(templateCode, signName, templateId);
 
 		SmsApplicationClient smsAppClient = smsApplicationFactory.getByName("default");
