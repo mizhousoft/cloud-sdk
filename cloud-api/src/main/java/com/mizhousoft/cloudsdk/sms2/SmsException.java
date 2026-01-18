@@ -19,13 +19,49 @@ public class SmsException extends CloudSDKNewException
 	/**
 	 * 构造函数
 	 *
-	 * @param statusCode
-	 * @param requestId
 	 * @param errorCode
+	 * @param message
+	 * @param throwable
 	 */
-	public SmsException(int statusCode, String requestId, String errorCode)
+	public SmsException(String errorCode, String message, Throwable throwable)
 	{
-		super(statusCode, requestId, errorCode);
+		super(errorCode, message, throwable);
+	}
+
+	/**
+	 * 构造函数
+	 *
+	 * @param errorCode
+	 * @param message
+	 */
+	public SmsException(String errorCode, String message)
+	{
+		super(errorCode, message);
+	}
+
+	/**
+	 * 构造函数
+	 *
+	 * @param errorCode
+	 * @param codeParams
+	 * @param message
+	 * @param throwable
+	 */
+	public SmsException(String errorCode, String[] codeParams, String message, Throwable throwable)
+	{
+		super(errorCode, codeParams, message, throwable);
+	}
+
+	/**
+	 * 构造函数
+	 *
+	 * @param errorCode
+	 * @param codeParams
+	 * @param message
+	 */
+	public SmsException(String errorCode, String[] codeParams, String message)
+	{
+		super(errorCode, codeParams, message);
 	}
 
 	/**

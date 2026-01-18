@@ -1,11 +1,11 @@
-package com.mizhousoft.cloudsdk.sms;
+package com.mizhousoft.cloudsdk.sms2;
 
 /**
  * 云短信模板
  *
  * @version
  */
-public class CloudSmsTemplate
+public class SmsTemplate
 {
 	/**
 	 * 模板编码
@@ -29,7 +29,7 @@ public class CloudSmsTemplate
 	 * @param signName
 	 * @param templateId
 	 */
-	public CloudSmsTemplate(String templateCode, String signName, Object templateId)
+	public SmsTemplate(String templateCode, String signName, Object templateId)
 	{
 		super();
 		this.templateCode = templateCode;

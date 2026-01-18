@@ -249,7 +249,12 @@ public abstract class AbstractClient
 					APIError error = respBody.getResponse().getError();
 					String requestId = respBody.getResponse().getRequestId();
 
-					throw new CloudSDKNewException(response.getStatus(), requestId, error.getCode(), error.getMessage());
+					CloudSDKNewException exception = new CloudSDKNewException(error.getMessage());
+					exception.setHttpStatusCode(response.getStatus());
+					exception.setRequestId(requestId);
+					exception.setRequestErrorCode(error.getCode());
+
+					throw exception;
 				}
 
 				T result = respBody.getResponse();
@@ -259,7 +264,10 @@ public abstract class AbstractClient
 			}
 			else
 			{
-				throw new CloudSDKNewException(response.getStatus(), response.getBody());
+				CloudSDKNewException exception = new CloudSDKNewException(response.getBody());
+				exception.setHttpStatusCode(response.getStatus());
+
+				throw exception;
 			}
 		}
 		catch (UnirestException e)

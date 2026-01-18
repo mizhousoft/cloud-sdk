@@ -1,11 +1,13 @@
 package com.mizhousoft.cloudsdk;
 
+import com.mizhousoft.commons.data.NestedException;
+
 /**
  * 异常
  *
  * @version
  */
-public class CloudSDKNewException extends Exception
+public class CloudSDKNewException extends NestedException
 {
 	/**
 	 * 
@@ -25,49 +27,54 @@ public class CloudSDKNewException extends Exception
 	/**
 	 * 错误码
 	 */
-	private String errorCode;
+	private String requestErrorCode;
 
 	/**
 	 * 构造函数
 	 *
-	 * @param httpStatusCode
-	 * @param requestId
 	 * @param errorCode
 	 * @param message
+	 * @param throwable
 	 */
-	public CloudSDKNewException(int httpStatusCode, String requestId, String errorCode, String message)
+	public CloudSDKNewException(String errorCode, String message, Throwable throwable)
 	{
-		super(message);
-		this.httpStatusCode = httpStatusCode;
-		this.requestId = requestId;
-		this.errorCode = errorCode;
+		super(errorCode, message, throwable);
 	}
 
 	/**
 	 * 构造函数
 	 *
-	 * @param httpStatusCode
-	 * @param requestId
 	 * @param errorCode
+	 * @param message
 	 */
-	public CloudSDKNewException(int httpStatusCode, String requestId, String errorCode)
+	public CloudSDKNewException(String errorCode, String message)
 	{
-		super();
-		this.httpStatusCode = httpStatusCode;
-		this.requestId = requestId;
-		this.errorCode = errorCode;
+		super(errorCode, message);
 	}
 
 	/**
 	 * 构造函数
 	 *
-	 * @param httpStatusCode
+	 * @param errorCode
+	 * @param codeParams
+	 * @param message
+	 * @param throwable
+	 */
+	public CloudSDKNewException(String errorCode, String[] codeParams, String message, Throwable throwable)
+	{
+		super(errorCode, codeParams, message, throwable);
+	}
+
+	/**
+	 * 构造函数
+	 *
+	 * @param errorCode
+	 * @param codeParams
 	 * @param message
 	 */
-	public CloudSDKNewException(int httpStatusCode, String message)
+	public CloudSDKNewException(String errorCode, String[] codeParams, String message)
 	{
-		super(message);
-		this.httpStatusCode = httpStatusCode;
+		super(errorCode, codeParams, message);
 	}
 
 	/**
@@ -132,22 +139,22 @@ public class CloudSDKNewException extends Exception
 	}
 
 	/**
-	 * 获取errorCode
+	 * 获取requestErrorCode
 	 * 
 	 * @return
 	 */
-	public String getErrorCode()
+	public String getRequestErrorCode()
 	{
-		return errorCode;
+		return requestErrorCode;
 	}
 
 	/**
-	 * 设置errorCode
+	 * 设置requestErrorCode
 	 * 
-	 * @param errorCode
+	 * @param requestErrorCode
 	 */
-	public void setErrorCode(String errorCode)
+	public void setRequestErrorCode(String requestErrorCode)
 	{
-		this.errorCode = errorCode;
+		this.requestErrorCode = requestErrorCode;
 	}
 }

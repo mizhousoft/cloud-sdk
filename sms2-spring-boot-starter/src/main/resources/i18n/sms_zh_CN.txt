@@ -1,0 +1,6 @@
+sms.template.not.found=短信模板不存在，或已被删除
+sms.send.failed=短信发送失败
+sms.send.phone.number.empty=手机号不能为空
+sms.verification.code.empty=验证码不能为空
+sms.verification.code.verify.null=请先获取短信验证码
+sms.verification.code.verify.wrong=验证码错误
