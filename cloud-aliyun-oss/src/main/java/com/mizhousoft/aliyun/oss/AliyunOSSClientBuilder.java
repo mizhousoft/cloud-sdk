@@ -5,7 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import com.aliyun.oss.ClientBuilderConfiguration;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.common.comm.Protocol;
+import com.aliyun.oss.common.comm.SignVersion;
 import com.mizhousoft.cloudsdk.CloudSDKException;
 
 /**
@@ -25,9 +27,17 @@ public abstract class AliyunOSSClientBuilder
 
 		ClientBuilderConfiguration conf = new ClientBuilderConfiguration();
 		conf.setProtocol(Protocol.HTTPS);
+		conf.setSignatureVersion(SignVersion.V4);
+
+		DefaultCredentialProvider credentialsProvider = new DefaultCredentialProvider(accessKeyId, accessKeySecret);
 
 		// 创建OSSClient实例。
-		OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret, conf);
+		OSS ossClient = OSSClientBuilder.create()
+		        .region(profile.getRegion())
+		        .endpoint(endpoint)
+		        .credentialsProvider(credentialsProvider)
+		        .clientConfiguration(conf)
+		        .build();
 
 		return ossClient;
 	}

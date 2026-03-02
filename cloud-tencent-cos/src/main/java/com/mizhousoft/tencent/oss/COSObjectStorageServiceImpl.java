@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -415,6 +416,16 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 	 */
 	@Override
 	public URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5) throws CloudSDKException
+	{
+		return genPresignedUploadUrl(bucketName, objectName, signExpired, contentMd5, null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5,
+	        Map<String, String> headerMap) throws CloudSDKException
 	{
 		try
 		{

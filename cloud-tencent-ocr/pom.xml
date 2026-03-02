@@ -23,12 +23,6 @@
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-ocr</artifactId>
 			<version>${tencent.ocr.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>

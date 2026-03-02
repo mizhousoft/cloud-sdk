@@ -21,10 +21,10 @@
 		<cloudsdk.version>3.0.0-SNAPSHOT</cloudsdk.version>
 		
 		<aliyun.sms.version>3.1.0</aliyun.sms.version>
-		<aliyun.oss.version>3.18.1</aliyun.oss.version>
+		<aliyun.oss.version>3.18.5</aliyun.oss.version>
 		
-		<tentcent.cos.sts.version>3.1.0</tentcent.cos.sts.version>
-		<tencent.cos-api.version>5.6.245</tencent.cos-api.version>
+		<tentcent.cos.sts.version>3.1.1</tentcent.cos.sts.version>
+		<tencent.cos-api.version>5.6.261</tencent.cos-api.version>
 		<tencent.ocr.version>3.1.1137</tencent.ocr.version>
 		<tencent.sts.version>3.1.1126</tencent.sts.version>
 		<tencent.sms.version>3.1.1135</tencent.sms.version>

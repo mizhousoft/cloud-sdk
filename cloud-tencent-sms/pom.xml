@@ -22,22 +22,12 @@
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-common</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java-sms</artifactId>
 			<version>${tencent.sms.version}</version>
 			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
 				<exclusion>
 					<groupId>com.tencentcloudapi</groupId>
 					<artifactId>tencentcloud-sdk-java-common</artifactId>

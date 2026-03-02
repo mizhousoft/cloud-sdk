@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -257,14 +258,17 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	public OSSTempCredential getUploadTempCredential(String bucketName, Set<String> objectNames, int oneDurationSeconds)
 	        throws CloudSDKException
 	{
-		String policy = "{\"Version\":\"1\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"oss:PutObject\"],\"Resource\":[\"acs:oss:*:*:*\"]}]}";
-
 		try
 		{
+			String policy = "{\"Version\":\"1\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"oss:PutObject\"],\"Resource\":[\"acs:oss:*:*:"
+			        + bucketName + "/*\"]}]}";
+
+			String regionId = "";
+
 			// 添加endpoint（直接使用STS endpoint，前两个参数留空，无需添加region ID）
-			DefaultProfile.addEndpoint("", "Sts", profile.getStsEndpoint());
-			// 构造default profile（参数留空，无需添加region ID）
-			IClientProfile clientProfile = DefaultProfile.getProfile("", profile.getAccessKey(), profile.getSecretKey());
+			DefaultProfile.addEndpoint(regionId, "Sts", profile.getStsEndpoint());
+
+			IClientProfile clientProfile = DefaultProfile.getProfile(regionId, profile.getAccessKey(), profile.getSecretKey());
 			// 用profile构造client
 			DefaultAcsClient client = new DefaultAcsClient(clientProfile);
 			final AssumeRoleRequest request = new AssumeRoleRequest();
@@ -301,14 +305,17 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	public OSSTempCredential getUploadTempCredential(String bucketName, String[] allowPrefixes, int oneDurationSeconds)
 	        throws CloudSDKException
 	{
-		String policy = "{\"Version\":\"1\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"oss:PutObject\"],\"Resource\":[\"acs:oss:*:*:*\"]}]}";
-
 		try
 		{
+			String policy = "{\"Version\":\"1\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"oss:PutObject\"],\"Resource\":[\"acs:oss:*:*:"
+			        + bucketName + "/*\"]}]}";
+
+			String regionId = "";
+
 			// 添加endpoint（直接使用STS endpoint，前两个参数留空，无需添加region ID）
-			DefaultProfile.addEndpoint("", "Sts", profile.getStsEndpoint());
-			// 构造default profile（参数留空，无需添加region ID）
-			IClientProfile clientProfile = DefaultProfile.getProfile("", profile.getAccessKey(), profile.getSecretKey());
+			DefaultProfile.addEndpoint(regionId, "Sts", profile.getStsEndpoint());
+
+			IClientProfile clientProfile = DefaultProfile.getProfile(regionId, profile.getAccessKey(), profile.getSecretKey());
 			// 用profile构造client
 			DefaultAcsClient client = new DefaultAcsClient(clientProfile);
 			final AssumeRoleRequest request = new AssumeRoleRequest();
@@ -364,10 +371,25 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 	@Override
 	public URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5) throws CloudSDKException
 	{
+		return genPresignedUploadUrl(bucketName, objectName, signExpired, contentMd5, null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5,
+	        Map<String, String> headerMap) throws CloudSDKException
+	{
 		try
 		{
 			GeneratePresignedUrlRequest req = new GeneratePresignedUrlRequest(bucketName, objectName, HttpMethod.PUT);
 			req.setContentMD5(contentMd5);
+
+			if (null != headerMap)
+			{
+				headerMap.forEach((key, value) -> req.addHeader(key, value));
+			}
 
 			Date expirationDate = new Date(System.currentTimeMillis() + signExpired);
 			req.setExpiration(expirationDate);

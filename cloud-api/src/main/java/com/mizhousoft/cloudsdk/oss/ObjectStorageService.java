@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 import com.mizhousoft.cloudsdk.CloudSDKException;
@@ -122,4 +123,19 @@ public interface ObjectStorageService
 	 * @throws CloudSDKException
 	 */
 	URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5) throws CloudSDKException;
+
+	/**
+	 * 生成一个预签名上传url
+	 * 
+	 * @param bucketName
+	 * @param objectName
+	 * @param signExpired
+	 * @param contentMd5
+	 * @param headerMap
+	 * @return
+	 * @throws CloudSDKException
+	 */
+	URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5, Map<String, String> headerMap)
+	        throws CloudSDKException;
+
 }

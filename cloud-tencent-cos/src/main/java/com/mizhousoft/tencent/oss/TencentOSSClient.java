@@ -351,6 +351,18 @@ public class TencentOSSClient implements OSSClient
 	 * {@inheritDoc}
 	 */
 	@Override
+	public URL genPresignedUploadUrl(String bucketName, String objectName, long signExpired, String contentMd5,
+	        Map<String, String> headerMap) throws CloudSDKException
+	{
+		ObjectStorageService objectStorageService = getObjectService(bucketName);
+
+		return objectStorageService.genPresignedUploadUrl(bucketName, objectName, signExpired, contentMd5, headerMap);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void destroy()
 	{
 		Iterator<Entry<String, BucketStroageService>> iter = bucketServiceMap.entrySet().iterator();
