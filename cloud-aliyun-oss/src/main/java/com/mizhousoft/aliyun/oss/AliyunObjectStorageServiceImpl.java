@@ -21,6 +21,7 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.CopyObjectRequest;
 import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.GeneratePresignedUrlRequest;
+import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.auth.sts.AssumeRoleRequest;
 import com.aliyuncs.auth.sts.AssumeRoleResponse;
@@ -211,6 +212,24 @@ public class AliyunObjectStorageServiceImpl implements ObjectStorageService
 		catch (ClientException e)
 		{
 			throw new CloudSDKException(e.getMessage(), e);
+		}
+		catch (Throwable e)
+		{
+			throw new CloudSDKException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void getObject(String bucketName, String objectName, File file) throws CloudSDKException
+	{
+		try
+		{
+			GetObjectRequest request = new GetObjectRequest(bucketName, objectName);
+
+			ossClient.getObject(request, file);
 		}
 		catch (Throwable e)
 		{

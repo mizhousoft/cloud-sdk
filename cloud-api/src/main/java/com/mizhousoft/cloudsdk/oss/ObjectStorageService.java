@@ -70,6 +70,16 @@ public interface ObjectStorageService
 	void deleteObjects(String bucketName, Collection<String> objectNames) throws CloudSDKException;
 
 	/**
+	 * 获取对象
+	 * 
+	 * @param bucketName
+	 * @param objectName
+	 * @param file
+	 * @throws CloudSDKException
+	 */
+	void getObject(String bucketName, String objectName, File file) throws CloudSDKException;
+
+	/**
 	 * 获取对象元数据
 	 * 
 	 * @param bucketName

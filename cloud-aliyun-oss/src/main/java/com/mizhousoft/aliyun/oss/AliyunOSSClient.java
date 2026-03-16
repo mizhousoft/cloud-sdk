@@ -291,6 +291,17 @@ public class AliyunOSSClient implements OSSClient
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void getObject(String bucketName, String objectName, File file) throws CloudSDKException
+	{
+		ObjectStorageService objectStorageService = getObjectService(bucketName);
+
+		objectStorageService.getObject(bucketName, objectName, file);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public ObjectMetadata getObjectMetadata(String bucketName, String objectName) throws CloudSDKException
 	{
 		ObjectStorageService objectStorageService = getObjectService(bucketName);

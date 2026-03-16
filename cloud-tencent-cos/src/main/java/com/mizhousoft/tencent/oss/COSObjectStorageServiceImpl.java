@@ -31,6 +31,7 @@ import com.qcloud.cos.model.CopyObjectRequest;
 import com.qcloud.cos.model.DeleteObjectsRequest;
 import com.qcloud.cos.model.DeleteObjectsRequest.KeyVersion;
 import com.qcloud.cos.model.GeneratePresignedUrlRequest;
+import com.qcloud.cos.model.GetObjectRequest;
 import com.tencent.cloud.CosStsClient;
 import com.tencent.cloud.Credentials;
 import com.tencent.cloud.Response;
@@ -220,6 +221,28 @@ public class COSObjectStorageServiceImpl implements ObjectStorageService
 			// List<DeletedObject> deleteObjects = mde.getDeletedObjects();
 			// List<DeleteError> deleteErrors = mde.getErrors();
 			throw new CloudSDKException(e.getMessage(), e);
+		}
+		catch (CosServiceException e)
+		{
+			throw new CloudSDKException(e.getMessage(), e);
+		}
+		catch (Throwable e)
+		{
+			throw new CloudSDKException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void getObject(String bucketName, String objectName, File file) throws CloudSDKException
+	{
+		try
+		{
+			GetObjectRequest request = new GetObjectRequest(bucketName, objectName);
+
+			cosClient.getObject(request, file);
 		}
 		catch (CosServiceException e)
 		{
