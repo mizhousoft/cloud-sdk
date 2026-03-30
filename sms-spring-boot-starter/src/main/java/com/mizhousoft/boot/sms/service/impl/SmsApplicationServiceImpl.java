@@ -57,7 +57,7 @@ public class SmsApplicationServiceImpl implements SmsApplicationService
 	{
 		if (ArrayUtils.isEmpty(phoneNumbers))
 		{
-			throw new SmsSendException("sms.send.phone.number.empty", "Phone number is null.");
+			throw new SmsSendException("intl.sms.send.phone.number.empty", "Phone number is null.");
 		}
 
 		CloudSmsTemplate smsTemplate = getBySmsTemplate(templateCode);
@@ -72,7 +72,7 @@ public class SmsApplicationServiceImpl implements SmsApplicationService
 		{
 			SmsBILogger.log(phoneNumbers, false, smsTemplate);
 
-			throw new SmsSendException("sms.send.failed", e.getMessage(), e);
+			throw new SmsSendException("intl.sms.send.failed", e.getMessage(), e);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class SmsApplicationServiceImpl implements SmsApplicationService
 	{
 		if (null == phoneNumber)
 		{
-			throw new SmsSendException("sms.send.phone.number.empty", "Phone number is null.");
+			throw new SmsSendException("intl.sms.send.phone.number.empty", "Phone number is null.");
 		}
 
 		CloudSmsTemplate smsTemplate = getBySmsTemplate(templateCode);
@@ -115,7 +115,7 @@ public class SmsApplicationServiceImpl implements SmsApplicationService
 	{
 		if (null == phoneNumber)
 		{
-			throw new SmsSendException("sms.send.phone.number.empty", "Phone number is null.");
+			throw new SmsSendException("intl.sms.send.phone.number.empty", "Phone number is null.");
 		}
 
 		CloudSmsTemplate smsTemplate = getBySmsTemplate(templateCode);
@@ -134,7 +134,7 @@ public class SmsApplicationServiceImpl implements SmsApplicationService
 
 			LOG.error(e.getMessage(), e);
 
-			throw new SmsSendException("sms.send.failed", e.getMessage(), e);
+			throw new SmsSendException("intl.sms.send.failed", e.getMessage(), e);
 		}
 	}
 
@@ -146,11 +146,11 @@ public class SmsApplicationServiceImpl implements SmsApplicationService
 	{
 		if (null == phoneNumber)
 		{
-			throw new SmsSendException("sms.send.phone.number.empty", "Phone number is null.");
+			throw new SmsSendException("intl.sms.send.phone.number.empty", "Phone number is null.");
 		}
 		else if (null == code)
 		{
-			throw new SmsSendException("sms.verification.code.empty", "Code is null.");
+			throw new SmsSendException("intl.sms.verification.code.empty", "Code is null.");
 		}
 
 		CloudSmsTemplate smsTemplate = getBySmsTemplate(templateCode);
@@ -163,7 +163,7 @@ public class SmsApplicationServiceImpl implements SmsApplicationService
 		CloudSmsTemplate smsTemplate = smsTemplateContainer.getByTemplateCode(templateCode);
 		if (null == smsTemplate)
 		{
-			throw new SmsSendException("sms.template.not.found", templateCode + " sms template not found.");
+			throw new SmsSendException("intl.sms.template.not.found", templateCode + " sms template not found.");
 		}
 
 		return smsTemplate;

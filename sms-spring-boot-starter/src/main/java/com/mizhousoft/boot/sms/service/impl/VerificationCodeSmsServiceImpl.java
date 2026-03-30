@@ -97,11 +97,11 @@ public class VerificationCodeSmsServiceImpl implements VerificationCodeSmsServic
 		SmsVerificationCode smsVerificationCode = getSmsVerificationCode(cacheKey);
 		if (null == smsVerificationCode)
 		{
-			throw new SmsSendException("sms.verification.code.verify.null", "Verification code is null.");
+			throw new SmsSendException("intl.sms.verification.code.verify.null", "Verification code is null.");
 		}
 		else if (!smsVerificationCode.getVerificationCode().equals(code))
 		{
-			throw new SmsSendException("sms.verification.code.verify.wrong", "Verification code is wrong.");
+			throw new SmsSendException("intl.sms.verification.code.verify.wrong", "Verification code is wrong.");
 		}
 		else
 		{
