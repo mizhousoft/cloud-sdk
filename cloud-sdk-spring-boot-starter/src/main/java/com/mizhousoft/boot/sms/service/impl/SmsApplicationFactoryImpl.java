@@ -99,7 +99,9 @@ public class SmsApplicationFactoryImpl implements SmsApplicationFactory
 			credential.setAccessKey(application.getSecretId());
 			credential.setSecretKey(application.getSecretKey());
 
-			DefaultSmsClient smsClient = new DefaultSmsClient(application.getEndpoint(), RegionEnum.get(application.getRegion()),
+			DefaultSmsClient smsClient = new DefaultSmsClient(
+			        application.getEndpoint(),
+			        RegionEnum.get(application.getRegion()),
 			        credential);
 
 			SmsApplicationClientImpl smsAppClient = new SmsApplicationClientImpl(application, smsClient);

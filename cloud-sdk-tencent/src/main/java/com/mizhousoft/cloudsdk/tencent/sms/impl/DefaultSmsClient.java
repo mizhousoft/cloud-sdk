@@ -181,7 +181,8 @@ public class DefaultSmsClient extends AbstractClient implements SmsClient
 
 		Map<String, String> headerMap = buildSignHeader(httpRequest, profile, credential);
 
-		SmsPackagesStatisticsResponse response = executeRequest(httpRequest, headerMap,
+		SmsPackagesStatisticsResponse response = executeRequest(httpRequest,
+		        headerMap,
 		        new TypeReference<APIResponse<SmsPackagesStatisticsResponse>>()
 		        {
 		        });

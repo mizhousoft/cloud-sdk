@@ -65,7 +65,8 @@ public class WindControlServiceImpl implements WindControlService
 			List<String> phoneNumbers = pool.getPhoneNumbers();
 			if (phoneNumbers.size() > smsApplication.getHostMaxRequest())
 			{
-				LOG.error("The host {} has taken too many sms messages, phone numbers are {}.", host,
+				LOG.error("The host {} has taken too many sms messages, phone numbers are {}.",
+				        host,
 				        StringUtils.join(phoneNumbers.iterator(), ","));
 				return false;
 			}

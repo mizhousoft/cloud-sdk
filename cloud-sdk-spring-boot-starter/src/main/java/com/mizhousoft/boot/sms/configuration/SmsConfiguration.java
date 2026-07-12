@@ -27,7 +27,7 @@ public class SmsConfiguration
 	private SmsApplicationProperties applicationProperties;
 
 	@Bean
-	@ConditionalOnProperty(name = "sms.applications[0].name", matchIfMissing = false)
+	@ConditionalOnProperty(name = "cloud.sms.applications[0].name", matchIfMissing = false)
 	public SmsApplicationFactory getSmsApplicationFactoryBean() throws CloudSDKException
 	{
 		SmsApplicationFactoryImpl factory = new SmsApplicationFactoryImpl(applicationProperties);

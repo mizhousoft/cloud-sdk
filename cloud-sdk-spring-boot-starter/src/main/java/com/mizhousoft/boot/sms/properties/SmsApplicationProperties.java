@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @version
  */
 @Component
-@ConfigurationProperties(prefix = "sms")
+@ConfigurationProperties(prefix = "cloud.sms")
 public class SmsApplicationProperties
 {
 	/**

@@ -84,7 +84,8 @@ public class DefaultStsClient extends AbstractClient implements StsClient
 
 		Map<String, String> headerMap = buildSignHeader(httpRequest, profile, credential);
 
-		GetFederationTokenResponse response = executeRequest(httpRequest, headerMap,
+		GetFederationTokenResponse response = executeRequest(httpRequest,
+		        headerMap,
 		        new TypeReference<APIResponse<GetFederationTokenResponse>>()
 		        {
 		        });
