@@ -38,13 +38,19 @@ public class DescribeCaptchaResultResponse extends TencentResponse
 	 * 拦截类型，注意：此字段可能返回 null，表示取不到有效值
 	 */
 	@JsonProperty("EvilBitmap")
-	private int evilBitmap;
+	private Integer evilBitmap;
 
 	/**
 	 * 提交验证码设备信息
 	 */
 	@JsonProperty("SubmitCaptchaTime")
 	private int submitCaptchaTime;
+
+	/**
+	 * 唯一请求 ID，由服务端生成，每次请求都会返回
+	 */
+	@JsonProperty("RequestId")
+	private String requestId;
 
 	/**
 	 * 获取captchaCode
@@ -131,7 +137,7 @@ public class DescribeCaptchaResultResponse extends TencentResponse
 	 * 
 	 * @return
 	 */
-	public int getEvilBitmap()
+	public Integer getEvilBitmap()
 	{
 		return evilBitmap;
 	}
@@ -141,7 +147,7 @@ public class DescribeCaptchaResultResponse extends TencentResponse
 	 * 
 	 * @param evilBitmap
 	 */
-	public void setEvilBitmap(int evilBitmap)
+	public void setEvilBitmap(Integer evilBitmap)
 	{
 		this.evilBitmap = evilBitmap;
 	}
@@ -164,5 +170,25 @@ public class DescribeCaptchaResultResponse extends TencentResponse
 	public void setSubmitCaptchaTime(int submitCaptchaTime)
 	{
 		this.submitCaptchaTime = submitCaptchaTime;
+	}
+
+	/**
+	 * 获取requestId
+	 * 
+	 * @return
+	 */
+	public String getRequestId()
+	{
+		return requestId;
+	}
+
+	/**
+	 * 设置requestId
+	 * 
+	 * @param requestId
+	 */
+	public void setRequestId(String requestId)
+	{
+		this.requestId = requestId;
 	}
 }
