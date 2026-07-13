@@ -3,8 +3,6 @@ package com.mizhousoft.boot.sms.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
 import com.mizhousoft.boot.sms.properties.SmsApplicationProperties;
 import com.mizhousoft.boot.sms.service.impl.SmsApplicationFactoryImpl;
@@ -16,8 +14,6 @@ import com.mizhousoft.cloudsdk.sms2.SmsApplicationFactory;
  *
  * @version
  */
-@Configuration
-@Order(value = Integer.MIN_VALUE)
 public class SmsConfiguration
 {
 	/**
